@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDPR Privacy Program — EuroShop GmbH | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #dbeafe; color: #1d4ed8; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .status-complete { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Privacy Program</span>
+        <h1>GDPR Compliance Program &mdash; <em>EuroShop GmbH</em></h1>
+        <p class="subtitle">End-to-end GDPR compliance program for an 800-employee EU e-commerce platform processing 3M+ customer records across 27 member states</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> EuroShop GmbH (800 employees)</div>
+            <div class="meta-item"><strong>Industry:</strong> E-Commerce / Retail</div>
+            <div class="meta-item"><strong>Frameworks:</strong> GDPR (EU 2016/679), ISO 27001:2022</div>
+            <div class="meta-item"><strong>Scope:</strong> 27 EU Member States, 12 Storefronts</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <h2>1. Executive Summary</h2>
+    <p>EuroShop GmbH is a mid-size e-commerce company with 800 employees, operating across all 27 EU member states. The company processes personal data for over 3 million customers including names, addresses, payment information, purchase histories, browsing behavior, and marketing preferences. This project implements a comprehensive GDPR compliance program covering 5 data processing assets, 6 privacy risks, 10 controls mapped to GDPR articles and ISO 27001, and 3 core privacy policies.</p>
+
+    <h2>2. Data Processing Asset Map &mdash; 5 Assets (ROPA)</h2>
+
+    <div class="risk-card">
+        <h3>Asset 1: E-Commerce Platform (Web &amp; Mobile)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>VP of Digital Commerce</td></tr>
+            <tr><th>Description</th><td>Main SaaS platform (Node.js + React) on AWS EU-West-1 (Frankfurt). 3.2M registered customers, 450K monthly active users across 12 localized storefronts. Processes account details, browsing behavior (first-party cookies with consent), order history, marketing preferences, and fraud detection data.</td></tr>
+            <tr><th>Legal Basis</th><td>Art. 6(1)(b) contract performance | Art. 6(1)(a) consent for marketing/cookies | Art. 6(1)(f) legitimate interest for fraud prevention</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 2: Customer Database (PostgreSQL on AWS RDS)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Head of Data Engineering</td></tr>
+            <tr><th>Description</th><td>Central database in EU-West-1 storing 3.2M customer records, 28M orders, 180M browsing events (anonymized after 90 days), delivery addresses across 27 EU countries, tokenized payment references, consent records with timestamps, and DSAR fulfillment logs. AES-256 encryption, Multi-AZ, daily backups retained 35 days.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 3: Marketing Automation Platform (HubSpot)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>High</td></tr>
+            <tr><th>Owner</th><td>Chief Marketing Officer</td></tr>
+            <tr><th>Description</th><td>2.1M marketing subscribers across 27 EU countries. Manages email campaigns, customer segmentation, automated workflows (cart abandonment, post-purchase, win-back). US-based SaaS &mdash; data transfer via Standard Contractual Clauses (SCCs). Double opt-in required; GDPR-compliant unsubscribe in all emails.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 4: Payment Processing Gateway (Stripe)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>CFO</td></tr>
+            <tr><th>Description</th><td>~850K transactions/month (avg &euro;67). Card numbers tokenized (EuroShop never stores raw card data). PCI DSS Level 1 certified. Payment data stored in Stripe&rsquo;s EU data center (Dublin). DPA per GDPR Art. 28. Stripe acts as both processor (on behalf of EuroShop) and independent controller (fraud detection).</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 5: Employee HR System (Personio)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>High</td></tr>
+            <tr><th>Owner</th><td>Head of HR</td></tr>
+            <tr><th>Description</th><td>800 employees across 8 EU countries. Stores personal details, contracts, salary, performance reviews, sick leave/medical certificates (special category data under Art. 9(2)(b)), tax info, work permits. EU-based (Munich); data stored in Frankfurt. No international transfers.</td></tr>
+        </table>
+    </div>
+
+    <h2>3. Privacy Risk Assessment &mdash; 6 Risks</h2>
+
+    <div class="risk-card">
+        <h3>PR-01: Personal Data Breach Exposing 3M+ Customer Records</h3>
+        <span class="score score-critical">CRITICAL &mdash; Score: 15 (L:3 x I:5)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>3.2M customer records at risk (names, emails, addresses, purchase history, marketing preferences)</li>
+            <li>Attack vectors: credential theft, SQL injection, insider threat, third-party compromise</li>
+            <li>GDPR Art. 33: notify supervisory authority within 72 hours; Art. 34: notify individuals if high risk</li>
+            <li>Financial impact: fines up to 4% annual revenue + compensation claims + reputation damage</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>PR-02: Unlawful Marketing Communications &mdash; Invalid Consent</h3>
+        <span class="score score-critical">CRITICAL &mdash; Score: 16 (L:4 x I:4)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>2.1M subscribers, avg 8 emails/month &mdash; invalid consent = millions of individual violations</li>
+            <li>Risks: pre-ticked checkboxes, bundled consent, unclear consent text, missing double opt-in (required in Germany)</li>
+            <li>GDPR Art. 7: must prove when/how consent was given; consent must be freely given, specific, informed</li>
+            <li>Each email without valid consent is a separate GDPR violation</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>PR-03: DSAR Fulfillment Failure (30-Day Deadline)</h3>
+        <span class="score score-high">HIGH &mdash; Score: 12 (L:4 x I:3)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>GDPR Arts. 15-22: access, rectification, erasure, restriction, portability, objection rights</li>
+            <li>Expected 50-200+ DSARs per month from 3.2M customer base</li>
+            <li>Risks: data scattered across 5 systems, identity verification gaps, no machine-readable export, legal retention conflicts</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>PR-04: Unlawful International Data Transfer to US Processors</h3>
+        <span class="score score-high">HIGH &mdash; Score: 12 (L:3 x I:4)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>HubSpot (US-based) processes EU customer data; Stripe stores EU data in Dublin but may process fraud data externally</li>
+            <li>EU-US Data Privacy Framework could be invalidated (like Schrems I &amp; II)</li>
+            <li>Risk of forced HubSpot discontinuation &mdash; would halt all EU marketing activities</li>
+            <li>Transfer Impact Assessments (TIAs) required per EDPB guidelines</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>PR-05: Cookie Consent Non-Compliance</h3>
+        <span class="score score-high">HIGH &mdash; Score: 12 (L:4 x I:3)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>12 localized stores with tracking cookies for analytics, advertising, personalization</li>
+            <li>Risks: missing &ldquo;Reject All&rdquo; button (dark pattern), cookies firing before consent, not respecting preferences</li>
+            <li>Country-specific rules: France (CNIL) requires 13-month consent renewal; Germany requires explicit consent for Google Analytics</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>PR-06: Excessive Data Retention &mdash; Storage Limitation Violation</h3>
+        <span class="score score-high">HIGH &mdash; Score: 12 (L:4 x I:3)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>GDPR Art. 5(1)(e): data kept only as long as necessary</li>
+            <li>Risks: inactive accounts (5+ years) with full data, unbounded browsing history, outdated consent records</li>
+            <li>Excessive retention increases breach impact and violates data minimization principle</li>
+        </ul>
+    </div>
+
+    <h2>4. Risk Summary</h2>
+    <table class="risk-table">
+        <tr><th>#</th><th>Risk</th><th>L</th><th>I</th><th>Score</th><th>Rating</th><th>Category</th></tr>
+        <tr><td>PR-01</td><td>Customer Data Breach (3M+ records)</td><td>3</td><td>5</td><td class="risk-critical">15</td><td class="risk-critical">CRITICAL</td><td>Data Protection</td></tr>
+        <tr><td>PR-02</td><td>Invalid Marketing Consent</td><td>4</td><td>4</td><td class="risk-critical">16</td><td class="risk-critical">CRITICAL</td><td>Compliance</td></tr>
+        <tr><td>PR-03</td><td>DSAR Fulfillment Failure</td><td>4</td><td>3</td><td class="risk-high">12</td><td class="risk-high">HIGH</td><td>Compliance</td></tr>
+        <tr><td>PR-04</td><td>Unlawful International Transfer</td><td>3</td><td>4</td><td class="risk-high">12</td><td class="risk-high">HIGH</td><td>Compliance</td></tr>
+        <tr><td>PR-05</td><td>Cookie Consent Non-Compliance</td><td>4</td><td>3</td><td class="risk-high">12</td><td class="risk-high">HIGH</td><td>Compliance</td></tr>
+        <tr><td>PR-06</td><td>Excessive Data Retention</td><td>4</td><td>3</td><td class="risk-high">12</td><td class="risk-high">HIGH</td><td>Data Protection</td></tr>
+    </table>
+
+    <h2>5. GDPR Control Catalog &mdash; 10 Controls</h2>
+
+    <div class="risk-card">
+        <h3>C-01: Consent Management Platform (OneTrust CMP)</h3>
+        <p><strong>GDPR:</strong> Art. 6(1)(a), Art. 7, ePrivacy Art. 5(3) &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.5.34</p>
+        <ul>
+            <li>Deployed on all 12 storefronts with country-specific configurations</li>
+            <li>&ldquo;Reject All&rdquo; button equally prominent as &ldquo;Accept All&rdquo; &mdash; no dark patterns</li>
+            <li>4 granular cookie categories: Necessary, Analytics, Marketing, Personalization (all non-essential OFF by default)</li>
+            <li>Consent records logged with timestamp, hashed IP, banner version, and choice</li>
+            <li>Country rules: Germany double opt-in, France 13-month renewal, Italy visible Reject All</li>
+            <li>Google Analytics replaced with self-hosted Matomo in countries where DPAs ruled it unlawful</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-02: DSAR Automated Workflow (OneTrust)</h3>
+        <p><strong>GDPR:</strong> Arts. 15-22, Art. 12 &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.5.34</p>
+        <ul>
+            <li>Requests via privacy.euroshop.eu portal or dpo@euroshop.eu</li>
+            <li>Identity verification: email confirmation + order number or account login</li>
+            <li>Automated queries across all 5 systems to collect all personal data</li>
+            <li>DPO reviews and redacts third-party data; response in JSON (portability) + PDF (access)</li>
+            <li>Acknowledgment within 3 business days; full response within 25 days (5-day buffer before 30-day deadline)</li>
+            <li>Erasure requests: data removed from all systems with deletion confirmation logged</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-03: Data Processing Agreement (DPA) Management</h3>
+        <p><strong>GDPR:</strong> Art. 28, Arts. 44-49 &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.5.20</p>
+        <ul>
+            <li>DPAs with all 5 processors: HubSpot (SCCs + supplementary measures), Stripe (EU data residency), Personio (EU-only), AWS (EU-West-1), OneTrust (EU-only)</li>
+            <li>Each DPA includes: processing purposes/data types, sub-processor approval rules, 24-hour breach notification, audit rights, data return/deletion at contract end</li>
+            <li>Annual review cycle; updated when processing activities change</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-04: Data Protection Impact Assessment (DPIA) Process</h3>
+        <p><strong>GDPR:</strong> Art. 35, Art. 36 &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.5.34</p>
+        <ul>
+            <li>Triggered by: sensitive data processing, large-scale monitoring, automated decisions, new international transfers, major processing changes</li>
+            <li>Assesses: data processed, necessity, risks to individuals, risk mitigation measures, DPO approval</li>
+            <li>Completed DPIAs: e-commerce tracking, HubSpot marketing profiling, Stripe fraud detection, employee health data (Personio)</li>
+            <li>High residual risk requires prior consultation with supervisory authority (Art. 36)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-05: 72-Hour Breach Notification Procedure</h3>
+        <p><strong>GDPR:</strong> Art. 33, Art. 34 &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.5.24, A.5.26</p>
+        <ul>
+            <li>0-4 hours: security team confirms breach and PHI involvement</li>
+            <li>4-12 hours: DPO assesses risk to individuals using EDPB guidelines</li>
+            <li>12-48 hours: DPO prepares notification to German BfDI (lead supervisory authority)</li>
+            <li>48-72 hours: notification submitted; high-risk individuals notified in their language</li>
+            <li>Monthly drills to validate 72-hour response capability</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-06: Data Encryption at Rest and in Transit</h3>
+        <p><strong>GDPR:</strong> Art. 32, Art. 5(1)(f) &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.8.24</p>
+        <ul>
+            <li>At rest: AES-256 via AWS KMS customer-managed keys (databases, S3, backups)</li>
+            <li>In transit: TLS 1.3 for all connections (APIs, internal services, third-party integrations)</li>
+            <li>Encrypted data breach may qualify for Art. 34 exemption (no individual notification required)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-07: Role-Based Access Control with Quarterly Reviews</h3>
+        <p><strong>GDPR:</strong> Art. 32, Art. 5(1)(f) &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.5.15, A.8.5</p>
+        <ul>
+            <li>Purpose-based roles: Customer Service (names/emails/orders), Marketing (emails + anonymized segments), Data Engineering (full DB), Finance (payment data), HR (employee data), DPO (read-only audit)</li>
+            <li>MFA required for all roles; quarterly access reviews</li>
+            <li>Terminated employees lose access within 1 hour via Okta</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-08: Automated Data Retention &amp; Deletion Enforcement</h3>
+        <p><strong>GDPR:</strong> Art. 5(1)(e), Art. 17 &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.5.33</p>
+        <ul>
+            <li>Retention periods: active accounts + 2 years, purchases 7 years, browsing data anonymized after 90 days, marketing consent active + 3 years, payment info 90 days after last transaction</li>
+            <li>Daily automated jobs flag and anonymize/delete expired data using k-anonymity</li>
+            <li>DSAR erasure requests fulfilled within 30 days with DPO approval</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-09: International Data Transfer Safeguards</h3>
+        <p><strong>GDPR:</strong> Arts. 44-49 &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.5.34</p>
+        <ul>
+            <li>HubSpot (US): Standard Contractual Clauses + encryption + Transfer Impact Assessment</li>
+            <li>Google Analytics replaced with self-hosted Matomo (EU-only) after DPA rulings</li>
+            <li>Annual TIA review; DPO maintains register of all international transfers with legal basis and safeguards</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-10: Privacy-by-Design &amp; Privacy-by-Default in Development</h3>
+        <p><strong>GDPR:</strong> Art. 25 &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.8.25</p>
+        <ul>
+            <li>Privacy screening checklist for all new features</li>
+            <li>Privacy defaults: marketing OFF, data sharing minimized, only necessary data collected</li>
+            <li>Pseudonymization when full identifiers not needed; automated code scanning for personal data</li>
+            <li>Annual privacy-by-design training for all developers</li>
+        </ul>
+    </div>
+
+    <h2>6. Core Privacy Policies &mdash; 3 Policies</h2>
+
+    <div class="risk-card">
+        <h3>Policy 1: Customer Privacy Policy (External)</h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>DPO</td></tr>
+            <tr><th>Status</th><td>Approved</td></tr>
+        </table>
+        <ul>
+            <li>Published on all 12 storefronts in local languages</li>
+            <li>Covers: controller identity, DPO contact, data categories &amp; purposes, recipients (HubSpot, Stripe, AWS), international transfers &amp; safeguards, retention periods, all data subject rights, automated decision-making</li>
+            <li>Plain language with summary + full details; version-tracked; reviewed annually</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Policy 2: DSAR Response Policy (Internal)</h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>DPO</td></tr>
+            <tr><th>Status</th><td>Approved</td></tr>
+        </table>
+        <ul>
+            <li>Channels: portal, email, mail, in-person; identity verification required</li>
+            <li>Request types: access, correction, deletion, restriction, portability, objection, automated decisions</li>
+            <li>SLAs: acknowledgment within 3 business days, full response within 25 days</li>
+            <li>Escalation for complex requests (2-month extension); refusal criteria for unfounded/excessive requests</li>
+            <li>Annual metrics reported to management</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Policy 3: Employee Data Handling &amp; Classification Policy</h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>DPO + Head of HR</td></tr>
+            <tr><th>Status</th><td>Approved</td></tr>
+        </table>
+        <ul>
+            <li>Covers: data classification, handling procedures, clean desk/screen, encrypted email, approved purposes only</li>
+            <li>No storing personal data on personal devices/cloud; need-to-know sharing only</li>
+            <li>GDPR training within 30 days of joining + annual refreshers; extra training for special category data handlers</li>
+            <li>Available in all 8 office languages; consequences for violations documented</li>
+        </ul>
+    </div>
+
+    <h2>7. Compliance Program Summary</h2>
+    <table class="risk-table">
+        <tr><th>Component</th><th>Details</th><th>Status</th></tr>
+        <tr><td><strong>Data Processing Assets</strong></td><td>5 mapped (ROPA foundation)</td><td><span class="status-complete">Complete</span></td></tr>
+        <tr><td><strong>Privacy Risks</strong></td><td>6 assessed (2 Critical, 4 High)</td><td><span class="status-complete">Documented</span></td></tr>
+        <tr><td><strong>GDPR Controls</strong></td><td>10 implemented, all Effective</td><td><span class="status-complete">Operational</span></td></tr>
+        <tr><td><strong>Privacy Policies</strong></td><td>3 approved (external + 2 internal)</td><td><span class="status-complete">Approved</span></td></tr>
+        <tr><td><strong>DPIAs Completed</strong></td><td>4 (e-commerce, marketing, payments, HR)</td><td><span class="status-complete">Complete</span></td></tr>
+        <tr><td><strong>DPA Agreements</strong></td><td>5 (HubSpot, Stripe, Personio, AWS, OneTrust)</td><td><span class="status-complete">All Current</span></td></tr>
+    </table>
+
+    <h2>8. Next Steps</h2>
+    <div class="risk-card">
+        <ul>
+            <li><strong>Register with Lead Supervisory Authority:</strong> Register DPO contact with BfDI (Germany) as lead authority</li>
+            <li><strong>Complete ROPA:</strong> Expand from 5 critical assets to ALL processing activities (internal systems, recruitment, CCTV)</li>
+            <li><strong>Annual GDPR compliance audit:</strong> Engage external privacy consultant to audit against all GDPR articles</li>
+            <li><strong>Cookie consent monitoring:</strong> Automated scanning (CookieBot/OneTrust) to verify all 12 storefronts remain compliant</li>
+            <li><strong>DPA response playbook:</strong> Prepare templates for supervisory authority inquiries and investigations</li>
+            <li><strong>DSAR metrics dashboard:</strong> Track volumes, response times, request types; quarterly management reporting</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    <p><a href="../index.html#projects" style="color: var(--primary); text-decoration: none; font-weight: 600;">&larr; Back to All Projects</a></p>
+    <p style="margin-top: 0.75rem;">&copy; 2026 Tejaswini Dondeti. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

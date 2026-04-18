@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphic Options Preview</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #1a1a1a; color: #fff; padding: 2rem; }
+        h1 { text-align: center; margin-bottom: 2rem; color: #fb923c; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1100px; margin: 0 auto; }
+        .option { background: #222; border: 2px solid #333; border-radius: 12px; padding: 1.5rem; text-align: center; }
+        .option h2 { color: #fb923c; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .option p { color: #999; font-size: 0.85rem; margin-bottom: 1rem; }
+        .option svg { max-width: 350px; width: 100%; height: auto; }
+        .current { border-color: #c2410c; }
+        .current h2::after { content: " (CURRENT)"; color: #22d3ee; font-size: 0.7rem; }
+    </style>
+</head>
+<body>
+<h1>Hero Graphic Options - Pick One</h1>
+<div class="grid">
+
+    <!-- OPTION A: Current Hexagon GRC -->
+    <div class="option current">
+        <h2>Option A: Hexagon GRC Network</h2>
+        <p>Current design - hexagonal icons with GRC center</p>
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1c1917"/><stop offset="100%" style="stop-color:#292524"/></linearGradient><linearGradient id="hs1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c2410c;stop-opacity:0.6"/><stop offset="100%" style="stop-color:#fb923c;stop-opacity:0.3"/></linearGradient></defs>
+            <circle cx="250" cy="250" r="240" fill="url(#bg1)" opacity="0.95"/>
+            <line x1="50" y1="250" x2="120" y2="250" stroke="#c2410c" stroke-width="1" opacity="0.3"/><line x1="380" y1="250" x2="450" y2="250" stroke="#c2410c" stroke-width="1" opacity="0.3"/><line x1="250" y1="50" x2="250" y2="120" stroke="#c2410c" stroke-width="1" opacity="0.3"/><line x1="250" y1="380" x2="250" y2="450" stroke="#c2410c" stroke-width="1" opacity="0.3"/>
+            <circle cx="50" cy="250" r="3" fill="#fb923c" opacity="0.5"/><circle cx="450" cy="250" r="3" fill="#fb923c" opacity="0.5"/><circle cx="250" cy="50" r="3" fill="#fb923c" opacity="0.5"/><circle cx="250" cy="450" r="3" fill="#fb923c" opacity="0.5"/>
+            <polygon points="250,175 295,197 295,241 250,263 205,241 205,197" fill="none" stroke="#c2410c" stroke-width="2.5" opacity="0.9"/>
+            <text x="250" y="225" text-anchor="middle" fill="#fb923c" font-family="sans-serif" font-size="22" font-weight="700">GRC</text>
+            <polygon points="250,85 285,105 285,140 250,160 215,140 215,105" fill="none" stroke="url(#hs1)" stroke-width="1.5"/><text x="250" y="130" text-anchor="middle" fill="#d6d3d1" font-size="22">&#9881;</text>
+            <polygon points="340,130 375,150 375,185 340,205 305,185 305,150" fill="none" stroke="url(#hs1)" stroke-width="1.5"/><text x="340" y="175" text-anchor="middle" fill="#d6d3d1" font-size="20">&#128274;</text>
+            <polygon points="365,220 400,240 400,275 365,295 330,275 330,240" fill="none" stroke="url(#hs1)" stroke-width="1.5"/><text x="365" y="265" text-anchor="middle" fill="#d6d3d1" font-size="20">&#9989;</text>
+            <polygon points="340,310 375,330 375,365 340,385 305,365 305,330" fill="none" stroke="url(#hs1)" stroke-width="1.5"/><text x="340" y="355" text-anchor="middle" fill="#d6d3d1" font-size="20">&#127919;</text>
+            <polygon points="250,355 285,375 285,410 250,430 215,410 215,375" fill="none" stroke="url(#hs1)" stroke-width="1.5"/><text x="250" y="400" text-anchor="middle" fill="#d6d3d1" font-size="20">&#128101;</text>
+            <polygon points="160,310 195,330 195,365 160,385 125,365 125,330" fill="none" stroke="url(#hs1)" stroke-width="1.5"/><text x="160" y="355" text-anchor="middle" fill="#d6d3d1" font-size="20">&#128269;</text>
+            <polygon points="135,220 170,240 170,275 135,295 100,275 100,240" fill="none" stroke="url(#hs1)" stroke-width="1.5"/><text x="135" y="265" text-anchor="middle" fill="#d6d3d1" font-size="20">&#128187;</text>
+            <polygon points="160,130 195,150 195,185 160,205 125,185 125,150" fill="none" stroke="url(#hs1)" stroke-width="1.5"/><text x="160" y="176" text-anchor="middle" fill="#d6d3d1" font-size="14" font-weight="700">AI</text>
+            <text x="380" y="295" fill="#fb923c" font-size="10" font-weight="600" opacity="0.8">Governance</text><text x="380" y="307" fill="#fb923c" font-size="10" font-weight="600" opacity="0.8">Risk &amp;</text><text x="380" y="319" fill="#fb923c" font-size="10" font-weight="600" opacity="0.8">Compliance</text>
+        </svg>
+    </div>
+
+    <!-- OPTION B: Shield with Checklist -->
+    <div class="option">
+        <h2>Option B: Shield with Checklist</h2>
+        <p>Security shield with compliance checkmarks</p>
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1c1917"/><stop offset="100%" style="stop-color:#292524"/></linearGradient></defs>
+            <circle cx="250" cy="250" r="240" fill="url(#bg2)" opacity="0.95"/>
+            <!-- Shield -->
+            <path d="M250 80 L370 140 L370 280 Q370 380 250 430 Q130 380 130 280 L130 140 Z" fill="none" stroke="#c2410c" stroke-width="3" opacity="0.8"/>
+            <path d="M250 100 L350 150 L350 270 Q350 360 250 405 Q150 360 150 270 L150 150 Z" fill="#292524" stroke="#fb923c" stroke-width="1" opacity="0.4"/>
+            <!-- Checkmarks -->
+            <line x1="190" y1="180" x2="310" y2="180" stroke="#44403c" stroke-width="1"/>
+            <rect x="190" y="195" width="16" height="16" rx="3" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+            <polyline points="193,203 197,207 203,197" fill="none" stroke="#22d3ee" stroke-width="2"/>
+            <text x="215" y="208" fill="#d6d3d1" font-size="13">ISO 27001 Compliance</text>
+            <rect x="190" y="225" width="16" height="16" rx="3" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+            <polyline points="193,233 197,237 203,227" fill="none" stroke="#22d3ee" stroke-width="2"/>
+            <text x="215" y="238" fill="#d6d3d1" font-size="13">SOC 2 Type II Audit</text>
+            <rect x="190" y="255" width="16" height="16" rx="3" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+            <polyline points="193,263 197,267 203,257" fill="none" stroke="#22d3ee" stroke-width="2"/>
+            <text x="215" y="268" fill="#d6d3d1" font-size="13">HIPAA Controls</text>
+            <rect x="190" y="285" width="16" height="16" rx="3" fill="none" stroke="#fb923c" stroke-width="1.5"/>
+            <polyline points="193,293 197,297 203,287" fill="none" stroke="#fb923c" stroke-width="2"/>
+            <text x="215" y="298" fill="#d6d3d1" font-size="13">GDPR Privacy</text>
+            <rect x="190" y="315" width="16" height="16" rx="3" fill="none" stroke="#fb923c" stroke-width="1.5"/>
+            <polyline points="193,323 197,327 203,317" fill="none" stroke="#fb923c" stroke-width="2"/>
+            <text x="215" y="328" fill="#d6d3d1" font-size="13">Risk Assessment</text>
+            <rect x="190" y="345" width="16" height="16" rx="3" fill="none" stroke="#fb923c" stroke-width="1.5"/>
+            <polyline points="193,353 197,357 203,347" fill="none" stroke="#fb923c" stroke-width="2"/>
+            <text x="215" y="358" fill="#d6d3d1" font-size="13">AI Governance</text>
+            <!-- Shield lock -->
+            <rect x="233" y="130" width="34" height="26" rx="4" fill="none" stroke="#fb923c" stroke-width="2"/>
+            <path d="M240 130 L240 120 Q240 108 250 108 Q260 108 260 120 L260 130" fill="none" stroke="#fb923c" stroke-width="2"/>
+            <circle cx="250" cy="143" r="3" fill="#fb923c"/>
+        </svg>
+    </div>
+
+    <!-- OPTION C: Framework Wheel -->
+    <div class="option">
+        <h2>Option C: Framework Wheel</h2>
+        <p>Circular segments for each framework</p>
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1c1917"/><stop offset="100%" style="stop-color:#292524"/></linearGradient></defs>
+            <circle cx="250" cy="250" r="240" fill="url(#bg3)" opacity="0.95"/>
+            <!-- Outer ring -->
+            <circle cx="250" cy="250" r="180" fill="none" stroke="#44403c" stroke-width="1"/>
+            <circle cx="250" cy="250" r="130" fill="none" stroke="#44403c" stroke-width="1"/>
+            <!-- Segments -->
+            <path d="M250 70 A180 180 0 0 1 405 155" fill="none" stroke="#c2410c" stroke-width="3" opacity="0.8"/>
+            <path d="M405 155 A180 180 0 0 1 430 250" fill="none" stroke="#22d3ee" stroke-width="3" opacity="0.8"/>
+            <path d="M430 250 A180 180 0 0 1 405 345" fill="none" stroke="#fb923c" stroke-width="3" opacity="0.8"/>
+            <path d="M405 345 A180 180 0 0 1 250 430" fill="none" stroke="#16a34a" stroke-width="3" opacity="0.8"/>
+            <path d="M250 430 A180 180 0 0 1 95 345" fill="none" stroke="#9333ea" stroke-width="3" opacity="0.8"/>
+            <path d="M95 345 A180 180 0 0 1 70 250" fill="none" stroke="#dc2626" stroke-width="3" opacity="0.8"/>
+            <path d="M70 250 A180 180 0 0 1 95 155" fill="none" stroke="#ca8a04" stroke-width="3" opacity="0.8"/>
+            <path d="M95 155 A180 180 0 0 1 250 70" fill="none" stroke="#2563eb" stroke-width="3" opacity="0.8"/>
+            <!-- Labels on outer ring -->
+            <text x="340" y="100" fill="#c2410c" font-size="12" font-weight="700">ISO 27001</text>
+            <text x="400" y="200" fill="#22d3ee" font-size="12" font-weight="700">SOC 2</text>
+            <text x="400" y="310" fill="#fb923c" font-size="12" font-weight="700">HIPAA</text>
+            <text x="300" y="420" fill="#16a34a" font-size="12" font-weight="700">GDPR</text>
+            <text x="85" y="400" fill="#9333ea" font-size="12" font-weight="700">CMMC</text>
+            <text x="50" y="290" fill="#dc2626" font-size="12" font-weight="700">PCI DSS</text>
+            <text x="55" y="190" fill="#ca8a04" font-size="12" font-weight="700">NIST CSF</text>
+            <text x="150" y="95" fill="#2563eb" font-size="12" font-weight="700">CIS Controls</text>
+            <!-- Center -->
+            <circle cx="250" cy="250" r="70" fill="#1c1917" stroke="#c2410c" stroke-width="2"/>
+            <text x="250" y="240" text-anchor="middle" fill="#fb923c" font-size="24" font-weight="700">GRC</text>
+            <text x="250" y="265" text-anchor="middle" fill="#78716c" font-size="11">Governance</text>
+            <text x="250" y="278" text-anchor="middle" fill="#78716c" font-size="11">Risk &amp; Compliance</text>
+            <!-- Dots on ring -->
+            <circle cx="250" cy="70" r="5" fill="#2563eb"/><circle cx="405" cy="155" r="5" fill="#c2410c"/><circle cx="430" cy="250" r="5" fill="#22d3ee"/><circle cx="405" cy="345" r="5" fill="#fb923c"/><circle cx="250" cy="430" r="5" fill="#16a34a"/><circle cx="95" cy="345" r="5" fill="#9333ea"/><circle cx="70" cy="250" r="5" fill="#dc2626"/><circle cx="95" cy="155" r="5" fill="#ca8a04"/>
+        </svg>
+    </div>
+
+    <!-- OPTION D: Network Node Graph -->
+    <div class="option">
+        <h2>Option D: Network Node Graph</h2>
+        <p>Connected dots forming a security network</p>
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1c1917"/><stop offset="100%" style="stop-color:#292524"/></linearGradient></defs>
+            <circle cx="250" cy="250" r="240" fill="url(#bg4)" opacity="0.95"/>
+            <!-- Connection lines -->
+            <line x1="250" y1="120" x2="370" y2="180" stroke="#c2410c" stroke-width="1" opacity="0.4"/>
+            <line x1="250" y1="120" x2="130" y2="180" stroke="#c2410c" stroke-width="1" opacity="0.4"/>
+            <line x1="250" y1="120" x2="250" y2="250" stroke="#c2410c" stroke-width="1.5" opacity="0.5"/>
+            <line x1="370" y1="180" x2="400" y2="300" stroke="#fb923c" stroke-width="1" opacity="0.3"/>
+            <line x1="370" y1="180" x2="250" y2="250" stroke="#fb923c" stroke-width="1" opacity="0.4"/>
+            <line x1="130" y1="180" x2="100" y2="300" stroke="#fb923c" stroke-width="1" opacity="0.3"/>
+            <line x1="130" y1="180" x2="250" y2="250" stroke="#fb923c" stroke-width="1" opacity="0.4"/>
+            <line x1="250" y1="250" x2="400" y2="300" stroke="#c2410c" stroke-width="1" opacity="0.3"/>
+            <line x1="250" y1="250" x2="100" y2="300" stroke="#c2410c" stroke-width="1" opacity="0.3"/>
+            <line x1="250" y1="250" x2="180" y2="380" stroke="#c2410c" stroke-width="1" opacity="0.3"/>
+            <line x1="250" y1="250" x2="320" y2="380" stroke="#c2410c" stroke-width="1" opacity="0.3"/>
+            <line x1="100" y1="300" x2="180" y2="380" stroke="#fb923c" stroke-width="1" opacity="0.2"/>
+            <line x1="400" y1="300" x2="320" y2="380" stroke="#fb923c" stroke-width="1" opacity="0.2"/>
+            <line x1="180" y1="380" x2="320" y2="380" stroke="#fb923c" stroke-width="1" opacity="0.3"/>
+            <!-- Pulse rings -->
+            <circle cx="250" cy="250" r="30" fill="none" stroke="#c2410c" stroke-width="1" opacity="0.15"/>
+            <circle cx="250" cy="250" r="60" fill="none" stroke="#c2410c" stroke-width="0.5" opacity="0.1"/>
+            <!-- Center node -->
+            <circle cx="250" cy="250" r="28" fill="#1c1917" stroke="#c2410c" stroke-width="2.5"/>
+            <text x="250" y="255" text-anchor="middle" fill="#fb923c" font-size="16" font-weight="700">GRC</text>
+            <!-- Major nodes -->
+            <circle cx="250" cy="120" r="20" fill="#1c1917" stroke="#22d3ee" stroke-width="1.5"/>
+            <text x="250" y="125" text-anchor="middle" fill="#d6d3d1" font-size="9" font-weight="600">ISO 27001</text>
+            <circle cx="370" cy="180" r="20" fill="#1c1917" stroke="#22d3ee" stroke-width="1.5"/>
+            <text x="370" y="185" text-anchor="middle" fill="#d6d3d1" font-size="10" font-weight="600">SOC 2</text>
+            <circle cx="130" cy="180" r="20" fill="#1c1917" stroke="#22d3ee" stroke-width="1.5"/>
+            <text x="130" y="185" text-anchor="middle" fill="#d6d3d1" font-size="10" font-weight="600">HIPAA</text>
+            <circle cx="400" cy="300" r="18" fill="#1c1917" stroke="#fb923c" stroke-width="1.5"/>
+            <text x="400" y="305" text-anchor="middle" fill="#d6d3d1" font-size="10" font-weight="600">GDPR</text>
+            <circle cx="100" cy="300" r="18" fill="#1c1917" stroke="#fb923c" stroke-width="1.5"/>
+            <text x="100" y="305" text-anchor="middle" fill="#d6d3d1" font-size="9" font-weight="600">NIST CSF</text>
+            <circle cx="180" cy="380" r="18" fill="#1c1917" stroke="#fb923c" stroke-width="1.5"/>
+            <text x="180" y="385" text-anchor="middle" fill="#d6d3d1" font-size="10" font-weight="600">CMMC</text>
+            <circle cx="320" cy="380" r="18" fill="#1c1917" stroke="#fb923c" stroke-width="1.5"/>
+            <text x="320" y="385" text-anchor="middle" fill="#d6d3d1" font-size="9" font-weight="600">AI Gov</text>
+            <!-- Small floating dots -->
+            <circle cx="310" cy="150" r="4" fill="#c2410c" opacity="0.5"/><circle cx="190" cy="150" r="4" fill="#c2410c" opacity="0.5"/><circle cx="175" cy="300" r="3" fill="#fb923c" opacity="0.4"/><circle cx="325" cy="300" r="3" fill="#fb923c" opacity="0.4"/><circle cx="250" cy="430" r="4" fill="#c2410c" opacity="0.3"/>
+        </svg>
+    </div>
+
+    <!-- OPTION E: Risk Matrix Heatmap -->
+    <div class="option">
+        <h2>Option E: Risk Matrix Heatmap</h2>
+        <p>5x5 risk matrix - directly from your ISO 27001 project</p>
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1c1917"/><stop offset="100%" style="stop-color:#292524"/></linearGradient></defs>
+            <circle cx="250" cy="250" r="240" fill="url(#bg5)" opacity="0.95"/>
+            <!-- Title -->
+            <text x="250" y="80" text-anchor="middle" fill="#fb923c" font-size="16" font-weight="700">RISK ASSESSMENT MATRIX</text>
+            <!-- Y-axis label -->
+            <text x="80" y="260" text-anchor="middle" fill="#78716c" font-size="11" transform="rotate(-90 80 260)">IMPACT</text>
+            <!-- X-axis label -->
+            <text x="280" y="440" text-anchor="middle" fill="#78716c" font-size="11">LIKELIHOOD</text>
+            <!-- Grid - 5x5 -->
+            <!-- Row 5 (Severe) -->
+            <rect x="120" y="100" width="60" height="55" rx="3" fill="#fb923c" opacity="0.3" stroke="#44403c" stroke-width="0.5"/><text x="150" y="132" text-anchor="middle" fill="#d6d3d1" font-size="12">5</text>
+            <rect x="180" y="100" width="60" height="55" rx="3" fill="#fb923c" opacity="0.5" stroke="#44403c" stroke-width="0.5"/><text x="210" y="132" text-anchor="middle" fill="#d6d3d1" font-size="12">10</text>
+            <rect x="240" y="100" width="60" height="55" rx="3" fill="#dc2626" opacity="0.5" stroke="#44403c" stroke-width="0.5"/><text x="270" y="132" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">15</text>
+            <rect x="300" y="100" width="60" height="55" rx="3" fill="#dc2626" opacity="0.7" stroke="#44403c" stroke-width="0.5"/><text x="330" y="132" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">20</text>
+            <rect x="360" y="100" width="60" height="55" rx="3" fill="#dc2626" opacity="0.9" stroke="#44403c" stroke-width="0.5"/><text x="390" y="132" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">25</text>
+            <!-- Row 4 (Major) -->
+            <rect x="120" y="155" width="60" height="55" rx="3" fill="#22d3ee" opacity="0.2" stroke="#44403c" stroke-width="0.5"/><text x="150" y="187" text-anchor="middle" fill="#d6d3d1" font-size="12">4</text>
+            <rect x="180" y="155" width="60" height="55" rx="3" fill="#fb923c" opacity="0.3" stroke="#44403c" stroke-width="0.5"/><text x="210" y="187" text-anchor="middle" fill="#d6d3d1" font-size="12">8</text>
+            <rect x="240" y="155" width="60" height="55" rx="3" fill="#fb923c" opacity="0.5" stroke="#44403c" stroke-width="0.5"/><text x="270" y="187" text-anchor="middle" fill="#d6d3d1" font-size="12" font-weight="700">12</text>
+            <rect x="300" y="155" width="60" height="55" rx="3" fill="#dc2626" opacity="0.5" stroke="#44403c" stroke-width="0.5"/><text x="330" y="187" text-anchor="middle" fill="#fff" font-size="12">16</text>
+            <rect x="360" y="155" width="60" height="55" rx="3" fill="#dc2626" opacity="0.7" stroke="#44403c" stroke-width="0.5"/><text x="390" y="187" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">20</text>
+            <!-- Row 3 (Moderate) -->
+            <rect x="120" y="210" width="60" height="55" rx="3" fill="#16a34a" opacity="0.2" stroke="#44403c" stroke-width="0.5"/><text x="150" y="242" text-anchor="middle" fill="#d6d3d1" font-size="12">3</text>
+            <rect x="180" y="210" width="60" height="55" rx="3" fill="#22d3ee" opacity="0.2" stroke="#44403c" stroke-width="0.5"/><text x="210" y="242" text-anchor="middle" fill="#d6d3d1" font-size="12">6</text>
+            <rect x="240" y="210" width="60" height="55" rx="3" fill="#22d3ee" opacity="0.3" stroke="#44403c" stroke-width="0.5"/><text x="270" y="242" text-anchor="middle" fill="#d6d3d1" font-size="12">9</text>
+            <rect x="300" y="210" width="60" height="55" rx="3" fill="#fb923c" opacity="0.3" stroke="#44403c" stroke-width="0.5"/><text x="330" y="242" text-anchor="middle" fill="#d6d3d1" font-size="12">12</text>
+            <rect x="360" y="210" width="60" height="55" rx="3" fill="#fb923c" opacity="0.5" stroke="#44403c" stroke-width="0.5"/><text x="390" y="242" text-anchor="middle" fill="#d6d3d1" font-size="12">15</text>
+            <!-- Row 2 (Minor) -->
+            <rect x="120" y="265" width="60" height="55" rx="3" fill="#16a34a" opacity="0.15" stroke="#44403c" stroke-width="0.5"/><text x="150" y="297" text-anchor="middle" fill="#d6d3d1" font-size="12">2</text>
+            <rect x="180" y="265" width="60" height="55" rx="3" fill="#16a34a" opacity="0.2" stroke="#44403c" stroke-width="0.5"/><text x="210" y="297" text-anchor="middle" fill="#d6d3d1" font-size="12">4</text>
+            <rect x="240" y="265" width="60" height="55" rx="3" fill="#22d3ee" opacity="0.2" stroke="#44403c" stroke-width="0.5"/><text x="270" y="297" text-anchor="middle" fill="#d6d3d1" font-size="12">6</text>
+            <rect x="300" y="265" width="60" height="55" rx="3" fill="#22d3ee" opacity="0.3" stroke="#44403c" stroke-width="0.5"/><text x="330" y="297" text-anchor="middle" fill="#d6d3d1" font-size="12">8</text>
+            <rect x="360" y="265" width="60" height="55" rx="3" fill="#fb923c" opacity="0.3" stroke="#44403c" stroke-width="0.5"/><text x="390" y="297" text-anchor="middle" fill="#d6d3d1" font-size="12">10</text>
+            <!-- Row 1 (Negligible) -->
+            <rect x="120" y="320" width="60" height="55" rx="3" fill="#16a34a" opacity="0.1" stroke="#44403c" stroke-width="0.5"/><text x="150" y="352" text-anchor="middle" fill="#d6d3d1" font-size="12">1</text>
+            <rect x="180" y="320" width="60" height="55" rx="3" fill="#16a34a" opacity="0.15" stroke="#44403c" stroke-width="0.5"/><text x="210" y="352" text-anchor="middle" fill="#d6d3d1" font-size="12">2</text>
+            <rect x="240" y="320" width="60" height="55" rx="3" fill="#16a34a" opacity="0.2" stroke="#44403c" stroke-width="0.5"/><text x="270" y="352" text-anchor="middle" fill="#d6d3d1" font-size="12">3</text>
+            <rect x="300" y="320" width="60" height="55" rx="3" fill="#16a34a" opacity="0.2" stroke="#44403c" stroke-width="0.5"/><text x="330" y="352" text-anchor="middle" fill="#d6d3d1" font-size="12">4</text>
+            <rect x="360" y="320" width="60" height="55" rx="3" fill="#22d3ee" opacity="0.2" stroke="#44403c" stroke-width="0.5"/><text x="390" y="352" text-anchor="middle" fill="#d6d3d1" font-size="12">5</text>
+            <!-- Risk markers -->
+            <circle cx="330" cy="127" r="10" fill="none" stroke="#fff" stroke-width="2"/><text x="330" y="132" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">R1</text>
+            <circle cx="390" cy="182" r="10" fill="none" stroke="#fff" stroke-width="2"/><text x="390" y="187" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">R2</text>
+            <circle cx="270" cy="182" r="10" fill="none" stroke="#fff" stroke-width="2"/><text x="270" y="187" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">R4</text>
+            <!-- Legend -->
+            <rect x="120" y="400" width="12" height="12" rx="2" fill="#16a34a" opacity="0.3"/><text x="138" y="411" fill="#78716c" font-size="10">Low</text>
+            <rect x="175" y="400" width="12" height="12" rx="2" fill="#22d3ee" opacity="0.3"/><text x="193" y="411" fill="#78716c" font-size="10">Medium</text>
+            <rect x="250" y="400" width="12" height="12" rx="2" fill="#fb923c" opacity="0.5"/><text x="268" y="411" fill="#78716c" font-size="10">High</text>
+            <rect x="310" y="400" width="12" height="12" rx="2" fill="#dc2626" opacity="0.7"/><text x="328" y="411" fill="#78716c" font-size="10">Critical</text>
+        </svg>
+    </div>
+
+    <!-- OPTION F: Cloud + Lock -->
+    <div class="option">
+        <h2>Option F: Cloud Security</h2>
+        <p>Cloud with lock and data flow lines</p>
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="bg6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1c1917"/><stop offset="100%" style="stop-color:#292524"/></linearGradient></defs>
+            <circle cx="250" cy="250" r="240" fill="url(#bg6)" opacity="0.95"/>
+            <!-- Cloud shape -->
+            <path d="M150 260 Q100 260 100 220 Q100 180 140 170 Q140 120 195 120 Q230 120 240 145 Q250 110 290 110 Q340 110 350 155 Q400 155 400 200 Q400 260 350 260 Z" fill="none" stroke="#fb923c" stroke-width="2" opacity="0.7"/>
+            <path d="M155 255 Q110 255 110 220 Q110 185 145 177 Q147 130 195 130 Q225 130 237 150 Q248 120 288 120 Q330 120 340 158 Q385 160 390 200 Q395 255 345 255 Z" fill="#292524" opacity="0.5"/>
+            <!-- Lock on cloud -->
+            <rect x="225" y="195" width="50" height="40" rx="5" fill="#1c1917" stroke="#c2410c" stroke-width="2"/>
+            <path d="M237 195 L237 180 Q237 165 250 165 Q263 165 263 180 L263 195" fill="none" stroke="#c2410c" stroke-width="2"/>
+            <circle cx="250" cy="215" r="5" fill="#fb923c"/>
+            <line x1="250" y1="220" x2="250" y2="228" stroke="#fb923c" stroke-width="2"/>
+            <!-- Data flow lines -->
+            <line x1="170" y1="300" x2="170" y2="370" stroke="#22d3ee" stroke-width="1.5" opacity="0.5" stroke-dasharray="4 4"/>
+            <line x1="250" y1="300" x2="250" y2="400" stroke="#22d3ee" stroke-width="1.5" opacity="0.5" stroke-dasharray="4 4"/>
+            <line x1="330" y1="300" x2="330" y2="370" stroke="#22d3ee" stroke-width="1.5" opacity="0.5" stroke-dasharray="4 4"/>
+            <!-- Server icons below -->
+            <rect x="155" y="370" width="30" height="25" rx="3" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+            <line x1="160" y1="378" x2="180" y2="378" stroke="#22d3ee" stroke-width="1" opacity="0.5"/>
+            <line x1="160" y1="385" x2="180" y2="385" stroke="#22d3ee" stroke-width="1" opacity="0.5"/>
+            <rect x="235" y="400" width="30" height="25" rx="3" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+            <line x1="240" y1="408" x2="260" y2="408" stroke="#22d3ee" stroke-width="1" opacity="0.5"/>
+            <line x1="240" y1="415" x2="260" y2="415" stroke="#22d3ee" stroke-width="1" opacity="0.5"/>
+            <rect x="315" y="370" width="30" height="25" rx="3" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+            <line x1="320" y1="378" x2="340" y2="378" stroke="#22d3ee" stroke-width="1" opacity="0.5"/>
+            <line x1="320" y1="385" x2="340" y2="385" stroke="#22d3ee" stroke-width="1" opacity="0.5"/>
+            <!-- Labels -->
+            <text x="170" y="412" text-anchor="middle" fill="#78716c" font-size="10">AWS</text>
+            <text x="250" y="442" text-anchor="middle" fill="#78716c" font-size="10">Azure</text>
+            <text x="330" y="412" text-anchor="middle" fill="#78716c" font-size="10">GCP</text>
+            <!-- Framework badges -->
+            <text x="120" y="90" fill="#fb923c" font-size="11" font-weight="600">ISO 27001</text>
+            <text x="300" y="80" fill="#22d3ee" font-size="11" font-weight="600">SOC 2</text>
+            <text x="380" y="100" fill="#c2410c" font-size="11" font-weight="600">NIST CSF</text>
+        </svg>
+    </div>
+
+</div>
+
+<p style="text-align:center; margin-top:2rem; color:#78716c; font-size:0.9rem;">Open this file in browser: themes/warm/graphic-options.html</p>
+</body>
+</html>

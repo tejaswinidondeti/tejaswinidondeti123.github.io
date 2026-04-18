@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontier AI Governance Program — NovaAI Labs | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #fefce8; color: #a16207; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-medium { background: #fefce8 !important; color: #a16207; font-weight: 700; }
+        .risk-low { background: #f0fdf4 !important; color: #15803d; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .score-medium { background: #fefce8; color: #a16207; }
+        .score-low { background: #f0fdf4; color: #15803d; }
+        .status-compliant { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-partial { background: #fefce8; color: #a16207; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-noncompliant { background: #fef2f2; color: #b91c1c; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">AI Governance</span>
+        <h1>Frontier AI Governance Program &mdash; <em>NovaAI Labs</em></h1>
+        <p class="subtitle">Built an end-to-end AI governance program for a frontier foundation model provider: inventoried 8 material AI systems, classified each under the EU AI Act (2024/1689), and mapped the portfolio against the NIST AI Risk Management Framework (AI RMF 1.0) &mdash; identifying 2 GPAI with systemic risk, 1 High-Risk Annex III system, and portfolio-wide maturity gaps</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> NovaAI Labs</div>
+            <div class="meta-item"><strong>Industry:</strong> Frontier AI / Foundation Models</div>
+            <div class="meta-item"><strong>Frameworks:</strong> EU AI Act (Reg. 2024/1689), NIST AI RMF 1.0, GDPR Art. 9</div>
+            <div class="meta-item"><strong>Scale:</strong> 2,500 Employees &bull; 200M+ Consumer Users &bull; 50,000+ Enterprise API Customers</div>
+            <div class="meta-item"><strong>Date:</strong> April 2026</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>NovaAI Labs is a frontier AI foundation model provider headquartered in San Francisco with EU operations in Dublin. The organization's core product is Nova-7, a 175B-parameter large language model deployed across consumer and enterprise channels. With 200M+ consumer users and 50,000+ enterprise API customers, NovaAI operates at the intersection of the EU AI Act's most consequential obligations &mdash; Article 51&ndash;53 for General-Purpose AI with systemic risk, Annex III for high-risk use cases, and Article 25 for value chain responsibility.</p>
+    <p>This project delivers an integrated AI governance program combining three coordinated workstreams: (1) a complete AI system inventory of 8 material systems, (2) EU AI Act risk tier classification with obligation mapping and remediation priorities, and (3) a NIST AI RMF 1.0 maturity assessment across the GOVERN, MAP, MEASURE, and MANAGE functions.</p>
+
+    <table class="risk-table">
+        <tr>
+            <th>Deliverable</th>
+            <th>Count</th>
+            <th>Details</th>
+        </tr>
+        <tr><td>AI Systems Inventoried</td><td><strong>8</strong></td><td>Foundation model, consumer app, enterprise API, recruitment, content moderation, security, analytics, voice pilot</td></tr>
+        <tr><td>GPAI with Systemic Risk</td><td><strong>2</strong></td><td>Nova-7 Foundation Model + Nova API Platform (Article 51&ndash;53)</td></tr>
+        <tr><td>High-Risk Annex III Systems</td><td><strong>1</strong></td><td>NovaHire recruitment AI &mdash; bias audit identified statistically significant disparities</td></tr>
+        <tr><td>Limited Risk Systems</td><td><strong>4</strong></td><td>NovaChat, NovaSafe, NovaGuard, NovaVoice (Art. 52 transparency)</td></tr>
+        <tr><td>Minimal Risk Systems</td><td><strong>1</strong></td><td>NovaInsight Analytics (internal-use only)</td></tr>
+        <tr><td>NIST AI RMF Functions</td><td><strong>4</strong></td><td>GOVERN, MAP, MEASURE, MANAGE &mdash; maturity scored 1&ndash;4 per system</td></tr>
+    </table>
+
+    <h2>2. EU AI Act Classification Framework</h2>
+    <p>The EU AI Act (Regulation 2024/1689) establishes a risk-based regulatory framework. NovaAI's inventory was classified across all five tiers:</p>
+
+    <table class="risk-table">
+        <tr>
+            <th>Risk Tier</th>
+            <th>Regulatory Treatment</th>
+        </tr>
+        <tr><td><span class="score score-critical">Unacceptable Risk</span></td><td>Prohibited under Article 5 &mdash; system must not be deployed</td></tr>
+        <tr><td><span class="score score-critical">High Risk</span></td><td>Strict pre-deployment obligations; conformity assessment required (Articles 6&ndash;15, Annex III)</td></tr>
+        <tr><td><span class="score score-high">GPAI with Systemic Risk</span></td><td>Model evaluation, adversarial testing, incident reporting, cybersecurity (Articles 51&ndash;53)</td></tr>
+        <tr><td><span class="score score-medium">Limited Risk</span></td><td>Transparency obligations &mdash; users informed of AI interaction (Article 52)</td></tr>
+        <tr><td><span class="score score-low">Minimal Risk</span></td><td>No specific obligations under the Act; GDPR and sector rules still apply</td></tr>
+    </table>
+
+    <!-- AI System Inventory -->
+    <h2>3. AI System Inventory &amp; Classification</h2>
+    <p>The 8 material AI systems were inventoried using a structured template capturing owner, deployment status, data inputs/outputs, affected populations, geographic scope, EU AI Act risk tier, and NIST AI RMF maturity level.</p>
+
+    <table class="risk-table">
+        <tr>
+            <th>System ID</th>
+            <th>Name</th>
+            <th>EU AI Act Tier</th>
+            <th>RMF Maturity</th>
+            <th>Priority</th>
+        </tr>
+        <tr>
+            <td>NV-AI-001</td>
+            <td>Nova-7 Foundation Model</td>
+            <td>GPAI + Systemic Risk</td>
+            <td>1.75 (Developing)</td>
+            <td class="risk-critical">CRITICAL</td>
+        </tr>
+        <tr>
+            <td>NV-AI-002</td>
+            <td>NovaChat Consumer</td>
+            <td>Limited Risk</td>
+            <td>2.0 (Developing)</td>
+            <td class="risk-high">HIGH</td>
+        </tr>
+        <tr>
+            <td>NV-AI-003</td>
+            <td>Nova API Platform</td>
+            <td>GPAI + Systemic Risk</td>
+            <td>1.5 (Initial&ndash;Developing)</td>
+            <td class="risk-critical">CRITICAL</td>
+        </tr>
+        <tr>
+            <td>NV-AI-004</td>
+            <td>NovaHire Recruitment</td>
+            <td>High Risk (Annex III)</td>
+            <td>1.0 (Initial)</td>
+            <td class="risk-critical">CRITICAL</td>
+        </tr>
+        <tr>
+            <td>NV-AI-005</td>
+            <td>NovaSafe Content Moderation</td>
+            <td>Limited Risk</td>
+            <td>3.0 (Defined)</td>
+            <td class="risk-medium">MEDIUM</td>
+        </tr>
+        <tr>
+            <td>NV-AI-006</td>
+            <td>NovaGuard Security</td>
+            <td>Limited Risk</td>
+            <td>3.0 (Defined)</td>
+            <td class="risk-medium">MEDIUM</td>
+        </tr>
+        <tr>
+            <td>NV-AI-007</td>
+            <td>NovaInsight Analytics</td>
+            <td>Minimal Risk</td>
+            <td>3.0 (Defined)</td>
+            <td class="risk-low">LOW</td>
+        </tr>
+        <tr>
+            <td>NV-AI-008</td>
+            <td>NovaVoice (Pilot)</td>
+            <td>Limited Risk (provisional)</td>
+            <td>1.0 (Initial)</td>
+            <td class="risk-high">HIGH</td>
+        </tr>
+    </table>
+
+    <!-- System 1: Nova-7 -->
+    <div class="risk-card">
+        <h3>NV-AI-001: Nova-7 Foundation Model <span class="score score-critical">GPAI + Systemic Risk</span></h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td><span class="status-noncompliant">Non-Compliant &mdash; Critical</span></td></tr>
+            <tr><th>Owner</th><td>Chief Technology Officer</td></tr>
+            <tr><th>Deployment</th><td>Production &bull; Global (EU, US, UK, APAC)</td></tr>
+            <tr><th>Affected Persons</th><td>200M+ consumer users; 50,000+ enterprise API customers</td></tr>
+            <tr><th>Description</th><td>175B-parameter large language model providing general-purpose text generation, reasoning, and conversation capabilities. Serves as the base for all NovaAI products and API services.</td></tr>
+            <tr><th>Legal Basis</th><td>EU AI Act Article 51 &mdash; Nova-7 exceeds the compute threshold (&gt;10<sup>25</sup> FLOPs) establishing systemic risk</td></tr>
+        </table>
+        <p><strong>Article 53 Obligations Triggered:</strong></p>
+        <ul>
+            <li>Model evaluation including adversarial testing (Art. 53(1)(a))</li>
+            <li>Systemic risk assessment and mitigation (Art. 53(1)(b))</li>
+            <li>Serious incident tracking and reporting to the AI Office (Art. 53(1)(c))</li>
+            <li>Adequate cybersecurity protection (Art. 53(1)(d))</li>
+            <li>Technical documentation of training methodology, compute, and evaluation results (Art. 53(2))</li>
+            <li>Cooperation with AI Office and downstream providers (Art. 53(3))</li>
+        </ul>
+        <p><strong>Compliance Gaps:</strong> Training data provenance documentation incomplete. Model evaluation framework exists but not independently audited. Systemic risk assessment not formalized to Article 53 standard. No formal process for tracking downstream high-risk deployments by API customers.</p>
+    </div>
+
+    <!-- System 2: NovaChat -->
+    <div class="risk-card">
+        <h3>NV-AI-002: NovaChat Consumer <span class="score score-medium">Limited Risk</span></h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td><span class="status-partial">Partial &mdash; Medium</span></td></tr>
+            <tr><th>Owner</th><td>VP Consumer Products</td></tr>
+            <tr><th>Deployment</th><td>Production &bull; Global</td></tr>
+            <tr><th>Affected Persons</th><td>200M+ registered users globally</td></tr>
+            <tr><th>Description</th><td>Consumer-facing conversational AI chatbot built on Nova-7 with safety filters and content moderation. Provides natural language responses, code generation, image descriptions, and file analysis.</td></tr>
+            <tr><th>Legal Basis</th><td>EU AI Act Article 52(1) &mdash; transparency obligation for AI systems interacting directly with natural persons</td></tr>
+        </table>
+        <p><strong>Compliance Gaps:</strong> AI disclosure implemented but user awareness research shows 23% of users do not notice the disclosure. AI-generated content watermarking not yet implemented for all output types. Mobile app disclosure redesign in progress. Third-party DataPulse Analytics breach (November 2025) exposed metadata for 15.2M users &mdash; a GDPR incident that highlights the scale of impact and importance of vendor governance.</p>
+    </div>
+
+    <!-- System 3: Nova API -->
+    <div class="risk-card">
+        <h3>NV-AI-003: Nova API Platform <span class="score score-critical">GPAI + Systemic Risk</span></h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td><span class="status-noncompliant">Non-Compliant &mdash; Critical</span></td></tr>
+            <tr><th>Owner</th><td>VP Enterprise</td></tr>
+            <tr><th>Deployment</th><td>Production &bull; Global</td></tr>
+            <tr><th>Affected Persons</th><td>50,000+ enterprise customers; unknown number of downstream end users</td></tr>
+            <tr><th>Description</th><td>Enterprise API platform providing access to Nova-7 for downstream applications including text generation, embeddings, classification, and fine-tuning.</td></tr>
+            <tr><th>Legal Basis</th><td>EU AI Act Articles 51&ndash;53 plus Article 25 (value chain responsibility)</td></tr>
+        </table>
+        <p><strong>Critical Concern:</strong> Enterprise customers may deploy Nova-7 in high-risk contexts (healthcare, recruitment, credit scoring) &mdash; NovaAI has limited visibility into downstream use cases. The acceptable use policy relies on self-declaration. API monitoring does not systematically detect high-risk downstream deployments, creating potential liability under Article 25.</p>
+        <p><strong>Compliance Gaps:</strong> Value chain responsibility not fully addressed. No systematic detection of downstream high-risk deployments. Deployer documentation (Article 13 information) not provided to all API customers.</p>
+    </div>
+
+    <!-- System 4: NovaHire -->
+    <div class="risk-card">
+        <h3>NV-AI-004: NovaHire <span class="score score-critical">HIGH RISK &mdash; Annex III</span></h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td><span class="status-noncompliant">Non-Compliant &mdash; Immediate Remediation</span></td></tr>
+            <tr><th>Owner</th><td>Head of Vertical AI Solutions</td></tr>
+            <tr><th>Deployment</th><td>Production &bull; EU and US</td></tr>
+            <tr><th>Affected Persons</th><td>~180,000 candidates processed to date</td></tr>
+            <tr><th>Description</th><td>AI-powered recruitment screening and candidate assessment tool. Directly screens, ranks, and assesses job candidates at NovaAI internally and at enterprise customer organizations.</td></tr>
+            <tr><th>Legal Basis</th><td>EU AI Act Annex III, Category 4(a) &mdash; AI systems used for recruitment or selection of natural persons</td></tr>
+        </table>
+        <p><strong>Bias Audit Findings (February 2025):</strong></p>
+        <ul>
+            <li>Shortlisting rates for women in technical roles were <strong>18% lower</strong> than for men with comparable qualifications</li>
+            <li>Candidates over 45 were shortlisted at rates <strong>22% lower</strong> than younger candidates for senior positions</li>
+            <li>Remediation in progress but not yet validated</li>
+        </ul>
+        <p><strong>Obligations Triggered:</strong> All high-risk obligations (Art. 9&ndash;15, 43), Art. 10 (data governance &mdash; training data bias), Art. 14 (human oversight &mdash; no automated rejection without human review), Art. 71 (registration in EU database).</p>
+        <p><strong>Compliance Gaps:</strong> Conformity assessment not completed. Deployer documentation not provided to enterprise customers. Not registered in EU database. No human-in-the-loop override currently in place.</p>
+    </div>
+
+    <!-- System 5: NovaSafe -->
+    <div class="risk-card">
+        <h3>NV-AI-005: NovaSafe Content Moderation <span class="score score-medium">Limited Risk</span></h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td><span class="status-partial">Partial &mdash; Medium</span></td></tr>
+            <tr><th>Owner</th><td>VP Trust &amp; Safety</td></tr>
+            <tr><th>Deployment</th><td>Production &bull; Global</td></tr>
+            <tr><th>Description</th><td>AI-powered content moderation system classifying user-generated content and model outputs for safety policy violations. Covers 200M+ users across consumer and enterprise.</td></tr>
+        </table>
+        <p><strong>Key Concern:</strong> Over-blocking rate for non-English languages is 3.2x higher than English (English 94% precision vs. Spanish 76% vs. Arabic 71%) &mdash; documented bias requiring remediation. Human review covers less than 0.1% of automated decisions due to scale.</p>
+    </div>
+
+    <!-- System 6: NovaGuard -->
+    <div class="risk-card">
+        <h3>NV-AI-006: NovaGuard Security <span class="score score-medium">Limited Risk</span></h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td><span class="status-compliant">Compliant &mdash; Low</span></td></tr>
+            <tr><th>Owner</th><td>CISO</td></tr>
+            <tr><th>Deployment</th><td>Production &bull; Global</td></tr>
+            <tr><th>Description</th><td>AI-driven threat detection system monitoring NovaAI's infrastructure for security threats, API abuse, and prompt injection attacks. Detection rates tracked (99.2% of known threat signatures).</td></tr>
+        </table>
+        <p><strong>Compliance Gap:</strong> Vendor threat intelligence feed contract lacks AI Act compliance clauses. False positive rate for API abuse detection is 4.7%, impacting legitimate enterprise customers temporarily.</p>
+    </div>
+
+    <!-- System 7: NovaInsight -->
+    <div class="risk-card">
+        <h3>NV-AI-007: NovaInsight Analytics <span class="score score-low">Minimal Risk</span></h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td><span class="status-compliant">Compliant &mdash; Monitor</span></td></tr>
+            <tr><th>Owner</th><td>CFO</td></tr>
+            <tr><th>Deployment</th><td>Production &bull; Internal Only</td></tr>
+            <tr><th>Description</th><td>Internal analytics and reporting system generating business intelligence dashboards, usage trend analysis, and revenue forecasting. All outputs reviewed by Finance team before business decisions.</td></tr>
+        </table>
+        <p>Internal-use system with no direct impact on natural persons outside the organization. Low risk profile. No specific EU AI Act obligations.</p>
+    </div>
+
+    <!-- System 8: NovaVoice -->
+    <div class="risk-card">
+        <h3>NV-AI-008: NovaVoice (Pilot) <span class="score score-high">Limited Risk (Provisional)</span></h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td><span class="status-noncompliant">Non-Compliant &mdash; High Priority Gate</span></td></tr>
+            <tr><th>Owner</th><td>Head of Emerging Products</td></tr>
+            <tr><th>Deployment</th><td>Pilot &bull; EU and US &bull; 5,000 beta users</td></tr>
+            <tr><th>Description</th><td>Voice-based AI assistant integrating Nova-7 with speech-to-text and text-to-speech. Biometric voice data (voiceprints) constitutes GDPR Article 9 special category data.</td></tr>
+        </table>
+        <p><strong>Critical Governance Gate:</strong> Emotion recognition capabilities are under evaluation but NOT deployed. Deployment would trigger Article 5(1)(f) prohibition if used for inferring emotions of employees, or Annex III classification in employment/education contexts. NovaAI must ensure emotion recognition features are NOT enabled in production without a separate classification review.</p>
+        <p><strong>Compliance Gaps:</strong> VoxTech Inc. (vendor) data processing agreement does not cover AI Act obligations. Emotion recognition feature governance policy not yet documented. Full governance review required before production deployment.</p>
+    </div>
+
+    <!-- NIST AI RMF Mapping -->
+    <h2>4. NIST AI RMF 1.0 &mdash; Maturity Assessment</h2>
+    <p>The NIST AI Risk Management Framework defines four primary functions. Each system was scored across all four on a 1&ndash;4 maturity scale (1 = Initial, 2 = Developing, 3 = Defined, 4 = Optimized).</p>
+
+    <table class="risk-table">
+        <tr>
+            <th>Function</th>
+            <th>Description</th>
+        </tr>
+        <tr><td><strong>GOVERN</strong></td><td>Establish policies, procedures, and oversight mechanisms for responsible AI development and deployment</td></tr>
+        <tr><td><strong>MAP</strong></td><td>Identify and analyze AI-specific risks including systemic risks, bias, safety, and security</td></tr>
+        <tr><td><strong>MEASURE</strong></td><td>Establish metrics, testing protocols, and monitoring mechanisms to track AI performance and risk indicators</td></tr>
+        <tr><td><strong>MANAGE</strong></td><td>Implement controls, incident response procedures, and remediation capabilities for identified risks</td></tr>
+    </table>
+
+    <!-- Nova-7 RMF -->
+    <div class="risk-card">
+        <h3>Nova-7 Foundation Model &mdash; Overall Maturity: 1.75 <span class="score score-critical">CRITICAL</span></h3>
+        <table class="info-table">
+            <tr><th>GOVERN</th><td><strong>2 (Developing)</strong> &mdash; CTO designated accountable; Board AI Safety Committee established March 2026 but operational effectiveness not yet demonstrated; AI Safety team experienced mass departures in 2025; no independent governance audit; GPAI-specific governance obligations not operationalized</td></tr>
+            <tr><th>MAP</th><td><strong>2 (Developing)</strong> &mdash; Internal red-teaming in place; systemic risk assessment not yet compliant with Article 53 standard; downstream use case mapping incomplete; no mechanism to track when Nova-7 is deployed in high-risk contexts</td></tr>
+            <tr><th>MEASURE</th><td><strong>2 (Developing)</strong> &mdash; Evaluations conducted internally but not independently audited; bias evaluation coverage limited for non-English languages (40% of usage); no societal risk measurement framework; no systematic hallucination or refusal effectiveness tracking</td></tr>
+            <tr><th>MANAGE</th><td><strong>1 (Initial)</strong> &mdash; No formalized AI incident classification; November 2025 DataPulse breach response was reactive; no model rollback procedure for safety-critical issues; post-deployment safety monitoring relies on user reports</td></tr>
+        </table>
+    </div>
+
+    <!-- Nova API RMF -->
+    <div class="risk-card">
+        <h3>Nova API Platform &mdash; Overall Maturity: 1.5 <span class="score score-critical">CRITICAL</span></h3>
+        <table class="info-table">
+            <tr><th>GOVERN</th><td><strong>2 (Developing)</strong> &mdash; VP Enterprise accountable; AUP documented; no formal framework for Article 25 value chain responsibilities</td></tr>
+            <tr><th>MAP</th><td><strong>2 (Developing)</strong> &mdash; Use case patterns understood at high level (35% financial services, 25% healthcare); no systematic downstream high-risk assessment</td></tr>
+            <tr><th>MEASURE</th><td><strong>1 (Initial)</strong> &mdash; API performance tracked (latency, availability); no measurement of downstream harm</td></tr>
+            <tr><th>MANAGE</th><td><strong>1 (Initial)</strong> &mdash; API abuse detection in place; no management capability for downstream high-risk deployments; no incident notification framework to API customers</td></tr>
+        </table>
+        <p><strong>Critical Gaps:</strong> No systematic monitoring of downstream use cases; no deployer documentation; no downstream risk management; no incident notification to API customers.</p>
+    </div>
+
+    <!-- NovaHire RMF -->
+    <div class="risk-card">
+        <h3>NovaHire Recruitment AI &mdash; Overall Maturity: 1.0 <span class="score score-critical">CRITICAL</span></h3>
+        <table class="info-table">
+            <tr><th>GOVERN</th><td><strong>1 (Initial)</strong> &mdash; Owner designated but lacks dedicated governance resources; no formal AI governance charter for high-risk recruitment AI; governance responsibilities dispersed; Board-level visibility extremely limited</td></tr>
+            <tr><th>MAP</th><td><strong>1 (Initial)</strong> &mdash; Bias audit identified 18% lower shortlisting for women in tech and 22% lower for candidates over 45; demographic breakdown incomplete</td></tr>
+            <tr><th>MEASURE</th><td><strong>1 (Initial)</strong> &mdash; Bias metrics identified but no continuous monitoring post-remediation; no defined accuracy benchmarks</td></tr>
+            <tr><th>MANAGE</th><td><strong>1 (Initial)</strong> &mdash; Remediation in progress; no procedure for new bias detection post-remediation; no AI incident classification</td></tr>
+        </table>
+        <p><strong>Critical Issues:</strong> No human-in-the-loop override, no Board reporting, no continuous fairness monitoring, no EU database registration, and no conformity assessment.</p>
+    </div>
+
+    <!-- NovaChat RMF -->
+    <div class="risk-card">
+        <h3>NovaChat Consumer &mdash; Overall Maturity: 2.0 <span class="score score-high">HIGH</span></h3>
+        <p>VP Consumer Products accountable; Trust &amp; Safety team manages content safety and user reporting; third-party VoxTech Inc. supplies speech-to-text integration. The November 2025 DataPulse breach exposed vendor governance as insufficient. User satisfaction tracked (4.2/5.0); content moderation highly automated with human escalation; no structured measurement of harm from AI outputs; no systematic false information tracking; incident response for AI-specific issues not formalized.</p>
+    </div>
+
+    <!-- NovaSafe + NovaGuard RMF -->
+    <div class="risk-card">
+        <h3>NovaSafe Content Moderation &mdash; Overall Maturity: 3.0 <span class="score score-medium">MEDIUM</span></h3>
+        <p>VP Trust &amp; Safety accountable with dedicated moderation team of 180+ FTE globally; content policy documented in a 120-page policy. Precision and recall metrics tracked monthly (94% precision, 87% recall); multilingual performance gap (English 94% vs. Spanish 76% vs. Arabic 71%); human review coverage less than 0.1%. Automated moderation with human escalation; 48-hour appeal response time.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>NovaGuard Security &mdash; Overall Maturity: 3.0 <span class="score score-medium">MEDIUM</span></h3>
+        <p>CISO accountable; security operations and threat detection procedures documented; threat intelligence vendor contract established but lacks AI Act compliance clauses. Detection rates tracked (99.2% of known threat signatures); false positive rate monitored (4.7%); automated threat response with human review for permanent actions.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>NovaInsight Analytics &mdash; Overall Maturity: 3.0 <span class="score score-low">LOW</span></h3>
+        <p>CFO accountable through existing finance governance framework; internal use only with no downstream deployment; forecast accuracy tracked (MAPE 12% for revenue forecasts); Finance team reviews all outputs prior to decision-making. Annual governance review sufficient.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>NovaVoice Pilot &mdash; Overall Maturity: 1.0 <span class="score score-high">HIGH (Pre-Production)</span></h3>
+        <p>Head of Emerging Products accountable for pilot (5,000 beta users); no formal governance sign-off on production transition criteria; emotion recognition feature integrated; VoxTech Inc. provides speech recognition engine but vendor governance not assessed. Biometric voiceprint risk identified; speech recognition accuracy tested on limited population (92.3% WER on English); no bias assessment across accents/languages; no privacy impact assessment.</p>
+    </div>
+
+    <!-- Critical Risk Concentration -->
+    <h2>5. Portfolio-Level Risk Concentration</h2>
+    <p>Two of NovaAI's eight AI systems carry GPAI with systemic risk obligations under EU AI Act Article 53: <strong>Nova-7 Foundation Model</strong> and <strong>Nova API Platform</strong>. These systems enable downstream high-risk deployments by enterprise customers with limited NovaAI oversight. One system (<strong>NovaHire</strong>) is classified as high-risk with documented discrimination risks and no completed conformity assessment.</p>
+    <p>The AI Safety team instability (mass departures in 2025) creates a cross-cutting governance vulnerability. The Board AI Safety Committee is too nascent to provide effective oversight.</p>
+    <p>NovaAI's most critical gap is limited visibility into downstream high-risk deployments by API customers. This represents a value chain responsibility issue under EU AI Act Article 25, affecting the entire Nova API platform and creating potential liability for NovaAI if customers deploy the model in high-risk contexts without adequate safeguards.</p>
+
+    <!-- Remediation Roadmap -->
+    <h2>6. Priority Remediation Roadmap</h2>
+
+    <h3>Immediate Actions (Next 30 Days)</h3>
+    <ul>
+        <li><strong>Stabilize AI Safety team:</strong> conduct external evaluation; develop retention strategy</li>
+        <li><strong>Nova-7 and Nova API Platform:</strong> complete systemic risk assessments compliant with EU AI Act Article 53</li>
+        <li><strong>NovaHire:</strong> implement human-in-the-loop override requirement for ALL shortlisting decisions</li>
+        <li><strong>NovaHire:</strong> establish Board-level Fairness Oversight Committee with quarterly reporting</li>
+        <li><strong>All systems:</strong> conduct preliminary gap analysis against NIST AI RMF</li>
+    </ul>
+
+    <h3>Medium-Term Actions (Next 90 Days)</h3>
+    <ul>
+        <li><strong>Nova-7:</strong> establish formal AI incident response procedure; commission independent model evaluation audit</li>
+        <li><strong>Nova API:</strong> implement downstream high-risk use case detection system</li>
+        <li><strong>Nova API:</strong> create deployer documentation package for enterprise customers (Article 13 information)</li>
+        <li><strong>NovaHire:</strong> complete bias remediation and commission independent fairness audit</li>
+        <li><strong>NovaHire:</strong> establish continuous fairness monitoring dashboard; register in EU high-risk AI database</li>
+        <li><strong>NovaVoice:</strong> complete governance gate criteria for production transition; DPIA; update VoxTech contract</li>
+        <li><strong>NovaSafe:</strong> address multilingual over-blocking bias; increase human review sampling to 1&ndash;2% of decisions</li>
+    </ul>
+
+    <!-- Program Summary -->
+    <h2>7. Program Summary</h2>
+
+    <table class="risk-table">
+        <tr>
+            <th>Component</th>
+            <th>Count / Status</th>
+            <th>Notes</th>
+        </tr>
+        <tr>
+            <td>AI Systems Inventoried</td>
+            <td><strong>8</strong></td>
+            <td>Inventory captures owner, data flows, affected persons, and review cycle</td>
+        </tr>
+        <tr>
+            <td>EU AI Act Tiers Assigned</td>
+            <td><strong>5 tiers used</strong></td>
+            <td>2 GPAI + Systemic Risk, 1 High Risk, 4 Limited Risk, 1 Minimal Risk</td>
+        </tr>
+        <tr>
+            <td>Non-Compliant Systems</td>
+            <td><strong>4</strong></td>
+            <td>Nova-7, Nova API, NovaHire, NovaVoice &mdash; all require immediate action</td>
+        </tr>
+        <tr>
+            <td>NIST AI RMF Average Maturity</td>
+            <td><strong>2.0 (Developing)</strong></td>
+            <td>4 systems at maturity 1&ndash;2; 4 systems at maturity 3 (Defined)</td>
+        </tr>
+        <tr>
+            <td>Critical Priority Systems</td>
+            <td><strong>3</strong></td>
+            <td>Nova-7, Nova API Platform, NovaHire</td>
+        </tr>
+        <tr>
+            <td>Next Review Cycle</td>
+            <td>October 2026</td>
+            <td>Or immediately upon any new AI system deployment or material change</td>
+        </tr>
+    </table>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti. All rights reserved.
+</footer>
+
+</body>
+</html>

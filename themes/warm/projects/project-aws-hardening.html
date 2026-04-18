@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Security Assessment & Hardening — CloudNative Corp | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #ffedd5; color: #ea580c; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Security</span>
+        <h1>AWS Security Assessment &amp; Hardening &mdash; <em>CloudNative Corp</em></h1>
+        <p class="subtitle">Comprehensive CIS AWS Foundations Benchmark assessment and security hardening for a 400-employee cloud MSP managing 50+ enterprise client AWS environments with $15M+ annual cloud spend</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> CloudNative Corp</div>
+            <div class="meta-item"><strong>Industry:</strong> Cloud Managed Services</div>
+            <div class="meta-item"><strong>Frameworks:</strong> CIS AWS Benchmark v3.0, NIST CSF 2.0</div>
+            <div class="meta-item"><strong>Trigger:</strong> External audit revealed critical misconfigurations</div>
+            <div class="meta-item"><strong>Date:</strong> March 2026</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>CloudNative Corp is a 400-employee cloud-managed services provider operating AWS infrastructure for 50+ enterprise clients with over $15M in annual cloud spend. A recent external audit revealed critical security misconfigurations including publicly accessible S3 buckets containing client data, overly permissive IAM policies granting broad administrative access, and missing encryption on several database instances.</p>
+    <p>This project conducts a comprehensive CIS AWS Foundations Benchmark assessment, inventories 6 critical cloud assets, documents 5 specific security findings, assesses 4 cloud-specific risks, and implements 10 security controls to harden the AWS environment.</p>
+
+    <table class="info-table">
+        <tr><th>Scope</th><td>50+ enterprise client AWS environments, $15M+ annual cloud spend</td></tr>
+        <tr><th>Deliverables</th><td>6 Cloud Assets, 5 Security Findings, 4 Cloud Risks, 10 Hardening Controls</td></tr>
+        <tr><th>Classification</th><td>CONFIDENTIAL</td></tr>
+    </table>
+
+    <!-- Cloud Asset Inventory -->
+    <h2>2. Cloud Asset Inventory &mdash; 6 Assets</h2>
+
+    <div class="risk-card">
+        <h3>Asset 1: AWS Lambda Functions (340+)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Head of Serverless Engineering</td></tr>
+        </table>
+        <ul>
+            <li>340+ Lambda functions processing client data: backend APIs, real-time data transformation, scheduled ETL jobs, event-driven automation, S3 file processing</li>
+            <li><strong>Audit findings:</strong> 23 shadow functions untracked, 38 with plaintext credentials, 15 on deprecated runtimes (Python 3.7, Node.js 12), 45 with overly broad IAM permissions</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 2: Amazon EKS Clusters (8 clusters, 200+ workloads)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Server</td></tr>
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Platform Engineering Lead</td></tr>
+        </table>
+        <ul>
+            <li>8 EKS clusters running 200+ containerized microservices for ~30 enterprise clients; images stored in Amazon ECR</li>
+            <li><strong>Audit findings:</strong> 4 clusters on outdated Kubernetes 1.25, 12 images with Critical CVEs never scanned, no Pod Security Standards, 3 clusters with public API endpoints, no network policies</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 3: Amazon DynamoDB Tables (180+)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Database</td></tr>
+            <tr><th>Classification</th><td>High</td></tr>
+            <tr><th>Owner</th><td>Data Architecture Lead</td></tr>
+        </table>
+        <ul>
+            <li>180+ tables storing session data, real-time analytics, IoT sensor data, application state, cached query results</li>
+            <li><strong>Audit findings:</strong> 28 tables without CMK encryption, 45 without Point-in-Time Recovery, no DynamoDB Streams for audit logging, 12 tables with overly broad scan permissions</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 4: AWS Secrets Manager &amp; Parameter Store</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Data Store</td></tr>
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Cloud Security Engineer</td></tr>
+        </table>
+        <ul>
+            <li>Manages credentials, API keys, database connections, and encryption keys across client accounts</li>
+            <li><strong>Audit findings:</strong> Only 42/180+ secrets (23%) properly stored in Secrets Manager; 138+ in insecure locations (Lambda env vars, EC2 user data, ECS tasks, S3 configs, CodeCommit repos, plaintext Parameter Store)</li>
+            <li>Only 8/42 secrets had auto-rotation; 28/42 not rotated in 12+ months</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 5: CloudFront &amp; ALBs (Public-Facing Layer)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Network Device</td></tr>
+            <tr><th>Classification</th><td>High</td></tr>
+            <tr><th>Owner</th><td>Senior SRE</td></tr>
+        </table>
+        <ul>
+            <li>35 CloudFront distributions and 28 ALBs handling all incoming client traffic</li>
+            <li><strong>Audit findings:</strong> 7 ALBs with expiring SSL certs, 5 CloudFront allowing HTTP, 12 ALBs without WAF, 18/35 CloudFront and 15/28 ALBs with logging disabled, 3 ALBs allowing all traffic on all ports</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 6: AWS CodePipeline &amp; CodeBuild (CI/CD)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Classification</th><td>High</td></tr>
+            <tr><th>Owner</th><td>DevOps Engineering Lead</td></tr>
+        </table>
+        <ul>
+            <li>25 CodePipeline pipelines and 30 CodeBuild projects deploying to 50+ client accounts</li>
+            <li><strong>Audit findings:</strong> 8 CodeBuild roles with full AdministratorAccess, no artifact signing/verification, no SAST/container scanning, 12/25 pipelines without production approval gates, 3 build log buckets publicly accessible</li>
+        </ul>
+    </div>
+
+    <!-- Security Findings -->
+    <h2>3. Security Findings &mdash; 5 Audit Findings</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Finding</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>138+ Credentials Scattered in Plaintext</td>
+                <td class="risk-critical">Critical</td>
+                <td>Open</td>
+                <td>Apr 15, 2026</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Shadow Infrastructure: 14 EC2 + 23 Lambda Untracked</td>
+                <td class="risk-critical">Critical</td>
+                <td>In Progress</td>
+                <td>Apr 30, 2026</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>CI/CD Pipeline Gaps Enabling Supply Chain Attacks</td>
+                <td class="risk-critical">Critical</td>
+                <td>Open</td>
+                <td>May 15, 2026</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>EKS Clusters: Outdated Kubernetes, No Pod Security</td>
+                <td class="risk-high">High</td>
+                <td>Open</td>
+                <td>May 31, 2026</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Access Logging Disabled on 33/63 Public Resources</td>
+                <td class="risk-high">High</td>
+                <td>Open</td>
+                <td>May 31, 2026</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="risk-card">
+        <h3>Finding 1: 138+ Credentials in Plaintext <span class="score score-critical">CRITICAL</span></h3>
+        <ul>
+            <li>138+ secrets (API keys, DB passwords, encryption keys) stored outside Secrets Manager: 38 in Lambda env vars, 22 in ECS tasks, 15 in EC2 user data, 18 in S3 configs, 12 in CodeCommit history, 33 in plaintext Parameter Store</li>
+            <li><strong>Remediation:</strong> Rotate all 138+ credentials within 72 hours, migrate to Secrets Manager with KMS CMK, enable auto-rotation (30-day DB, 90-day API keys), add secret detection in CI/CD (CodeGuru/truffleHog), scrub CodeCommit history</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Finding 2: Shadow Infrastructure Untracked <span class="score score-critical">CRITICAL</span></h3>
+        <ul>
+            <li>37 untracked resources: 14 EC2 instances (3 in public subnets, 2 on deprecated Amazon Linux 1) and 23 Lambda functions (8 without CloudWatch logs, 15 manually deployed)</li>
+            <li><strong>Remediation:</strong> Tag and inventory all 37 resources, decommission Amazon Linux 1 instances, remove unnecessary public IPs, enable CloudWatch logs, enforce mandatory tagging via AWS Config rule, deploy Service Catalog for approved resource provisioning</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Finding 3: CI/CD Pipeline Supply Chain Gaps <span class="score score-critical">CRITICAL</span></h3>
+        <ul>
+            <li>8 CodeBuild roles with full AdministratorAccess, no security scanning (SAST/DAST/container), no artifact signing, 12/25 pipelines skip production approval, 3 build log buckets publicly accessible</li>
+            <li><strong>Remediation:</strong> Restrict CodeBuild to least-privilege roles, add mandatory approval gates, secure log buckets, add scanning gates (Checkov, Semgrep, Trivy, OWASP Dependency-Check), implement AWS Signer for artifact verification</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Finding 4: EKS Clusters Without Pod Security <span class="score score-high">HIGH</span></h3>
+        <ul>
+            <li>4/8 clusters on unsupported Kubernetes 1.25, no Pod Security Standards (root access allowed), 3 clusters with public API, no network policies, 12 images with Critical CVEs</li>
+            <li><strong>Remediation:</strong> Upgrade to latest Kubernetes, enforce restricted Pod Security Standards, make API endpoints private, deploy Calico network policies for namespace isolation, enable ECR scanning + OPA Gatekeeper, deploy Falco for runtime monitoring</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Finding 5: Access Logging Disabled on Public Resources <span class="score score-high">HIGH</span></h3>
+        <ul>
+            <li>18/35 CloudFront and 15/28 ALBs without access logging; 12 ALBs without WAF &mdash; no visibility into DDoS, brute-force, SQLi, or API abuse</li>
+            <li><strong>Remediation:</strong> Enable logging on all CloudFront and ALBs, deploy AWS WAF with OWASP Top 10 rules, auto-renew SSL certs via ACM, enforce HTTPS-only, centralize logs in SIEM, deploy Shield Advanced for DDoS protection</li>
+        </ul>
+    </div>
+
+    <!-- Cloud Risk Assessment -->
+    <h2>4. Cloud Risk Assessment &mdash; 4 Risks</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Risk ID</th>
+                <th>Risk Title</th>
+                <th>Category</th>
+                <th>Likelihood</th>
+                <th>Impact</th>
+                <th>Score</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CR-1</td>
+                <td>Supply Chain Compromise via Insecure CI/CD</td>
+                <td>Application Security</td>
+                <td>4</td>
+                <td>5</td>
+                <td>20</td>
+                <td class="risk-critical">CRITICAL</td>
+            </tr>
+            <tr>
+                <td>CR-2</td>
+                <td>Credential Exposure Leading to Multi-Client Breach</td>
+                <td>Data Protection</td>
+                <td>5</td>
+                <td>5</td>
+                <td>25</td>
+                <td class="risk-critical">CRITICAL</td>
+            </tr>
+            <tr>
+                <td>CR-3</td>
+                <td>Container Escape and Cross-Tenant Data Access</td>
+                <td>Access Control</td>
+                <td>3</td>
+                <td>5</td>
+                <td>15</td>
+                <td class="risk-critical">CRITICAL</td>
+            </tr>
+            <tr>
+                <td>CR-4</td>
+                <td>Invisible Attack Surface (Shadow Infra + Logging Gaps)</td>
+                <td>Visibility</td>
+                <td>4</td>
+                <td>4</td>
+                <td>16</td>
+                <td class="risk-critical">CRITICAL</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="risk-card">
+        <h3>CR-1: Supply Chain Compromise via CI/CD <span class="score score-critical">CRITICAL &mdash; 20</span></h3>
+        <ul>
+            <li>CI/CD deploys code to ALL 50+ client environments &mdash; compromised dependency or malicious commit could affect all clients simultaneously</li>
+            <li>CodeBuild has full admin access, no scanning, no artifact signing, pipelines skip approval</li>
+            <li><strong>Treatment:</strong> Least-privilege build roles, 4 scanning gates, mandatory approval, AWS Signer for artifact verification, SBOM generation</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>CR-2: Credential Exposure &mdash; Multi-Client Breach <span class="score score-critical">CRITICAL &mdash; 25</span></h3>
+        <ul>
+            <li>138+ credentials already exposed in source code history, Lambda console, and public S3 build logs</li>
+            <li>Database credentials provide direct client data access; shared credentials across systems multiply impact</li>
+            <li><strong>Treatment:</strong> Emergency 72-hour rotation, centralize in Secrets Manager, auto-rotation, CI/CD secret detection, quarterly secrets audit</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>CR-3: Container Escape &amp; Cross-Tenant Access <span class="score score-critical">CRITICAL &mdash; 15</span></h3>
+        <ul>
+            <li>Outdated Kubernetes with privilege escalation CVEs, pods running as root, no namespace isolation, public API endpoints</li>
+            <li>Container escape gives attacker access to host node running pods from multiple clients</li>
+            <li><strong>Treatment:</strong> Upgrade Kubernetes, restricted Pod Security Standards, Calico network policies, private API endpoints, ECR scanning + Falco runtime monitoring</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>CR-4: Invisible Attack Surface <span class="score score-critical">CRITICAL &mdash; 16</span></h3>
+        <ul>
+            <li>37 untracked resources, 33 public resources without logging, 12 ALBs without WAF &mdash; security team has no visibility</li>
+            <li>Public S3 exposure went undetected for 4 months due to monitoring gaps</li>
+            <li><strong>Treatment:</strong> Mandatory tagging + Service Catalog provisioning, universal access logging, WAF on all public endpoints, GuardDuty + Security Hub org-wide</li>
+        </ul>
+    </div>
+
+    <!-- Security Hardening Controls -->
+    <h2>5. Security Hardening Controls &mdash; 10 Controls</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Control Name</th>
+                <th>Reference</th>
+                <th>Frequency</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Centralized Secrets Management with Auto-Rotation</td><td>CIS AWS 1.20 | NIST CSF PR.AC-1, PR.DS-1</td><td>Continuous</td></tr>
+            <tr><td>2</td><td>Mandatory Resource Tagging + Service Catalog</td><td>CIS AWS 1.1 | NIST CSF ID.AM-1, ID.AM-2</td><td>Continuous</td></tr>
+            <tr><td>3</td><td>CI/CD Pipeline Security with Supply Chain Controls</td><td>CIS v8 16.1 | NIST CSF PR.IP-3, PR.DS-6</td><td>Every build</td></tr>
+            <tr><td>4</td><td>EKS Security Hardening (Pod Security + Network Policies)</td><td>CIS Kubernetes 5.2, 5.3 | NIST CSF PR.AC-5</td><td>Continuous</td></tr>
+            <tr><td>5</td><td>Comprehensive Access Logging on All Public Resources</td><td>CIS AWS 3.9 | NIST CSF DE.CM-1, DE.AE-3</td><td>Continuous</td></tr>
+            <tr><td>6</td><td>AWS WAF with OWASP Top 10 Managed Rules</td><td>CIS AWS 5.6 | NIST CSF PR.PT-4, DE.CM-1</td><td>Real-time</td></tr>
+            <tr><td>7</td><td>DynamoDB Security Hardening (CMK + Audit Logging)</td><td>CIS AWS 2.4 | NIST CSF PR.DS-1, DE.AE-3</td><td>Continuous</td></tr>
+            <tr><td>8</td><td>Lambda Security Hardening &amp; Runtime Management</td><td>CIS AWS 2.x | NIST CSF PR.IP-1, PR.DS-5</td><td>Continuous</td></tr>
+            <tr><td>9</td><td>Cross-Account IAM Role Trust Policy Hardening</td><td>CIS AWS 1.16 | NIST CSF PR.AC-4, PR.AC-6</td><td>Quarterly audit</td></tr>
+            <tr><td>10</td><td>Automated CIS Benchmark with Security Hub &amp; Config</td><td>CIS AWS Benchmark v3.0 | NIST CSF DE.CM-7</td><td>Continuous</td></tr>
+        </tbody>
+    </table>
+
+    <div class="risk-card">
+        <h3>Control 1: Centralized Secrets Management with Auto-Rotation</h3>
+        <ul>
+            <li>All 138+ credentials migrated to AWS Secrets Manager with KMS CMK encryption</li>
+            <li>Auto-rotation: database credentials every 30 days, API keys every 90 days</li>
+            <li>CodeGuru Reviewer + truffleHog in CI/CD blocking commits containing secrets</li>
+            <li>Custom Config rule detects secrets in Lambda env vars, ECS tasks, and plaintext Parameter Store</li>
+            <li>Scrubbed all secrets from CodeCommit history via git-filter-repo; quarterly secrets audit</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 2: Mandatory Resource Tagging + Service Catalog</h3>
+        <ul>
+            <li>SCP requiring 5 mandatory tags on every resource: Owner, Client, Environment, CostCenter, ManagedBy</li>
+            <li>AWS Service Catalog with pre-approved, security-hardened CloudFormation templates as only approved provisioning method</li>
+            <li>Manual console creation of EC2, Lambda, RDS, EKS blocked via SCP</li>
+            <li>Monthly asset inventory reconciliation: AWS Config inventory vs CMDB</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 3: CI/CD Pipeline Security with Supply Chain Controls</h3>
+        <ul>
+            <li>CodeBuild roles replaced with least-privilege policies scoped to specific client accounts and resource types</li>
+            <li>4 security scanning gates: Checkov (IaC), Semgrep (SAST), Trivy (container CVEs), OWASP Dependency-Check (dependencies)</li>
+            <li>Mandatory human approval before all production deployments via CodePipeline approval actions</li>
+            <li>AWS Signer for artifact signing/verification; build logs in encrypted private S3 buckets</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 4: EKS Security Hardening</h3>
+        <ul>
+            <li>All 8 clusters upgraded to latest Kubernetes; Pod Security Standards enforced in "restricted" mode</li>
+            <li>Calico network policies isolating client namespaces; all API endpoints made private (VPC-only)</li>
+            <li>ECR image scanning on push; OPA Gatekeeper blocks deployment of images with Critical CVEs</li>
+            <li>Falco runtime monitoring for suspicious activity: unexpected processes, unsafe network connections, filesystem changes</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 5: Comprehensive Access Logging</h3>
+        <ul>
+            <li>Access logging enabled on all 35 CloudFront distributions and 28 ALBs to encrypted S3 with lifecycle rules</li>
+            <li>VPC Flow Logs enabled on all VPCs across all 50+ accounts</li>
+            <li>All logs centralized in SIEM alongside application and CloudTrail logs</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 6: AWS WAF with OWASP Top 10 Managed Rules</h3>
+        <ul>
+            <li>WAF deployed on ALL 28 ALBs and 35 CloudFront distributions</li>
+            <li>Rule groups: Common Rule Set, SQL Injection, Known Bad Inputs, IP Reputation List, Rate-Based (2000 req/5min DDoS mitigation)</li>
+            <li>Custom rules: geo-restriction for sanctioned countries, suspicious header blocking, per-client API key rate limiting</li>
+            <li>WAF logs to S3 + SIEM; monthly rule tuning for false positives and emerging threats</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 7: DynamoDB Security Hardening</h3>
+        <ul>
+            <li>All 180+ tables migrated to KMS CMK encryption; PITR enabled for 35-day recovery</li>
+            <li>CloudTrail data events tracking ALL GetItem, PutItem, Query, and Scan operations with user identity</li>
+            <li>IAM policies replaced with resource-specific ARN policies (no table-level wildcards)</li>
+            <li>DynamoDB Streams enabled for change tracking; quarterly access review for least privilege</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 8: Lambda Security Hardening &amp; Runtime Management</h3>
+        <ul>
+            <li>All 340+ functions audited: deprecated runtimes upgraded, IAM roles restricted to exact resource ARNs</li>
+            <li>Execution timeouts configured (5 min for APIs, 15 min for ETL); environment variables migrated to Secrets Manager</li>
+            <li>Lambda function URLs audited and restricted; Config rules for runtime, timeout, memory checks</li>
+            <li>Monthly fleet review for abandoned functions</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 9: Cross-Account IAM Role Trust Policy Hardening</h3>
+        <ul>
+            <li>All 50+ cross-account roles hardened: trust policies restricted to CloudNative identity account with ExternalId condition</li>
+            <li>IAM Access Analyzer across all accounts detecting externally accessible roles, S3, KMS, Lambda</li>
+            <li>Session duration reduced from 12 hours to 1 hour (standard) / 4 hours (platform admins)</li>
+            <li>All AssumeRole events logged via CloudTrail</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 10: Automated CIS Benchmark with Security Hub &amp; Config</h3>
+        <ul>
+            <li>Security Hub enabled across all 50+ accounts with CIS AWS Foundations Benchmark v3.0</li>
+            <li>Real-time compliance scoring; target: 95%+ (up from 38% pre-assessment)</li>
+            <li>AWS Config with 30+ managed rules; auto-remediation for Critical findings (public S3 removed, unencrypted flagged, SG violations restricted)</li>
+            <li>Weekly compliance report; monthly trend review with VP of Cloud Operations; quarterly deep-dive</li>
+        </ul>
+    </div>
+
+    <!-- Next Steps -->
+    <h2>6. Next Steps</h2>
+    <ul>
+        <li>Complete emergency rotation of all 138+ exposed credentials by April 15, 2026</li>
+        <li>Decommission shadow infrastructure and enforce Service Catalog provisioning</li>
+        <li>Achieve 95%+ CIS Benchmark compliance score across all 50+ accounts</li>
+        <li>Complete EKS hardening with Falco runtime monitoring and OPA Gatekeeper</li>
+        <li>Deploy AWS Shield Advanced for critical client endpoints</li>
+        <li>Implement SLSA Level 3 supply chain security for all CI/CD pipelines</li>
+    </ul>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti. All rights reserved.
+</footer>
+
+</body>
+</html>

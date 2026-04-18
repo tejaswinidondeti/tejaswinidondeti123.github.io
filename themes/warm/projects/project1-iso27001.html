@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO 27001 Risk Assessment — Tech Start Inc | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --shadow-md: 0 6px 20px rgba(41,37,36,0.08);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+
+        /* Nav */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: linear-gradient(180deg, #292524 0%, #1c1917 100%);
+            border-bottom: 1px solid #44403c;
+            box-shadow: 0 4px 16px rgba(41, 37, 36, 0.3);
+            padding: 0 2rem;
+        }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 700; font-size: 1.35rem; color: #fef2e8; text-decoration: none; }
+        .nav-logo span { color: #fb923c; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; transition: color 0.2s; }
+        .back-link:hover { color: #fb923c; }
+
+        /* Hero banner */
+        .project-hero {
+            padding: 7rem 2rem 3rem;
+            background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%);
+            border-bottom: 1px solid var(--border);
+        }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #fef2f2; color: #b91c1c; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+
+        /* Content */
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+
+        /* Tables */
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+
+        /* Risk table */
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+
+        /* Cards */
+        .risk-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow);
+        }
+        .risk-card h3 { margin-top: 0; }
+        .risk-card .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+
+        /* Control mapping */
+        .mapping-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.82rem; text-align: center; }
+        .mapping-table th { background: #1c1917; color: #fef2e8; padding: 0.5rem; border: 1px solid #44403c; }
+        .mapping-table td { padding: 0.5rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .map-primary { background: #dcfce7 !important; color: #15803d; font-weight: 700; font-size: 0.75rem; }
+        .map-secondary { background: #dbeafe !important; color: #1d4ed8; font-weight: 600; font-size: 0.75rem; }
+
+        /* Treatment summary */
+        .treatment-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .arrow { color: var(--primary); font-weight: 700; }
+
+        /* Footer */
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+
+        @media (max-width: 768px) {
+            .project-hero h1 { font-size: 1.8rem; }
+            .info-table th { width: 120px; }
+            .meta-row { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">&lt;<span>TD</span>/&gt;</a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Risk Assessment</span>
+        <h1>ISO 27001:2022 Risk Assessment &mdash; <em>SaaS Cloud Migration</em></h1>
+        <p class="subtitle">End-to-end risk assessment for a B2B SaaS company migrating 5M+ customer records to AWS</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> Tech Start Inc (500 employees)</div>
+            <div class="meta-item"><strong>Industry:</strong> B2B SaaS / Cloud</div>
+            <div class="meta-item"><strong>Frameworks:</strong> ISO 27001:2022, NIST CSF</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <h2>1. Executive Summary</h2>
+    <p>Tech Start Inc is a B2B SaaS company serving enterprise clients with a customer database containing over 5 million records. The company is migrating this critical database from on-premises infrastructure to Amazon Web Services (AWS) to improve scalability, reduce operational costs, and meet growing client demands. Simultaneously, Tech Start is pursuing ISO 27001:2022 certification to satisfy enterprise client security requirements and demonstrate a mature information security posture.</p>
+    <p>This risk assessment identifies critical assets involved in the migration, evaluates key risks using a 5x5 likelihood-impact matrix, and maps security controls to ISO 27001:2022 Annex A and the NIST Cybersecurity Framework. The goal is to ensure that the migration is executed securely, with risks reduced to acceptable levels, while building the foundation for ISO 27001 certification.</p>
+
+    <h2>2. Risk Scoring Methodology</h2>
+    <p>We use a 5x5 matrix where <strong>Risk Score = Likelihood x Impact</strong>. Scores are categorized as: <strong style="color:#15803d;">Low (1-4)</strong>, <strong style="color:#1d4ed8;">Medium (5-9)</strong>, <strong style="color:#c2410c;">High (10-14)</strong>, <strong style="color:#b91c1c;">Critical (15-25)</strong>.</p>
+
+    <h3>Likelihood Scale</h3>
+    <table class="info-table">
+        <tr><th>1 &mdash; Rare</th><td>Less than once in 5 years (e.g., zero-day targeting your specific stack)</td></tr>
+        <tr><th>2 &mdash; Unlikely</th><td>Once every 2-5 years (e.g., disgruntled employee data theft attempt)</td></tr>
+        <tr><th>3 &mdash; Possible</th><td>Once per year (e.g., successful phishing email)</td></tr>
+        <tr><th>4 &mdash; Likely</th><td>Multiple times per year (e.g., cloud misconfiguration from rapid deployment)</td></tr>
+        <tr><th>5 &mdash; Almost Certain</th><td>Monthly or more (e.g., employees reusing weak passwords)</td></tr>
+    </table>
+
+    <h3>Impact Scale</h3>
+    <table class="info-table">
+        <tr><th>1 &mdash; Negligible</th><td>&lt; $10K loss. No customer impact.</td></tr>
+        <tr><th>2 &mdash; Minor</th><td>$10K-$100K loss. Brief service disruption.</td></tr>
+        <tr><th>3 &mdash; Moderate</th><td>$100K-$500K loss. Service degraded for hours. Media coverage possible.</td></tr>
+        <tr><th>4 &mdash; Major</th><td>$500K-$2M loss. Extended outage. Customer churn. Regulatory inquiry.</td></tr>
+        <tr><th>5 &mdash; Severe</th><td>&gt; $2M loss. Massive data breach. Lawsuits. Loss of ISO certification.</td></tr>
+    </table>
+
+    <h2>3. Critical Asset Identification</h2>
+
+    <div class="risk-card">
+        <h3>Asset 1: Customer PII Database</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Database &mdash; Critical</td></tr>
+            <tr><th>Owner</th><td>VP of Engineering</td></tr>
+            <tr><th>Environment</th><td>Production (migrating from on-prem to AWS RDS)</td></tr>
+            <tr><th>Description</th><td>SQL database storing 5M+ customer records including names, emails, billing addresses, payment information, and usage data. Currently on a physical Dell server, migrating to AWS managed database service.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 2: AWS Production Account (Root &amp; IAM)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Cloud Account &mdash; Critical</td></tr>
+            <tr><th>Owner</th><td>Director of Cloud Infrastructure</td></tr>
+            <tr><th>Environment</th><td>Production</td></tr>
+            <tr><th>Description</th><td>Main AWS account containing network, servers, databases, storage, permissions, encryption keys, logging, and security monitoring. Root account has full control; IAM manages access for 45+ engineers.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 3: Data Migration Pipeline (AWS DMS)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application &mdash; High</td></tr>
+            <tr><th>Owner</th><td>Lead Database Engineer</td></tr>
+            <tr><th>Environment</th><td>Production</td></tr>
+            <tr><th>Description</th><td>AWS Database Migration Service pipeline copying ~2TB of data from on-prem PostgreSQL to AWS RDS via secure VPN, with continuous replication to keep databases synchronized.</td></tr>
+        </table>
+    </div>
+
+    <h2>4. Risk Identification &amp; Assessment</h2>
+
+    <div class="risk-card">
+        <h3>R-01: Unauthorized Access to Customer Database During Migration</h3>
+        <span class="score score-critical">CRITICAL &mdash; Score: 20 (L:4 x I:5)</span>
+        <p style="margin-top: 0.75rem;">When migrating the database to AWS, sensitive customer data (PII, payment details) could be exposed through unencrypted network connections, excessive employee access, unremoved temporary credentials, or unencrypted backups. A breach could result in privacy law penalties, financial fines, customer loss, and reputation damage.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>R-02: AWS Account Compromise via Misconfigured IAM</h3>
+        <span class="score score-critical">CRITICAL &mdash; Score: 20 (L:4 x I:5)</span>
+        <p style="margin-top: 0.75rem;">AWS permissions might be set incorrectly, granting engineers or service accounts more access than needed. During migrations, teams often grant broad permissions to resolve access issues and forget to revoke them, leading to potential accidental system deletion, data theft, unsafe root account usage, or exposed access keys in code.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>R-03: Data Loss or Corruption During Migration</h3>
+        <span class="score score-critical">CRITICAL &mdash; Score: 15 (L:3 x I:5)</span>
+        <p style="margin-top: 0.75rem;">During transfer of ~2TB of customer data, records could be lost, duplicated, damaged, or stored incorrectly due to format differences, network interruptions, replication delays, schema mismatches, or large field handling issues.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>R-04: Data Residency Non-Compliance</h3>
+        <span class="score score-high">HIGH &mdash; Score: 12 (L:3 x I:4)</span>
+        <p style="margin-top: 0.75rem;">Post-migration, data might be stored or processed in cloud regions not permitted by privacy laws or customer contracts. Non-compliance could result in fines, customer loss, or certification failure.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>R-05: Extended Service Outage During Cutover</h3>
+        <span class="score score-high">HIGH &mdash; Score: 12 (L:3 x I:4)</span>
+        <p style="margin-top: 0.75rem;">During the database cutover, technical problems (connection failures, network misconfiguration, failed rollback, extended migration time) could cause prolonged downtime, breaching SLAs and causing customer impact.</p>
+    </div>
+
+    <h2>5. Risk Summary</h2>
+    <table class="risk-table">
+        <tr><th>#</th><th>Risk Title</th><th>L</th><th>I</th><th>Score</th><th>Rating</th><th>Category</th></tr>
+        <tr><td>R-01</td><td>Unauthorized Access to Customer DB</td><td>4</td><td>5</td><td class="risk-critical">20</td><td class="risk-critical">CRITICAL</td><td>Data Protection</td></tr>
+        <tr><td>R-02</td><td>AWS IAM Misconfiguration</td><td>4</td><td>5</td><td class="risk-critical">20</td><td class="risk-critical">CRITICAL</td><td>Access Control</td></tr>
+        <tr><td>R-03</td><td>Data Loss/Corruption in Migration</td><td>3</td><td>5</td><td class="risk-critical">15</td><td class="risk-critical">CRITICAL</td><td>Availability</td></tr>
+        <tr><td>R-04</td><td>Data Residency Non-Compliance</td><td>3</td><td>4</td><td class="risk-high">12</td><td class="risk-high">HIGH</td><td>Compliance</td></tr>
+        <tr><td>R-05</td><td>Extended Cutover Outage</td><td>3</td><td>4</td><td class="risk-high">12</td><td class="risk-high">HIGH</td><td>Availability</td></tr>
+    </table>
+
+    <h2>6. Security Controls</h2>
+
+    <div class="risk-card">
+        <h3>C-01: End-to-End Data Encryption (AES-256 + TLS 1.3)</h3>
+        <p><strong>Mitigates:</strong> R-01 &nbsp;|&nbsp; <strong>ISO 27001:</strong> Annex A 8.24 &nbsp;|&nbsp; <strong>NIST CSF:</strong> PR.DS-1, PR.DS-2</p>
+        <p>All customer data encrypted at rest (AES-256) and in transit (TLS 1.3). Only secure connections allowed. Encryption keys rotated regularly with all key activities logged.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-02: Least-Privilege IAM with MFA Enforcement</h3>
+        <p><strong>Mitigates:</strong> R-02 &nbsp;|&nbsp; <strong>ISO 27001:</strong> Annex A 5.15, 5.16, 8.5 &nbsp;|&nbsp; <strong>NIST CSF:</strong> PR.AC-1, PR.AC-4</p>
+        <p>Role-based access with minimum permissions. Root account secured with hardware MFA (YubiKey). Temporary credentials replace permanent access keys. Quarterly access reviews.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-03: Automated Backup &amp; Data Validation</h3>
+        <p><strong>Mitigates:</strong> R-03 &nbsp;|&nbsp; <strong>ISO 27001:</strong> Annex A 8.13, 8.14 &nbsp;|&nbsp; <strong>NIST CSF:</strong> PR.IP-4</p>
+        <p>Full pre-migration backup stored in two locations. Automated validation compares source/target databases (row counts, checksums, foreign keys). Original database kept read-only for 30 days post-migration.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-04: AWS Region Restriction with SCP Enforcement</h3>
+        <p><strong>Mitigates:</strong> R-04 &nbsp;|&nbsp; <strong>ISO 27001:</strong> Annex A 5.34, 5.31 &nbsp;|&nbsp; <strong>NIST CSF:</strong> ID.GV-3</p>
+        <p>Service Control Policies block resource creation in unapproved regions. AWS Config rules continuously monitor compliance. Automated alerts and tagging for non-compliant resources.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-05: Cutover Runbook with Tested Rollback</h3>
+        <p><strong>Mitigates:</strong> R-05 &nbsp;|&nbsp; <strong>ISO 27001:</strong> Annex A 5.30, 8.14 &nbsp;|&nbsp; <strong>NIST CSF:</strong> PR.IP-9, RC.RP-1</p>
+        <p>Detailed step-by-step cutover guide with decision trees. Two rehearsals in staging (target: 45-min cutover, 15-min rollback). Automated rollback triggers if error rate &gt;5% or latency &gt;2s.</p>
+    </div>
+
+    <h2>7. Control-to-Risk Mapping</h2>
+    <table class="mapping-table">
+        <tr><th>Control</th><th>R-01</th><th>R-02</th><th>R-03</th><th>R-04</th><th>R-05</th></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-01: Encryption</td><td class="map-primary">PRIMARY</td><td></td><td></td><td></td><td></td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-02: IAM + MFA</td><td class="map-secondary">SECONDARY</td><td class="map-primary">PRIMARY</td><td></td><td></td><td></td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-03: Backup &amp; Validation</td><td></td><td></td><td class="map-primary">PRIMARY</td><td></td><td class="map-secondary">SECONDARY</td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-04: Region Restriction</td><td></td><td></td><td></td><td class="map-primary">PRIMARY</td><td></td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-05: Cutover Runbook</td><td></td><td></td><td class="map-secondary">SECONDARY</td><td></td><td class="map-primary">PRIMARY</td></tr>
+    </table>
+
+    <h2>8. Risk Treatment Plans</h2>
+    <p>A Risk Treatment Plan (RTP) is the action plan that takes a risk from &lsquo;identified&rsquo; to &lsquo;managed&rsquo;. While the risk register tells you WHAT the risks are and the controls tell you HOW to reduce them, the treatment plan tells you WHO will do WHAT, by WHEN, with WHAT budget, and HOW you will know it worked.</p>
+
+    <div class="risk-card">
+        <h3>Risk Treatment Plan 1: Unauthorized Access to Customer Database (R-01)</h3>
+        <table class="info-table">
+            <tr><th>Risk ID</th><td>R-01</td></tr>
+            <tr><th>Inherent Score</th><td><strong style="color:#b91c1c;">20 (Critical)</strong> &mdash; L:4 &times; I:5</td></tr>
+            <tr><th>Treatment</th><td>MITIGATE</td></tr>
+            <tr><th>Target Score</th><td><strong style="color:#1d4ed8;">8 (Medium)</strong> &mdash; L:2 &times; I:4</td></tr>
+            <tr><th>Owner / Approver</th><td>VP of Engineering / CISO</td></tr>
+        </table>
+        <h3 style="margin-top: 1rem;">Treatment Actions</h3>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text);">
+            <li>Enable AES-256 encryption at rest using AWS KMS with automatic key rotation</li>
+            <li>Enforce TLS 1.3 for all database connections; disable unencrypted access</li>
+            <li>Restrict database access to approved app servers within private VPC only (no public endpoint)</li>
+            <li>Route migration traffic through private AWS Direct Connect</li>
+            <li>Deploy DLP tool to detect accidental PII exposure in cloud storage and logs</li>
+            <li>Conduct penetration test on database and migration pipeline before go-live</li>
+            <li>Enable database activity monitoring with real-time alerts for anomalies (large downloads, unknown IPs, off-hours access)</li>
+            <li>Remove all temporary migration credentials within 24 hours of completion</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Risk Treatment Plan 2: AWS IAM Misconfiguration (R-02)</h3>
+        <table class="info-table">
+            <tr><th>Risk ID</th><td>R-02</td></tr>
+            <tr><th>Inherent Score</th><td><strong style="color:#b91c1c;">20 (Critical)</strong> &mdash; L:4 &times; I:5</td></tr>
+            <tr><th>Treatment</th><td>MITIGATE</td></tr>
+            <tr><th>Target Score</th><td><strong style="color:#1d4ed8;">5 (Medium)</strong> &mdash; L:1 &times; I:5</td></tr>
+            <tr><th>Owner / Approver</th><td>Director of Cloud Infrastructure / CISO</td></tr>
+        </table>
+        <h3 style="margin-top: 1rem;">Treatment Actions</h3>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text);">
+            <li>Lock root account with hardware MFA (YubiKey); remove root access keys; store credentials in physical safe</li>
+            <li>Create RBAC policies for 4 groups: Developers, DBAs, DevOps, Security — each scoped to exact resources</li>
+            <li>Enforce MFA for all IAM users; block access if MFA is not enabled</li>
+            <li>Replace all long-term access keys with temporary credentials via IAM roles and STS AssumeRole</li>
+            <li>Run weekly reports to detect any newly created permanent access keys</li>
+            <li>Deploy IAM Access Analyzer to detect overly broad permissions and external access</li>
+            <li>Conduct quarterly access reviews with team leaders; remove unused roles/permissions</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Risk Treatment Plan 3: Data Loss/Corruption During Migration (R-03)</h3>
+        <table class="info-table">
+            <tr><th>Risk ID</th><td>R-03</td></tr>
+            <tr><th>Inherent Score</th><td><strong style="color:#b91c1c;">15 (Critical)</strong> &mdash; L:3 &times; I:5</td></tr>
+            <tr><th>Treatment</th><td>MITIGATE</td></tr>
+            <tr><th>Target Score</th><td><strong style="color:#1d4ed8;">6 (Medium)</strong> &mdash; L:2 &times; I:3</td></tr>
+            <tr><th>Owner / Approver</th><td>Lead Database Engineer / VP of Engineering</td></tr>
+        </table>
+        <h3 style="margin-top: 1rem;">Treatment Actions</h3>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text);">
+            <li>Create full pre-migration backup stored in two locations (local NAS + encrypted S3 bucket)</li>
+            <li>Verify backup by restoring to test server and comparing record counts</li>
+            <li>Build automated validation scripts (Python/SQL) — row counts, numeric checksums, MD5 hashes in 10K batches, foreign key checks, character encoding validation</li>
+            <li>Run 3 complete migration rehearsals in staging; require 100% validation pass rate</li>
+            <li>Configure AWS DMS with validation enabled; set CloudWatch alerts for replication lag &gt; 60 seconds</li>
+            <li>Keep on-prem database in read-only mode for 30 days post-migration as rollback safety net</li>
+            <li>Auto-rollback if data validation errors exceed 0.01% of total records</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Risk Treatment Plan 4: Data Residency Compliance Violation (R-04)</h3>
+        <table class="info-table">
+            <tr><th>Risk ID</th><td>R-04</td></tr>
+            <tr><th>Inherent Score</th><td><strong style="color:#c2410c;">12 (High)</strong> &mdash; L:3 &times; I:4</td></tr>
+            <tr><th>Treatment</th><td>MITIGATE</td></tr>
+            <tr><th>Target Score</th><td><strong style="color:#15803d;">4 (Low)</strong> &mdash; L:1 &times; I:4</td></tr>
+            <tr><th>Owner / Approver</th><td>Data Protection Officer / Chief Legal Officer</td></tr>
+        </table>
+        <h3 style="margin-top: 1rem;">Treatment Actions</h3>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text);">
+            <li>Conduct DPIA (GDPR Article 35) — map all PII data flows: origin, processing, storage, and access</li>
+            <li>Create Data Residency Matrix linking customer segments to required AWS regions (e.g., EU clients &rarr; eu-west-1); get Legal sign-off</li>
+            <li>Implement SCPs to block resource creation in unapproved regions (even for admins)</li>
+            <li>Deploy AWS Config rules for continuous region compliance monitoring</li>
+            <li>Set up automated alerts via SNS + Lambda tagging for non-compliant resources</li>
+            <li>Update all client DPAs to specify approved AWS regions; include 48-hour change notification clause</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Risk Treatment Plan 5: Extended Cutover Outage (R-05)</h3>
+        <table class="info-table">
+            <tr><th>Risk ID</th><td>R-05</td></tr>
+            <tr><th>Inherent Score</th><td><strong style="color:#c2410c;">12 (High)</strong> &mdash; L:3 &times; I:4</td></tr>
+            <tr><th>Treatment</th><td>MITIGATE</td></tr>
+            <tr><th>Target Score</th><td><strong style="color:#15803d;">4 (Low)</strong> &mdash; L:2 &times; I:2</td></tr>
+            <tr><th>Owner / Approver</th><td>VP of Engineering / CTO</td></tr>
+        </table>
+        <h3 style="margin-top: 1rem;">Treatment Actions</h3>
+        <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text);">
+            <li>Create detailed cutover runbook with step-by-step commands, owners, timings, success criteria, and decision trees</li>
+            <li>Have 3 engineers independently review the runbook</li>
+            <li>Rehearsal 1: Full staging cutover with production data copy — target 45 min; document and fix issues</li>
+            <li>Rehearsal 2: Staged rollback test — verify full restore with zero data loss in under 15 min</li>
+            <li>Set up real-time dashboard (CloudWatch + Grafana) — error rates, connections, latency, DMS lag</li>
+            <li>Configure auto-rollback triggers: error rate &gt; 5% for 5 min or latency &gt; 2s for 10 min</li>
+            <li>Customer communication plan: 7-day notice, 24-hour reminder, live status page, post-cutover confirmation</li>
+            <li>Assign Customer Success lead for real-time escalations during cutover window</li>
+        </ul>
+    </div>
+
+    <h2>9. Risk Treatment Summary</h2>
+    <p>All five risks are treated with a <strong>MITIGATE</strong> strategy. Below shows the inherent-to-residual risk reduction:</p>
+    <table class="risk-table">
+        <tr><th>Risk</th><th>Title</th><th>Inherent</th><th>Rating</th><th>Target</th><th>Rating</th></tr>
+        <tr><td>R-01</td><td>Unauthorized DB Access</td><td class="risk-critical">20</td><td class="risk-critical">Critical</td><td>8</td><td>Medium</td></tr>
+        <tr><td>R-02</td><td>IAM Misconfiguration</td><td class="risk-critical">20</td><td class="risk-critical">Critical</td><td>5</td><td>Medium</td></tr>
+        <tr><td>R-03</td><td>Data Corruption</td><td class="risk-critical">15</td><td class="risk-critical">Critical</td><td>6</td><td>Medium</td></tr>
+        <tr><td>R-04</td><td>Data Residency</td><td class="risk-high">12</td><td class="risk-high">High</td><td>4</td><td>Low</td></tr>
+        <tr><td>R-05</td><td>Cutover Outage</td><td class="risk-high">12</td><td class="risk-high">High</td><td>4</td><td>Low</td></tr>
+    </table>
+
+</div>
+
+<footer>
+    <p><a href="../index.html#projects" style="color: var(--primary); text-decoration: none; font-weight: 600;">&larr; Back to All Projects</a></p>
+    <p style="margin-top: 0.75rem;">&copy; 2026 Tejaswini Dondeti. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

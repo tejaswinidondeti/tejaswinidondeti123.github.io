@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataPulse Third-Party Breach Incident Response & RCA | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #fef2f2; color: #b91c1c; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content h4 { font-size: 1rem; font-weight: 700; margin: 1rem 0 0.5rem; color: var(--text); }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 220px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); vertical-align: top; }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-medium { background: #fefce8 !important; color: #a16207; font-weight: 700; }
+        .risk-low { background: #f0fdf4 !important; color: #15803d; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .score-medium { background: #fefce8; color: #a16207; }
+        .score-low { background: #f0fdf4; color: #15803d; }
+        .callout { background: #fef2f2; border-left: 4px solid #b91c1c; padding: 1rem 1.25rem; margin: 1.25rem 0; border-radius: 4px; }
+        .callout strong { color: #b91c1c; }
+        .callout-amber { background: #fff7ed; border-left: 4px solid #c2410c; padding: 1rem 1.25rem; margin: 1.25rem 0; border-radius: 4px; }
+        .callout-amber strong { color: #c2410c; }
+        .why-card { background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 1.1rem 1.3rem; margin: 0.85rem 0; box-shadow: var(--shadow); }
+        .why-card h4 { margin-top: 0; color: var(--primary); margin-bottom: 0.4rem; }
+        .why-card p { margin-bottom: 0; }
+        .timeline-day { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 0.75rem 0; box-shadow: var(--shadow); }
+        .timeline-day h4 { margin-top: 0; color: var(--primary); }
+        .timeline-day ul { margin-left: 1.25rem; margin-bottom: 0; font-size: 0.92rem; }
+        .timestamp { font-family: 'DM Sans', monospace; color: var(--text-light); font-weight: 600; font-size: 0.82rem; }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Incident Response &bull; Severity 1</span>
+        <h1>DataPulse Third-Party Breach &mdash; <em>Incident Response, Timeline &amp; Root Cause Analysis</em></h1>
+        <p class="subtitle">Drove the end-to-end incident response, timeline reconstruction, and root cause analysis for NVA-INC-2025-007 &mdash; a Severity 1 third-party vendor breach exposing 847,312 customer records across 31,243 enterprise organizations through compromised DataPulse Analytics employee credentials. Closed 158 days after detection with 1.2% customer churn against a 5% worst-case projection.</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> NovaAI Labs</div>
+            <div class="meta-item"><strong>Incident ID:</strong> NVA-INC-2025-007</div>
+            <div class="meta-item"><strong>Severity:</strong> 1 &mdash; Critical</div>
+            <div class="meta-item"><strong>Frameworks:</strong> GDPR Art. 33/34, EU AI Act Art. 73, CCPA/CPRA, NY SHIELD</div>
+            <div class="meta-item"><strong>Duration:</strong> 9 Nov 2025 &mdash; 15 Apr 2026 (158 days)</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- 1. Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>On <strong>9 November 2025</strong>, the NovaAI Labs security team was notified of unauthorized access to customer analytics data held by <strong>DataPulse Analytics</strong>, a third-party analytics platform integrated into NovaAI's enterprise product analytics stack. An attacker had compromised a DataPulse employee credential through phishing and exfiltrated nearly two years of accumulated NovaAI telemetry. The breach exposed approximately <strong>847,312 unique customer records</strong> across <strong>31,243 enterprise organizations</strong>, including customer names, email addresses, organization details, rough geographic location, and OS/browser metadata. <em>No</em> NovaAI production systems were compromised; <em>no</em> passwords, payment data, or chat content were in scope.</p>
+    <p>This engagement combined three deliverables that together drove the response and the lessons learned cycle:</p>
+    <ul>
+        <li><strong>Incident Scenario document</strong> &mdash; the working incident dossier capturing the breach facts, scope, regulatory exposure, and Severity 1 classification.</li>
+        <li><strong>Incident Response Timeline</strong> &mdash; the 158-day, five-phase reconstruction from detection through closure on 15 April 2026.</li>
+        <li><strong>Root Cause Analysis report</strong> &mdash; a 5-Whys investigation, seven contributing factors, and a 12-action corrective programme approved by the AI Governance Committee on 15 March 2026 and endorsed by the Board AI Safety Sub-Committee on 22 March 2026.</li>
+    </ul>
+    <div class="callout">
+        <strong>Result:</strong> Public disclosure delivered on day 18 (27 November 2025) &mdash; faster than several industry comparators &mdash; while still meeting GDPR Article 33's 72-hour regulator clock. Final customer churn was <strong>1.2%</strong>, well below the 5% worst-case projection (~$45M annual revenue at risk).
+    </div>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 1: INCIDENT SCENARIO -->
+    <!-- =================================================== -->
+    <h2>2. Document 1 &mdash; Incident Scenario</h2>
+
+    <h3>2.1 Incident Information</h3>
+    <table class="info-table">
+        <tr><th>Incident ID</th><td>NVA-INC-2025-007</td></tr>
+        <tr><th>System</th><td>NovaChat Enterprise API + DataPulse Analytics Platform (Third-Party)</td></tr>
+        <tr><th>Incident Type</th><td>Data Breach &bull; Third-Party Vendor Compromise &bull; PII Exposure</td></tr>
+        <tr><th>Severity</th><td><span class="score score-critical">1 &mdash; Critical</span></td></tr>
+        <tr><th>Status</th><td>Closed &mdash; Lessons Learned Phase (as of April 2026)</td></tr>
+        <tr><th>Incident Owner</th><td>Chief Information Security Officer</td></tr>
+        <tr><th>Governance Lead</th><td>AI Governance Office</td></tr>
+        <tr><th>Discovery Date</th><td>9 November 2025</td></tr>
+        <tr><th>Initial Disclosure Date</th><td>27 November 2025</td></tr>
+    </table>
+
+    <h3>2.2 What Happened</h3>
+    <p>On 9 November 2025, NovaAI Labs was notified by DataPulse Analytics that unauthorized access had been detected on a DataPulse employee account. Forensic analysis subsequently confirmed the attacker had access for a 72-hour window (6&ndash;9 November) during which they exfiltrated NovaAI Labs customer analytics data that had been continuously sent to DataPulse since January 2024. The breach occurred entirely on DataPulse's infrastructure &mdash; no NovaAI production system was compromised.</p>
+
+    <h4>Data Exposed</h4>
+    <ul>
+        <li>Enterprise customer contact names</li>
+        <li>Email addresses</li>
+        <li>Rough geographic location (city-level, derived from IP)</li>
+        <li>Operating system and browser information</li>
+        <li>Organization names</li>
+        <li>NovaAI API account identifiers (hashed)</li>
+        <li>Usage metadata (session counts, feature usage categories)</li>
+    </ul>
+    <p><strong>Not in scope:</strong> No passwords, payment data, chat / conversation content, or model outputs were stored in DataPulse.</p>
+
+    <h3>2.3 How the Incident Was Detected</h3>
+    <p><strong>Detection source:</strong> DataPulse Analytics security monitoring.</p>
+    <p>At <span class="timestamp">14:32 UTC</span> on 9 November 2025, DataPulse's security monitoring detected anomalous data export activity from an employee account. The account was suspended within <strong>11 minutes</strong>. Forensic analysis determined unauthorized access had occurred over a 72-hour window. DataPulse notified NovaAI Labs at <span class="timestamp">19:47 UTC</span> on 9 November via their vendor security notification channel. Initial NovaAI triage by the CISO on-call confirmed the data was exported from DataPulse's systems, that no NovaAI production systems were compromised, and that the data exposed was telemetry NovaAI had been sending since January 2024. Emergency incident response was initiated immediately.</p>
+
+    <h3>2.4 Scope &amp; Impact Assessment</h3>
+    <table class="info-table">
+        <tr><th>Affected Records</th><td>~847,000 unique customer identifiers</td></tr>
+        <tr><th>Affected Organizations</th><td>~31,000 enterprise organizations</td></tr>
+        <tr><th>Geographic Distribution</th><td>US 54% &bull; EU 31% &bull; UK 7% &bull; Other 8%</td></tr>
+        <tr><th>Names + Emails</th><td>Phishing &amp; credential-stuffing risk</td></tr>
+        <tr><th>Organization Names</th><td>Targeting risk for social engineering</td></tr>
+        <tr><th>Location / OS / Browser</th><td>Fingerprinting risk, targeted attacks</td></tr>
+        <tr><th>Usage Metadata</th><td>Business intelligence risk</td></tr>
+    </table>
+
+    <h4>Regulatory Implications</h4>
+    <ul>
+        <li><strong>GDPR Article 33:</strong> 72-hour notification to supervisory authorities required for EU data subjects.</li>
+        <li><strong>GDPR Article 34:</strong> Notification to affected data subjects required (risk threshold met).</li>
+        <li><strong>US state breach notification laws:</strong> CCPA/CPRA, NY SHIELD, Texas, plus the 50+ state patchwork.</li>
+        <li><strong>EU AI Act Article 73:</strong> AI system serious incident assessment &mdash; determined non-applicable (data breach is not AI system output harm), but documentation required by incident reporting policy.</li>
+        <li><strong>SEC material disclosure</strong> consideration for public-company impact (enterprise customers).</li>
+        <li>Vendor contract obligations to enterprise customers triggered.</li>
+    </ul>
+
+    <h4>Financial Exposure</h4>
+    <table class="info-table">
+        <tr><th>Regulatory Fines (potential)</th><td>&euro;20M+ GDPR exposure (max 4% global revenue)</td></tr>
+        <tr><th>Customer Litigation (estimated)</th><td>$8M &ndash; $25M class-action risk</td></tr>
+        <tr><th>Notification Costs</th><td>~$4M</td></tr>
+        <tr><th>Credit Monitoring Offer</th><td>~$12M</td></tr>
+        <tr><th>Customer Churn Risk</th><td>~$45M annual revenue at risk if 5% enterprise base leaves</td></tr>
+    </table>
+    <div class="callout">
+        <strong>Reputational Risk &mdash; Critical:</strong> This is NovaAI Labs' second major trust incident in 18 months, following the July 2024 plain-text credential storage vulnerability. Media attention expected; enterprise customer confidence at risk.
+    </div>
+
+    <h3>2.5 Immediate Context &amp; Prior Connection</h3>
+    <p><strong>Why was data shared with DataPulse?</strong> DataPulse Analytics was onboarded in December 2023 as NovaAI's product analytics platform, replacing an in-house tool. The decision was made by the Product team via standard procurement review and DataPulse was selected for its real-time analytics capabilities and SOC 2 Type II certification.</p>
+    <p><strong>Was this risk known?</strong> The November 2025 breach was not anticipated as a specific attack vector. However, broader vendor risk had been identified in the October 2025 Enterprise Risk Register as "medium" for analytics vendors, and the DataPulse relationship had not been subject to enhanced review since onboarding.</p>
+    <p><strong>Is this ongoing?</strong> No. DataPulse confirmed containment on 9 November. NovaAI Labs immediately suspended the DataPulse integration and rotated all credentials on 10 November. No further exfiltration was possible.</p>
+    <p><strong>Connection to the July 2024 incident:</strong> This breach shares DNA with NovaAI Labs' July 2024 plain-text credential storage vulnerability &mdash; both reflect insufficient data minimization discipline. Data was being shared or stored that did not need to be there in the first place.</p>
+
+    <h3>2.6 Severity Classification</h3>
+    <table class="risk-table">
+        <thead><tr><th>Dimension</th><th>Assessment</th></tr></thead>
+        <tbody>
+            <tr><td>Harm to Individuals</td><td class="risk-high">High &mdash; phishing &amp; credential-stuffing risk to 847,000 individuals</td></tr>
+            <tr><td>Regulatory Exposure</td><td class="risk-critical">Critical &mdash; multi-jurisdictional GDPR, state, sectoral</td></tr>
+            <tr><td>Reputational Risk</td><td class="risk-critical">Critical &mdash; second trust incident in 18 months</td></tr>
+            <tr><td>Operational Impact</td><td class="risk-medium">Medium &mdash; analytics capability degraded</td></tr>
+            <tr><td>Reversibility</td><td class="risk-medium">Medium &mdash; data cannot be un-leaked; relationships can be rebuilt</td></tr>
+            <tr><td><strong>Overall Severity</strong></td><td class="risk-critical">1 &mdash; Critical</td></tr>
+        </tbody>
+    </table>
+
+    <h4>Severity 1 Notification Path (All Completed)</h4>
+    <table class="risk-table">
+        <thead><tr><th>Notification</th><th>SLA</th><th>Completed</th></tr></thead>
+        <tbody>
+            <tr><td>AI Governance Committee</td><td>Within 24h</td><td>9 Nov 21:15 UTC</td></tr>
+            <tr><td>CAIO + CRO</td><td>Within 24h</td><td>9 Nov 22:00 UTC</td></tr>
+            <tr><td>Board AI Safety Sub-Committee Chair</td><td>Within 48h</td><td>10 Nov 09:00 UTC</td></tr>
+            <tr><td>CEO + Full Board</td><td>Within 48h</td><td>10 Nov 14:00 UTC</td></tr>
+            <tr><td>Legal, Compliance, Communications, DPO</td><td>Immediate</td><td>9 Nov &mdash; all engaged</td></tr>
+            <tr><td>Regulatory disclosure obligations executed</td><td>By 12 Nov</td><td>12 Nov complete</td></tr>
+            <tr><td>Public disclosure decision made / executed</td><td>&mdash;</td><td>26 Nov decision &bull; 27 Nov disclosure</td></tr>
+        </tbody>
+    </table>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 2: RESPONSE TIMELINE -->
+    <!-- =================================================== -->
+    <h2>3. Document 2 &mdash; Incident Response Timeline</h2>
+    <p>The Incident Response Timeline reconstructs the full 158-day arc of the response across <strong>five phases</strong> &mdash; Detection &amp; Containment, Investigation &amp; Preparation, Disclosure, Remediation, and Lessons Learned &amp; Closure. The document was prepared by the AI Governance Office and CISO Team and distributed under "Confidential &mdash; Internal Use Only" classification to the AI Governance Committee, Board AI Safety Sub-Committee, CEO, CRO, and General Counsel.</p>
+
+    <h3>3.1 Phase 1 &mdash; Detection &amp; Containment (9&ndash;15 November 2025)</h3>
+
+    <div class="timeline-day">
+        <h4>Day 0 &mdash; Sunday 9 November 2025</h4>
+        <ul>
+            <li><span class="timestamp">14:32 UTC</span> &mdash; DataPulse detects anomalous export activity</li>
+            <li><span class="timestamp">14:43 UTC</span> &mdash; DataPulse suspends affected account</li>
+            <li><span class="timestamp">16:15 UTC</span> &mdash; DataPulse initiates forensic investigation</li>
+            <li><span class="timestamp">19:47 UTC</span> &mdash; DataPulse notifies NovaAI Labs CISO</li>
+            <li><span class="timestamp">20:03 UTC</span> &mdash; CISO on-call engages security response team</li>
+            <li><span class="timestamp">20:45 UTC</span> &mdash; Severity 1 (Critical) classification</li>
+            <li><span class="timestamp">21:15 UTC</span> &mdash; AI Governance Office notified</li>
+            <li><span class="timestamp">22:00 UTC</span> &mdash; CAIO + CRO + General Counsel notified</li>
+            <li><span class="timestamp">22:30 UTC</span> &mdash; Emergency Incident Response Team assembled</li>
+            <li><span class="timestamp">23:45 UTC</span> &mdash; DataPulse integration suspended</li>
+        </ul>
+    </div>
+
+    <div class="timeline-day">
+        <h4>Day 1 &mdash; Monday 10 November 2025</h4>
+        <ul>
+            <li><span class="timestamp">00:15 UTC</span> &mdash; All NovaAI credentials rotated</li>
+            <li><span class="timestamp">07:00 UTC</span> &mdash; Initial scope: 600,000 &ndash; 900,000 records potentially affected</li>
+            <li><span class="timestamp">09:00 UTC</span> &mdash; Board AI Safety Sub-Committee Chair notified</li>
+            <li><span class="timestamp">10:30 UTC</span> &mdash; CEO briefed; Full Board notification scheduled</li>
+            <li><span class="timestamp">11:00 UTC</span> &mdash; External incident response firm engaged (ForensicShield LLP)</li>
+            <li><span class="timestamp">13:00 UTC</span> &mdash; Legal &amp; Compliance begin multi-jurisdictional assessment</li>
+            <li><span class="timestamp">14:00 UTC</span> &mdash; Full Board notified via secure communications</li>
+            <li><span class="timestamp">15:30 UTC</span> &mdash; Customer notification preparation begins</li>
+            <li><span class="timestamp">16:00 UTC</span> &mdash; First enterprise customer inquiries received</li>
+            <li><span class="timestamp">20:00 UTC</span> &mdash; DPO initiates GDPR Article 33 notification</li>
+        </ul>
+    </div>
+
+    <div class="timeline-day">
+        <h4>Day 2 &mdash; Tuesday 11 November 2025</h4>
+        <ul>
+            <li>Forensic analysis with DataPulse + ForensicShield begins</li>
+            <li>Preliminary scope: analytics data only, no production systems</li>
+            <li>GDPR Article 33 72-hour clock confirmed from discovery</li>
+            <li>Regulatory notification drafts prepared for EU DPAs</li>
+            <li>Decision: no public disclosure yet &mdash; confirm scope first</li>
+        </ul>
+    </div>
+
+    <div class="timeline-day">
+        <h4>Day 3 &mdash; Wednesday 12 November 2025</h4>
+        <ul>
+            <li>GDPR Article 33 notifications submitted to <strong>Irish DPC (lead authority)</strong></li>
+            <li>UK ICO notified per UK GDPR</li>
+            <li>US state attorney general notifications prepared</li>
+            <li>Forensic report: <strong>847,000 records confirmed</strong></li>
+            <li>Internal employee briefing sent</li>
+        </ul>
+    </div>
+
+    <div class="timeline-day">
+        <h4>Days 4&ndash;7 &mdash; 13&ndash;16 November 2025</h4>
+        <ul>
+            <li>Customer notification strategy discussion</li>
+            <li>Decision: disclose within 2&ndash;3 weeks with complete forensic picture</li>
+            <li>Board Risk Committee extraordinary session convened</li>
+            <li>Customer support teams briefed on response playbooks</li>
+            <li>Crisis communications firm engaged</li>
+            <li>Customer contact lists prepared for tiered outreach; breach notification letter templates finalized</li>
+        </ul>
+    </div>
+
+    <h3>3.2 Phase 2 &mdash; Investigation &amp; Preparation (16&ndash;26 November 2025)</h3>
+
+    <div class="timeline-day">
+        <h4>Week 2 &mdash; 16&ndash;22 November</h4>
+        <ul>
+            <li>Full forensic analysis of breach vector completed</li>
+            <li><strong>Root cause:</strong> compromised DataPulse employee credentials</li>
+            <li>DataPulse lacked single-factor authentication for internal tools (MFA gap)</li>
+            <li>Final scope: <strong>847,312 records, 31,243 enterprise organizations</strong></li>
+            <li>Confirmed: no NovaAI production systems compromised</li>
+            <li>Outreach plan &mdash; Tier 1: 200 customers (direct calls)</li>
+            <li>Outreach plan &mdash; Tier 2: 1,000 customers (CISO emails)</li>
+            <li>Outreach plan &mdash; Tier 3: 30,000+ (templated notifications)</li>
+            <li>Credit monitoring service procurement initiated</li>
+        </ul>
+    </div>
+
+    <div class="timeline-day">
+        <h4>Week 3 &mdash; 23&ndash;26 November</h4>
+        <ul>
+            <li>Customer notification materials finalized</li>
+            <li>Public statement drafted and reviewed</li>
+            <li>Media strategy finalized with crisis communications firm</li>
+            <li>Regulatory update filings prepared</li>
+            <li>Tier 1 customer outreach begins (24 November)</li>
+            <li>Internal AMA session for employees (25 November)</li>
+            <li>Public disclosure preparation complete</li>
+        </ul>
+    </div>
+
+    <h3>3.3 Phase 3 &mdash; Disclosure (27 November &ndash; 3 December 2025)</h3>
+
+    <div class="timeline-day">
+        <h4>Thursday 27 November 2025 &mdash; Public Disclosure Day</h4>
+        <ul>
+            <li><span class="timestamp">08:00 ET</span> &mdash; Tier 1 customer calls completed</li>
+            <li><span class="timestamp">10:00 ET</span> &mdash; Email notifications sent to all 31,243 organizations</li>
+            <li><span class="timestamp">10:30 ET</span> &mdash; Public security advisory posted</li>
+            <li><span class="timestamp">10:45 ET</span> &mdash; Blog post published</li>
+            <li><span class="timestamp">11:00 ET</span> &mdash; Press release issued</li>
+            <li><span class="timestamp">11:30 ET</span> &mdash; CEO customer letter published</li>
+            <li><span class="timestamp">12:00 ET</span> &mdash; Media interviews begin</li>
+            <li><span class="timestamp">18:00 ET</span> &mdash; Day 1 totals: <strong>847,000 notifications sent, ~4,200 inquiries</strong></li>
+        </ul>
+    </div>
+
+    <div class="timeline-day">
+        <h4>28 November &ndash; 7 December 2025</h4>
+        <ul>
+            <li>Ongoing customer support engagement and social media response management</li>
+            <li>Media cycle management; minimal churn, only 12 public complaints, regulatory acknowledgments received</li>
+            <li>Congressional staff inquiries received (US)</li>
+            <li>Response to European Parliament member inquiries</li>
+            <li>SEC consultation regarding materiality disclosure</li>
+            <li>Cyber-insurance claim initiation</li>
+        </ul>
+    </div>
+
+    <h3>3.4 Phase 4 &mdash; Remediation (December 2025 &ndash; February 2026)</h3>
+
+    <div class="timeline-day">
+        <h4>December 2025</h4>
+        <ul>
+            <li>DataPulse relationship review &mdash; <strong>termination decision</strong></li>
+            <li>Migration to alternative vendor planned</li>
+            <li>New vendor selection with Enhanced Due Diligence</li>
+            <li>Data minimization review initiated</li>
+        </ul>
+    </div>
+
+    <div class="timeline-day">
+        <h4>January 2026</h4>
+        <ul>
+            <li>Third-party vendor security policy overhaul</li>
+            <li>MFA requirement added to all vendor contracts</li>
+            <li>Vendor data access scope minimization launched</li>
+            <li>2 years free credit monitoring offered to affected customers</li>
+            <li><strong>1.2% customer churn</strong> &mdash; below the 5% worst-case projection</li>
+        </ul>
+    </div>
+
+    <div class="timeline-day">
+        <h4>February 2026</h4>
+        <ul>
+            <li>New vendor onboarded with enhanced security</li>
+            <li>Reduced telemetry shared (data minimization in effect)</li>
+            <li>Vendor data-sharing agreements reviewed</li>
+            <li>Board presented comprehensive security overhaul plan</li>
+        </ul>
+    </div>
+
+    <h3>3.5 Phase 5 &mdash; Lessons Learned &amp; Closure (March &ndash; April 2026)</h3>
+
+    <div class="timeline-day">
+        <h4>March 2026</h4>
+        <ul>
+            <li>Formal Root Cause Analysis approved (15 March)</li>
+            <li>Lessons learned shared with ML Engineering, Product, Security</li>
+            <li>Third-Party Risk Management Policy v2.0 finalized</li>
+            <li>Regulator closure reports submitted</li>
+            <li>Class-action litigation filed (14 March)</li>
+        </ul>
+    </div>
+
+    <div class="timeline-day">
+        <h4>April 2026 &mdash; Incident Closed</h4>
+        <ul>
+            <li>Post-incident review with Board AI Safety Sub-Committee</li>
+            <li>Enterprise Risk Register updated</li>
+            <li>Vendor security improvements verified</li>
+            <li>Public transparency report published</li>
+            <li><strong>Incident closed: 15 April 2026</strong></li>
+        </ul>
+    </div>
+
+    <h3>3.6 Key Response Metrics</h3>
+    <table class="info-table">
+        <tr><th>Detection &rarr; NovaAI Notification</th><td>5h 15min</td></tr>
+        <tr><th>Notification &rarr; Containment</th><td>4 hours</td></tr>
+        <tr><th>Detection &rarr; Regulatory Notification</th><td>72 hours (Article 33 met)</td></tr>
+        <tr><th>Detection &rarr; Public Disclosure</th><td>18 days</td></tr>
+        <tr><th>Affected Records</th><td>847,312</td></tr>
+        <tr><th>Affected Organizations</th><td>31,243</td></tr>
+        <tr><th>Regulatory Notifications</th><td>55 jurisdictions</td></tr>
+        <tr><th>Customer Churn Rate</th><td>1.2% (vs 5% worst-case)</td></tr>
+        <tr><th>Notification Cost</th><td>$4.2M</td></tr>
+        <tr><th>Credit Monitoring Cost</th><td>$11.8M</td></tr>
+        <tr><th>Forensic / Response Cost</th><td>$6.5M</td></tr>
+        <tr><th>Regulatory Fines (pending)</th><td>$0 &ndash; $20M</td></tr>
+        <tr><th>Total Duration</th><td>158 days</td></tr>
+    </table>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 3: RCA -->
+    <!-- =================================================== -->
+    <h2>4. Document 3 &mdash; Root Cause Analysis Report</h2>
+    <p>The Root Cause Analysis was prepared by the AI Governance Office, the CISO Team, and the Third-Party Risk Office, and was approved by the AI Governance Committee on <strong>15 March 2026</strong> and endorsed by the Board AI Safety Sub-Committee on <strong>22 March 2026</strong>. The report uses the <strong>5 Whys method</strong> followed by a contributing-factors analysis. Consistent with NovaAI Labs' post-incident culture, the goal is <em>not</em> to assign individual blame but to identify systemic conditions that allowed this failure and to prevent recurrence.</p>
+
+    <h3>4.1 Five Whys Analysis</h3>
+    <p><strong>Problem statement:</strong> NovaAI Labs customer analytics data was exposed when third-party vendor DataPulse Analytics was compromised. 847,000 customer records were exfiltrated.</p>
+
+    <div class="why-card">
+        <h4>Why 1 &mdash; Why was customer data exposed?</h4>
+        <p>Because NovaAI Labs had been sending customer analytics data to DataPulse for over 22 months, and DataPulse's systems were compromised via a phishing attack on a DataPulse employee, allowing an attacker to access that accumulated data.</p>
+    </div>
+
+    <div class="why-card">
+        <h4>Why 2 &mdash; Why was so much customer data sitting in DataPulse's systems?</h4>
+        <p>Because NovaAI Labs had configured its analytics pipeline to send broad telemetry to DataPulse &mdash; including customer PII that was not strictly necessary for the product analytics use cases. Data minimization was not rigorously applied to vendor data sharing. DataPulse retained this data indefinitely per the default contract terms.</p>
+    </div>
+
+    <div class="why-card">
+        <h4>Why 3 &mdash; Why was data minimization not applied and why were retention controls not set?</h4>
+        <p>Because NovaAI Labs' third-party vendor onboarding process in 2023 focused primarily on SOC 2 certification status, pricing, and functional capability &mdash; <em>not</em> on the question "what is the minimum data this vendor actually needs to perform its function?" There was no mandatory data minimization review gate in vendor procurement; retention terms were accepted as default from vendor templates without scrutiny.</p>
+    </div>
+
+    <div class="why-card">
+        <h4>Why 4 &mdash; Why was there no data minimization review gate in vendor procurement?</h4>
+        <p>Because the vendor risk management programme assessed vendors against a standardized questionnaire that asked whether appropriate controls existed (Yes/No format) but did not require teams to consider the data sharing design from a minimization-first perspective. Vendors were assessed on their ability to <em>protect</em> data, not on whether the data should be shared at all. The DPO was consulted at onboarding but did not have veto power or mandatory review status for non-financial vendor relationships.</p>
+    </div>
+
+    <div class="why-card">
+        <h4>Why 5 &mdash; Why did the vendor risk management programme not embed minimization as a first principle?</h4>
+        <p>Because third-party risk management at NovaAI Labs was treated as a security compliance function &mdash; "ensure vendors have appropriate controls" &mdash; rather than as a privacy and data governance function &mdash; "minimize the data we share with any third party so that exposure if they fail is limited." This reflected the organizational structure at the time: TPRM sat under CISO/Security, not as a joint CISO + DPO + Privacy function. The principle that "the data not shared cannot be leaked" was known but not operationalized into vendor controls.</p>
+    </div>
+
+    <div class="callout">
+        <strong>Root Cause:</strong> NovaAI Labs treated vendor risk as primarily a vendor-security <em>assurance</em> problem rather than a data-minimization and privacy-by-design problem. The organization trusted that vendors would protect data that did not need to be there in the first place.
+    </div>
+    <div class="callout-amber">
+        <strong>Secondary Root Cause:</strong> The gap between third-party attestations (SOC 2) and actual operational security at the vendor. DataPulse's SOC 2 Type II certification stated multi-factor authentication was enforced for internal tools, but in practice this control was not operational at the time of the breach.
+    </div>
+
+    <h3>4.2 Contributing Factors</h3>
+
+    <div class="risk-card">
+        <h3>CF-1 &mdash; Over-Sharing of Customer Data with Analytics Vendor</h3>
+        <p>The analytics data sent to DataPulse included customer names, emails, organization details, and location metadata that were not required for the product analytics use cases actually performed. This was convenient telemetry, not necessary telemetry. The principle of data minimization was not applied to the outbound vendor data flow.</p>
+        <p><strong>Implication:</strong> Data minimization must be applied to outbound vendor data flows, not just inbound data collection from customers.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>CF-2 &mdash; SOC 2 Certification Treated as Sufficient Evidence of Security</h3>
+        <p>DataPulse's SOC 2 Type II report was treated as definitive proof of security posture during onboarding. But SOC 2 reports describe controls at a point in time and depend on the accuracy of management assertions. SOC 2 does not guarantee controls operate effectively on every day thereafter. NovaAI Labs did not conduct independent technical verification of critical controls like MFA enforcement.</p>
+        <p><strong>Implication:</strong> Vendor security evidence should include technical verification for critical controls, not solely reliance on attestations.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>CF-3 &mdash; No Indefinite Data Retention Gate</h3>
+        <p>DataPulse's standard contract allowed indefinite retention of analytics data. NovaAI Labs accepted these terms. As a result, nearly two years of customer data accumulated in DataPulse systems. Had retention been capped at 90 days, the exposure would have been dramatically smaller.</p>
+        <p><strong>Implication:</strong> Vendor contracts must include specific retention limits proportionate to the business need.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>CF-4 &mdash; Third-Party Risk Management Under-Resourced</h3>
+        <p>At the time of the incident, NovaAI Labs' TPRM function consisted of <strong>1.5 FTE managing over 340 vendor relationships</strong>. Capacity constraints meant vendor reviews were shallow and vendor lifecycle monitoring was minimal. There was no scheduled reassessment cadence for existing vendors after initial onboarding.</p>
+        <p><strong>Implication:</strong> TPRM must be resourced proportionately to the vendor portfolio risk profile.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>CF-5 &mdash; No Data Flow Mapping for Vendor Relationships</h3>
+        <p>NovaAI Labs did not maintain a comprehensive data flow map showing what customer data was sent to which vendors and for what purpose. When the DataPulse breach occurred, it took nearly 48 hours to confidently confirm exactly what data had been exposed, because the data flow was not documented. This delayed both investigation and customer notification.</p>
+        <p><strong>Implication:</strong> Maintaining data flow maps for vendor relationships is essential for both preventive governance and incident response readiness.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>CF-6 &mdash; Recurring Pattern: Data Minimization Gap</h3>
+        <p>This incident echoes the July 2024 plain-text credential storage vulnerability, where NovaAI Labs was storing authentication tokens in clear text within operational logs. Both incidents reflect the same underlying issue: data being held (or shared) beyond its functional need, creating exposure that would not exist if data minimization were rigorously practiced. The 2024 incident lessons were not fully operationalized into third-party practices.</p>
+        <p><strong>Implication:</strong> Lessons from one part of the organization must be propagated across functions. The 2024 incident should have triggered a systematic data minimization review across all data stores and flows, including vendor data sharing.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>CF-7 &mdash; DataPulse Multi-Factor Authentication Gap</h3>
+        <p>At the vendor side, DataPulse had represented in their SOC 2 audit that multi-factor authentication was enforced for all employees with access to customer data. This was not operational at the time of the breach. Their phished employee had single-factor credential access. This is primarily a DataPulse failure, but NovaAI Labs had relied on the assertion without verification.</p>
+        <p><strong>Implication:</strong> Critical control assertions from vendors warrant independent verification for vendors handling significant customer data.</p>
+    </div>
+
+    <h3>4.3 Corrective Action Plan (12 Actions)</h3>
+    <table class="risk-table">
+        <thead><tr><th>Action</th><th>Root Cause / CF</th><th>Owner</th><th>Due</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr><td>Terminate DataPulse relationship and migrate to alternative vendor</td><td>Direct</td><td>CISO + Product</td><td>31 Jan 2026</td><td class="risk-low">Complete</td></tr>
+            <tr><td>Implement mandatory data minimization review gate in vendor procurement</td><td>Root, CF-1</td><td>TPRM + DPO</td><td>31 Mar 2026</td><td class="risk-low">Complete</td></tr>
+            <tr><td>Require data flow mapping for all new vendor data-sharing relationships</td><td>CF-5</td><td>TPRM + DPO</td><td>30 Apr 2026</td><td class="risk-medium">In progress</td></tr>
+            <tr><td>Retrospective data flow mapping for top 50 existing vendors</td><td>CF-5</td><td>TPRM</td><td>30 Jun 2026</td><td class="risk-medium">In progress</td></tr>
+            <tr><td>Mandatory retention caps in all vendor contracts (max 365 days default)</td><td>CF-3</td><td>Legal + Procurement</td><td>31 May 2026</td><td class="risk-medium">In progress</td></tr>
+            <tr><td>Restructure TPRM as joint CISO + DPO + Privacy function with expanded staffing</td><td>Root, CF-4</td><td>CRO + CISO + DPO</td><td>30 Jun 2026</td><td class="risk-medium">In progress</td></tr>
+            <tr><td>Mandatory technical verification of MFA &amp; critical access controls for vendors handling &gt;100k records</td><td>CF-2, CF-7</td><td>CISO</td><td>31 Jul 2026</td><td class="risk-high">Not started</td></tr>
+            <tr><td>Annual vendor reassessment cadence for all vendors handling PII</td><td>CF-4</td><td>TPRM</td><td>30 Sep 2026</td><td class="risk-high">Not started</td></tr>
+            <tr><td>Organization-wide data minimization programme &mdash; internal stores, logs, vendor flows</td><td>CF-6</td><td>DPO + CISO</td><td>31 Dec 2026</td><td class="risk-medium">In progress</td></tr>
+            <tr><td>Update Responsible AI Policy and Third-Party Risk Policy to reference learnings</td><td>Root</td><td>AGO + CRO</td><td>30 Apr 2026</td><td class="risk-low">Complete</td></tr>
+            <tr><td>Mandatory vendor incident response playbook and testing</td><td>CF-5</td><td>CISO + AGO</td><td>30 Jun 2026</td><td class="risk-high">Not started</td></tr>
+            <tr><td>Customer-facing data transparency: publish list of sub-processors and data types</td><td>Transparency</td><td>DPO + Communications</td><td>30 Sep 2026</td><td class="risk-high">Not started</td></tr>
+        </tbody>
+    </table>
+
+    <h3>4.4 Lessons Learned</h3>
+    <h4>For Third-Party Risk Management</h4>
+    <ol>
+        <li><strong>The data we don't share can't be leaked.</strong> Minimization is a more robust defense than any vendor control, because it removes the exposure surface entirely. Every vendor data-sharing decision should begin with "what is the minimum we need?" not "what controls does the vendor have?"</li>
+        <li><strong>Vendor attestations are representations, not guarantees.</strong> SOC 2 certification indicates that controls existed at the time of audit per management assertion. It does not indicate controls operate daily. For critical controls on vendors handling significant customer data, technical verification is warranted.</li>
+        <li><strong>Retention caps should be contractual defaults.</strong> Default vendor contracts allow indefinite retention. That is a design choice, not a necessity. Retention should be capped proportionate to functional need, with explicit renewal required.</li>
+        <li><strong>Third-party risk requires dedicated capacity.</strong> Under-resourced TPRM functions default to shallow checklist reviews. The NovaAI Labs TPRM function was handling 340 vendors with 1.5 FTE &mdash; a ratio that cannot produce quality reviews regardless of team effort.</li>
+        <li><strong>Lessons must propagate across functions.</strong> The July 2024 credential exposure should have triggered a systematic data minimization review. It did not. Post-incident learning requires explicit propagation mechanisms.</li>
+        <li><strong>Data flow mapping is an operational necessity, not a compliance artifact.</strong> When the breach hit, the team did not know exactly what data had been exposed. That delay cost trust. Data flow maps must be maintained as operational tooling.</li>
+    </ol>
+    <h4>For Culture &amp; Governance</h4>
+    <ol start="7">
+        <li><strong>Trust incidents compound.</strong> This was NovaAI Labs' second major customer trust incident in 18 months. Each on its own is recoverable; recurring incidents erode the foundation. Governance investment must be proportionate to the risk of recurring failures, not just one-off events.</li>
+        <li><strong>"Responsible AI leader" requires responsible data handling.</strong> Responsibility is more than model safety &mdash; it includes operational discipline around customer data. The two cannot be separated.</li>
+        <li><strong>Transparency in disclosure matters.</strong> The 18-day disclosure timeline was faster than several industry comparators. Fast, clear, proactive disclosure preserves more trust than slow, defensive disclosure. This lesson should shape future incident response default.</li>
+    </ol>
+
+    <!-- 5. Program Summary -->
+    <h2>5. Program Summary</h2>
+    <table class="info-table">
+        <tr><th>Incident</th><td>NVA-INC-2025-007 &mdash; DataPulse Analytics Third-Party Breach</td></tr>
+        <tr><th>Severity / Status</th><td>1 (Critical) &bull; Closed 15 April 2026</td></tr>
+        <tr><th>Documents Delivered</th><td>Incident Scenario &bull; Incident Response Timeline &bull; Root Cause Analysis Report</td></tr>
+        <tr><th>Affected Population</th><td>847,312 customer records &bull; 31,243 enterprise organizations &bull; 55 regulatory jurisdictions</td></tr>
+        <tr><th>Root Cause</th><td>Vendor risk treated as security-assurance rather than data-minimization &amp; privacy-by-design</td></tr>
+        <tr><th>Contributing Factors</th><td>7 (Over-sharing &bull; SOC 2 over-reliance &bull; No retention cap &bull; Under-resourced TPRM &bull; No data flow maps &bull; Recurring minimization gap &bull; DataPulse MFA gap)</td></tr>
+        <tr><th>Corrective Actions</th><td>12 actions &bull; 3 Complete, 5 In Progress, 4 Not Started (as of April 2026)</td></tr>
+        <tr><th>Customer Churn</th><td><span class="score score-low">1.2%</span> (vs 5% worst-case projection)</td></tr>
+        <tr><th>Total Response Cost</th><td>$22.5M (notification $4.2M + monitoring $11.8M + forensic $6.5M)</td></tr>
+        <tr><th>Regulatory Anchors</th><td>GDPR Art. 33/34, EU AI Act Art. 73, CCPA/CPRA, NY SHIELD, Texas, SEC materiality</td></tr>
+        <tr><th>Approvals</th><td>RCA approved by AI Governance Committee 15 Mar 2026 &bull; Endorsed by Board AI Safety Sub-Committee 22 Mar 2026</td></tr>
+    </table>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti &bull; GRC Analyst Portfolio
+</footer>
+
+</body>
+</html>

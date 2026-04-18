@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Governance & ISO 42001 — MindfulAI Labs | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --shadow-md: 0 6px 20px rgba(41,37,36,0.08);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+
+        /* Nav */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: linear-gradient(180deg, #292524 0%, #1c1917 100%);
+            border-bottom: 1px solid #44403c;
+            box-shadow: 0 4px 16px rgba(41, 37, 36, 0.3);
+            padding: 0 2rem;
+        }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #ffffff; text-decoration: none; }
+        .nav-logo span { color: #ffffff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; transition: color 0.2s; }
+        .back-link:hover { color: #fb923c; }
+
+        /* Hero banner */
+        .project-hero {
+            padding: 7rem 2rem 3rem;
+            background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%);
+            border-bottom: 1px solid var(--border);
+        }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #f3e8ff; color: #7c3aed; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+
+        /* Download button */
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            margin-top: 1.5rem; padding: 0.65rem 1.4rem;
+            background: var(--primary); color: #fff;
+            font-size: 0.85rem; font-weight: 600;
+            border-radius: var(--radius); text-decoration: none;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 2px 6px rgba(194,65,12,0.25);
+        }
+        .download-btn:hover { background: #9a3412; transform: translateY(-1px); }
+        .download-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+        /* Content */
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+
+        /* Tables */
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+
+        /* Risk table */
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+
+        /* Cards */
+        .risk-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow);
+        }
+        .risk-card h3 { margin-top: 0; }
+        .risk-card .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+
+        /* Control mapping */
+        .mapping-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.82rem; text-align: center; }
+        .mapping-table th { background: #1c1917; color: #fef2e8; padding: 0.5rem; border: 1px solid #44403c; }
+        .mapping-table td { padding: 0.5rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .map-primary { background: #dcfce7 !important; color: #15803d; font-weight: 700; font-size: 0.75rem; }
+        .map-secondary { background: #dbeafe !important; color: #1d4ed8; font-weight: 600; font-size: 0.75rem; }
+
+        /* Status badges */
+        .status-complete { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-progress { background: #fff7ed; color: #c2410c; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+
+        /* Footer */
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+
+        @media (max-width: 768px) {
+            .project-hero h1 { font-size: 1.8rem; }
+            .info-table th { width: 120px; }
+            .meta-row { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">AI Governance</span>
+        <h1>AI Governance &amp; ISO 42001 Implementation &mdash; <em>MindfulAI Labs</em></h1>
+        <p class="subtitle">End-to-end AI governance program for high-risk healthcare diagnostics &amp; financial risk scoring AI systems</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> MindfulAI Labs (200 employees)</div>
+            <div class="meta-item"><strong>Industry:</strong> Healthcare &amp; Financial AI</div>
+            <div class="meta-item"><strong>Frameworks:</strong> ISO 42001, NIST AI RMF, EU AI Act</div>
+        </div>
+        <a href="../assets/pdfs/MindfulAI.pdf" download class="download-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+            Download Full Report (PDF)
+        </a>
+    </div>
+</div>
+
+<div class="content">
+
+    <h2>1. Executive Summary</h2>
+    <p>MindfulAI Labs is a 200-employee AI company headquartered in Toronto, developing machine learning models for healthcare diagnostics (medical imaging analysis, clinical decision support) and financial risk scoring (credit decisioning, fraud detection, AML). The company serves clients across Canada and the EU, placing it under the EU AI Act, Canada's AIDA, GDPR, PIPEDA, and sector-specific regulations.</p>
+    <p>This project implements an AI Management System (AIMS) aligned with ISO/IEC 42001:2023 &mdash; the world's first international standard for AI governance. The project inventories 5 AI systems, assesses 6 AI-specific risks, implements 10 governance controls, and establishes 4 policies for responsible AI.</p>
+
+    <h2>2. AI System Inventory &mdash; 5 AI Systems</h2>
+
+    <div class="risk-card">
+        <h3>System 1: MedVision AI &mdash; Medical Imaging Diagnostic Model</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>VP of Healthcare AI</td></tr>
+            <tr><th>Description</th><td>Deep learning CNN analyzing X-rays, CT scans, and MRIs for cancer detection, brain hemorrhages, and fractures. Deployed in 45 hospitals (Canada) + 20 EU institutions. Processes 15,000 images daily. 94.2% sensitivity, 96.8% specificity. Trained on 2.8M annotated images from 120 institutions across 15 countries.</td></tr>
+            <tr><th>Regulation</th><td>EU AI Act High-Risk (Annex III), EU MDR Class IIa Medical Device, Health Canada SaMD</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 2: CreditLens AI &mdash; Financial Credit Risk Scoring</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>VP of Financial AI</td></tr>
+            <tr><th>Description</th><td>Gradient boosted decision tree ensemble for credit decisioning, risk-based pricing, and portfolio monitoring. Serves 12 Canadian banks + 8 EU financial institutions. 50,000 credit decisions daily. 142 input features, trained on 15 years of credit data (8.5M accounts).</td></tr>
+            <tr><th>Regulation</th><td>EU AI Act High-Risk (Annex III 5b), ECOA, OSFI E-23, EBA Guidelines</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 3: FraudShield AI &mdash; Real-Time Transaction Fraud Detection</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>High</td></tr>
+            <tr><th>Owner</th><td>VP of Financial AI</td></tr>
+            <tr><th>Description</th><td>Ensemble model (anomaly detection + supervised classification + graph neural network) monitoring 2.3M transactions daily for 15 financial institutions. 89% fraud detection rate, 0.3% false positive rate. Response time under 100ms. Updated monthly with new fraud patterns.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 4: AI Training Data Platform (Data Lake &amp; Feature Store)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Chief Data Officer</td></tr>
+            <tr><th>Description</th><td>Centralized platform storing all training data: 2.8M medical images, 8.5M credit accounts, 5M fraud/legitimate transaction pairs. Includes feature engineering pipelines, data versioning, demographic metadata for fairness analysis, and consent tracking. Built on AWS S3 + Glue + custom feature store.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 5: AI Model Registry &amp; Deployment Platform (MLOps)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>High</td></tr>
+            <tr><th>Owner</th><td>Director of MLOps</td></tr>
+            <tr><th>Description</th><td>MLflow-based platform managing the complete AI lifecycle: version control, A/B testing (5% &rarr; 100% rollout), model monitoring for drift detection, automated fairness reporting, human approval gates, and instant rollback capability. 7-year model retention for regulatory compliance.</td></tr>
+        </table>
+    </div>
+
+    <h2>3. AI Risk Assessment &mdash; 6 Risks</h2>
+
+    <div class="risk-card">
+        <h3>R-01: Algorithmic Bias in Healthcare Diagnostics</h3>
+        <span class="score score-critical">CRITICAL &mdash; Score: 15 (L:3 x I:5)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>MedVision may perform differently across demographic groups if training data is not sufficiently representative</li>
+            <li>94.2% overall sensitivity may not be uniform &mdash; could be 96% for one group and 88% for another</li>
+            <li>Biased diagnostics could miss cancers in underserved populations (life-threatening)</li>
+            <li>Violates EU AI Act non-discrimination requirements (penalty up to 7% of turnover)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>R-02: Lack of AI Explainability &mdash; Regulatory Non-Compliance</h3>
+        <span class="score score-critical">CRITICAL &mdash; Score: 16 (L:4 x I:4)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>EU AI Act Article 13 requires high-risk AI to be sufficiently transparent</li>
+            <li>MedVision (CNN) is a &ldquo;black box&rdquo; &mdash; provides heatmaps but no text explanations</li>
+            <li>CreditLens provides top 5 features but not in consumer-friendly language</li>
+            <li>Financial regulations require specific reasons for credit denial (adverse action notices)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>R-03: AI Model Drift &mdash; Degraded Performance Without Detection</h3>
+        <span class="score score-critical">CRITICAL &mdash; Score: 16 (L:4 x I:4)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>Data drift: new scanner models produce images with different characteristics</li>
+            <li>Concept drift: post-pandemic economic conditions changed default patterns</li>
+            <li>If MedVision sensitivity drops from 94.2% to 87%, dozens of missed diagnoses per day</li>
+            <li>EU AI Act Article 61 requires post-market monitoring for high-risk AI</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>R-04: Training Data Privacy Violations (GDPR &amp; PIPEDA)</h3>
+        <span class="score score-high">HIGH &mdash; Score: 12 (L:3 x I:4)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>2.8M medical images are personal data under GDPR &mdash; consent scope may not cover AI training</li>
+            <li>Cross-border transfers (EU &rarr; Canada) require GDPR Chapter V safeguards</li>
+            <li>Right to erasure challenge: model has &ldquo;learned&rdquo; from data even after deletion</li>
+            <li>GDPR violations carry penalties up to EUR 20M or 4% of turnover</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>R-05: Insufficient Human Oversight &mdash; Automated Decisions Without Accountability</h3>
+        <span class="score score-critical">CRITICAL &mdash; Score: 15 (L:3 x I:5)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>Automation bias: radiologists may defer to AI even when it is wrong</li>
+            <li>Alert fatigue: 6,900 daily false positives may cause analysts to ignore real fraud</li>
+            <li>Skill degradation: radiologist diagnostic skills may atrophy over time</li>
+            <li>EU AI Act Article 14 requires effective human oversight for high-risk AI</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>R-06: EU AI Act Non-Compliance &mdash; Incomplete Conformity Assessment</h3>
+        <span class="score score-critical">CRITICAL &mdash; Score: 20 (L:4 x I:5)</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>Healthcare AI requires third-party conformity assessment through EU notified body</li>
+            <li>Technical documentation is only 70% complete; no EU authorized representative designated</li>
+            <li>Non-compliance blocks EU market access (40% of revenue)</li>
+            <li>Penalties up to EUR 35M or 7% of global turnover</li>
+        </ul>
+    </div>
+
+    <h2>4. Risk Summary</h2>
+    <table class="risk-table">
+        <tr><th>#</th><th>Risk Title</th><th>L</th><th>I</th><th>Score</th><th>Rating</th><th>Category</th></tr>
+        <tr><td>R-01</td><td>Algorithmic Bias in Healthcare</td><td>3</td><td>5</td><td class="risk-critical">15</td><td class="risk-critical">CRITICAL</td><td>Application Security</td></tr>
+        <tr><td>R-02</td><td>Lack of AI Explainability</td><td>4</td><td>4</td><td class="risk-critical">16</td><td class="risk-critical">CRITICAL</td><td>Compliance</td></tr>
+        <tr><td>R-03</td><td>AI Model Drift</td><td>4</td><td>4</td><td class="risk-critical">16</td><td class="risk-critical">CRITICAL</td><td>Availability</td></tr>
+        <tr><td>R-04</td><td>Training Data Privacy Violations</td><td>3</td><td>4</td><td class="risk-high">12</td><td class="risk-high">HIGH</td><td>Data Protection</td></tr>
+        <tr><td>R-05</td><td>Insufficient Human Oversight</td><td>3</td><td>5</td><td class="risk-critical">15</td><td class="risk-critical">CRITICAL</td><td>Human Error</td></tr>
+        <tr><td>R-06</td><td>EU AI Act Non-Compliance</td><td>4</td><td>5</td><td class="risk-critical">20</td><td class="risk-critical">CRITICAL</td><td>Compliance</td></tr>
+    </table>
+
+    <h2>5. AI Governance Controls &mdash; 10 Controls</h2>
+
+    <div class="risk-card">
+        <h3>C-01: AI Risk Assessment Framework with Bias &amp; Fairness Testing</h3>
+        <p><strong>Mitigates:</strong> R-01 &nbsp;|&nbsp; <strong>ISO 42001:</strong> 6.1.2 &nbsp;|&nbsp; <strong>NIST AI RMF:</strong> MAP &amp; MEASURE &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 9</p>
+        <ul>
+            <li>Formal risk assessment for every model before deployment and quarterly in production</li>
+            <li>6 dimensions: bias/fairness, safety, transparency, privacy, security, accountability</li>
+            <li>MedVision: sensitivity/specificity per demographic group (max 5% disparity allowed)</li>
+            <li>CreditLens: approval rate ratios tested against ECOA adverse impact thresholds</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-02: Algorithmic Fairness Testing with Demographic Parity Monitoring</h3>
+        <p><strong>Mitigates:</strong> R-01 &nbsp;|&nbsp; <strong>ISO 42001:</strong> 6.1.4 &nbsp;|&nbsp; <strong>NIST AI RMF:</strong> MEASURE 2.6-2.11 &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 10</p>
+        <ul>
+            <li>Automated fairness pipeline evaluating every model version before deployment</li>
+            <li>Metrics: statistical parity, equalized odds, disparate impact ratio (&gt;0.8), calibration</li>
+            <li>MedVision: weekly fairness dashboards; alert if any group sensitivity drops below 90%</li>
+            <li>CreditLens: monthly fair lending reports reviewed by Fair Lending Committee</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-03: AI Explainability &amp; Transparency Framework</h3>
+        <p><strong>Mitigates:</strong> R-02 &nbsp;|&nbsp; <strong>ISO 42001:</strong> Annex B &nbsp;|&nbsp; <strong>NIST AI RMF:</strong> GOVERN 1.7 &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 13</p>
+        <ul>
+            <li>4-layer explainability: Technical (SHAP/LIME), Deployer (capability statements), User (confidence scores), Individual (plain-language)</li>
+            <li>MedVision: Grad-CAM heatmaps + text explanation of findings with confidence percentage</li>
+            <li>CreditLens: adverse action notices with top 4 contributing factors in consumer-friendly language</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-04: Human Oversight Protocol with Blind-First-Read</h3>
+        <p><strong>Mitigates:</strong> R-05 &nbsp;|&nbsp; <strong>ISO 42001:</strong> Annex C &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 14 &nbsp;|&nbsp; <strong>NIST AI RMF:</strong> GOVERN 1.3</p>
+        <ul>
+            <li>MedVision: radiologist performs own assessment BEFORE seeing AI output (prevents automation bias)</li>
+            <li>CreditLens: human decision required for all applications &gt;$50K and all AI-recommended denials</li>
+            <li>FraudShield: &gt;95% confidence = auto-block; 70-95% = human review within 30 min; one-click customer override</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-05: Training Data Governance with Representativeness &amp; Consent</h3>
+        <p><strong>Mitigates:</strong> R-04 &nbsp;|&nbsp; <strong>ISO 42001:</strong> Annex A.2 &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 10 &nbsp;|&nbsp; <strong>NIST AI RMF:</strong> MAP 2.1-2.3</p>
+        <ul>
+            <li>No single demographic group &gt;60% of any training dataset; minimum 500 samples per subgroup</li>
+            <li>All medical data tracked by consent type (IRB, explicit patient consent, anonymized)</li>
+            <li>Automated bias detection in training data comparing outcome distributions across protected groups</li>
+            <li>GDPR compliance: DPIA for all training datasets, Article 30 records, documented legal basis</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-06: AI Model Lifecycle Management with Version Control</h3>
+        <p><strong>Mitigates:</strong> R-03 &nbsp;|&nbsp; <strong>ISO 42001:</strong> 8.4 &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 9(2) &nbsp;|&nbsp; <strong>NIST AI RMF:</strong> MANAGE 3.1-3.2</p>
+        <ul>
+            <li>Staged A/B rollout: 5% traffic initially, scaling to 100% after 2-week validation</li>
+            <li>Multi-stage validation: accuracy, fairness, adversarial robustness, performance, regression testing</li>
+            <li>Human approval gate required before production deployment</li>
+            <li>Every model version retained with full reproducibility for 7 years</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-07: Continuous AI Monitoring with Drift Detection</h3>
+        <p><strong>Mitigates:</strong> R-03 &nbsp;|&nbsp; <strong>ISO 42001:</strong> 9.1 &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 61 &nbsp;|&nbsp; <strong>NIST AI RMF:</strong> MANAGE 4.1</p>
+        <ul>
+            <li>Data drift detection via KS test and PSI comparing current vs training distributions</li>
+            <li>Fairness drift: demographic-specific metrics tracked continuously with automated alerting</li>
+            <li>Health dashboard: GREEN (within thresholds), YELLOW (approaching), RED (immediate investigation)</li>
+            <li>RED alerts trigger incident response and potential model rollback</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-08: Adversarial Robustness Testing</h3>
+        <p><strong>Mitigates:</strong> R-01, R-03 &nbsp;|&nbsp; <strong>ISO 42001:</strong> Annex B.4 &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 15 &nbsp;|&nbsp; <strong>NIST AI RMF:</strong> MEASURE 2.6</p>
+        <ul>
+            <li>Evasion attacks: testing if small pixel modifications can cause misclassification in medical images</li>
+            <li>Data poisoning: verifying training pipeline detects and rejects anomalous examples</li>
+            <li>Model extraction: testing if model behavior can be replicated through extensive querying</li>
+            <li>Red team exercises using IBM ART and Microsoft Counterfit frameworks</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-09: AI Incident Response &amp; Model Rollback</h3>
+        <p><strong>Mitigates:</strong> R-01, R-03, R-05 &nbsp;|&nbsp; <strong>ISO 42001:</strong> Annex A.7 &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 62 &nbsp;|&nbsp; <strong>NIST AI RMF:</strong> MANAGE 4.2</p>
+        <ul>
+            <li>P1: healthcare safety metric breached &rarr; immediate model suspension + fallback to manual reading</li>
+            <li>P2: fairness metric breached &rarr; pause model for affected subgroup + investigation</li>
+            <li>EU AI Act Art. 62: serious incidents reported to market surveillance authority immediately</li>
+            <li>Quarterly tabletop exercises simulating AI-specific incident scenarios</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-10: EU AI Act Conformity Assessment Preparation</h3>
+        <p><strong>Mitigates:</strong> R-06 &nbsp;|&nbsp; <strong>ISO 42001:</strong> 10.1 &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 43, Art. 11</p>
+        <ul>
+            <li>Technical documentation per Annex IV: design specs, training data, performance metrics, risk management</li>
+            <li>Quality management system per Art. 17: policies and procedures for all AI lifecycle activities</li>
+            <li>EU Declaration of Conformity per Art. 47 for each high-risk AI system</li>
+            <li>Status: 70% complete &mdash; full compliance targeted by Q4 2026</li>
+        </ul>
+    </div>
+
+    <h2>6. Control-to-Risk Mapping</h2>
+    <table class="mapping-table">
+        <tr><th>Control</th><th>R-01</th><th>R-02</th><th>R-03</th><th>R-04</th><th>R-05</th><th>R-06</th></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-01: AI Risk Assessment</td><td class="map-primary">PRIMARY</td><td></td><td></td><td></td><td></td><td class="map-secondary">SECONDARY</td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-02: Fairness Testing</td><td class="map-primary">PRIMARY</td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-03: Explainability</td><td></td><td class="map-primary">PRIMARY</td><td></td><td></td><td></td><td class="map-secondary">SECONDARY</td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-04: Human Oversight</td><td></td><td></td><td></td><td></td><td class="map-primary">PRIMARY</td><td></td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-05: Data Governance</td><td class="map-secondary">SECONDARY</td><td></td><td></td><td class="map-primary">PRIMARY</td><td></td><td></td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-06: Lifecycle Mgmt</td><td></td><td></td><td class="map-primary">PRIMARY</td><td></td><td></td><td></td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-07: Drift Detection</td><td></td><td></td><td class="map-primary">PRIMARY</td><td></td><td></td><td></td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-08: Adversarial Testing</td><td class="map-secondary">SECONDARY</td><td></td><td class="map-secondary">SECONDARY</td><td></td><td></td><td></td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-09: Incident Response</td><td class="map-secondary">SECONDARY</td><td></td><td class="map-secondary">SECONDARY</td><td></td><td class="map-secondary">SECONDARY</td><td></td></tr>
+        <tr><td style="text-align:left; font-weight:600;">C-10: Conformity Assessment</td><td></td><td></td><td></td><td></td><td></td><td class="map-primary">PRIMARY</td></tr>
+    </table>
+
+    <h2>7. AI Governance Policies &mdash; 4 Policies</h2>
+
+    <div class="risk-card">
+        <h3>Policy 1: Responsible AI Development &amp; Deployment Policy</h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>CEO</td></tr>
+            <tr><th>Status</th><td>Approved</td></tr>
+        </table>
+        <ul>
+            <li><strong>Human-Centered AI:</strong> All AI systems augment human decisions, not replace them</li>
+            <li><strong>Fairness:</strong> Mandatory bias testing across protected characteristics before deployment</li>
+            <li><strong>Transparency:</strong> No black-box decisions affecting individuals without human review</li>
+            <li><strong>Safety:</strong> Healthcare AI requires clinical validation; financial AI requires model validation</li>
+            <li><strong>Privacy:</strong> Compliance with GDPR, PIPEDA, and applicable data protection laws</li>
+            <li><strong>Accountability:</strong> Every AI system has a designated owner, oversight authority, and escalation path</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Policy 2: AI Fairness &amp; Bias Mitigation Policy</h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>AI Governance Lead</td></tr>
+            <tr><th>Status</th><td>Approved</td></tr>
+        </table>
+        <ul>
+            <li>Protected characteristics: age, gender, race/ethnicity, disability, religion, sexual orientation, socioeconomic status</li>
+            <li>Fairness testing is MANDATORY before deployment &mdash; no production release without AI Ethics Committee approval</li>
+            <li>Proxy variable analysis required (e.g., postal code as proxy for ethnicity)</li>
+            <li>When bias is confirmed: remediation via additional training data, feature modification, or model withdrawal</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Policy 3: AI Data Governance &amp; Privacy Policy</h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>Chief Data Officer</td></tr>
+            <tr><th>Status</th><td>Approved</td></tr>
+        </table>
+        <ul>
+            <li>Every training dataset must have documented legal basis under GDPR and PIPEDA</li>
+            <li>Data minimization: de-identify/anonymize where possible without compromising model quality</li>
+            <li>Cross-border transfers via Standard Contractual Clauses (GDPR Chapter V)</li>
+            <li>Right to erasure process including assessment of impact on trained models</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Policy 4: AI Incident Response &amp; Escalation Policy</h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>AI Governance Lead</td></tr>
+            <tr><th>Status</th><td>Approved</td></tr>
+        </table>
+        <ul>
+            <li>P1 (healthcare safety): immediate suspension + fallback + regulatory notification</li>
+            <li>P2 (fairness breach): model pause for affected subgroup + investigation</li>
+            <li>P3 (performance degradation): investigation + potential retraining</li>
+            <li>EU AI Act Art. 62: serious incidents reported to market surveillance authority within 15 days</li>
+        </ul>
+    </div>
+
+    <h2>8. Program Summary</h2>
+    <table class="risk-table">
+        <tr><th>Component</th><th>Details</th><th>Status</th></tr>
+        <tr><td><strong>AI Systems</strong></td><td>5 inventoried with lifecycle tracking</td><td><span class="status-complete">Complete</span></td></tr>
+        <tr><td><strong>AI Risks</strong></td><td>6 assessed (5 Critical, 1 High)</td><td><span class="status-complete">Documented</span></td></tr>
+        <tr><td><strong>AI Controls</strong></td><td>10 implemented (9 Effective, 1 Partially Effective)</td><td><span class="status-complete">Operational</span></td></tr>
+        <tr><td><strong>Policies</strong></td><td>4 approved (Responsible AI, Fairness, Data Gov, Incident)</td><td><span class="status-complete">Approved</span></td></tr>
+        <tr><td><strong>EU AI Act</strong></td><td>Conformity assessment prep 70% complete</td><td><span class="status-progress">In Progress</span></td></tr>
+        <tr><td><strong>ISO 42001</strong></td><td>AIMS implemented, certification targeted Q1 2027</td><td><span class="status-progress">In Progress</span></td></tr>
+    </table>
+
+</div>
+
+<footer>
+    <p><a href="../index.html#projects" style="color: var(--primary); text-decoration: none; font-weight: 600;">&larr; Back to All Projects</a></p>
+    <p style="margin-top: 0.75rem;">&copy; 2026 Tejaswini Dondeti. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

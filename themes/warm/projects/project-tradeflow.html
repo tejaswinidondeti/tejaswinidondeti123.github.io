@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeFlow Cyber &amp; AI Risk Program | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #eff6ff 0%, #faf7f2 40%, #dbeafe 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #dbeafe; color: #1d4ed8; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h2:first-child { margin-top: 0; }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content h4 { font-size: 1rem; font-weight: 600; margin: 1.2rem 0 0.5rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-medium { background: #fefce8 !important; color: #a16207; font-weight: 700; }
+        .risk-low { background: #f0fdf4 !important; color: #15803d; font-weight: 700; }
+
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .risk-card h4 { margin-top: 0.5rem; }
+
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .score-medium { background: #fefce8; color: #a16207; }
+        .score-low { background: #f0fdf4; color: #15803d; }
+
+        .status-green { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-amber { background: #fefce8; color: #a16207; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+
+        .doc-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin: 0.75rem 0; box-shadow: var(--shadow); display: flex; align-items: flex-start; gap: 1rem; }
+        .doc-num { background: #1d4ed8; color: #fff; font-weight: 700; font-size: 0.8rem; min-width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .doc-info h4 { margin: 0 0 0.25rem; font-size: 0.95rem; }
+        .doc-info p { margin: 0; font-size: 0.82rem; color: var(--text-light); }
+
+        .callout { background: #eff6ff; border-left: 4px solid #1d4ed8; padding: 1rem 1.25rem; border-radius: 0 var(--radius) var(--radius) 0; margin: 1.25rem 0; font-size: 0.9rem; }
+        .callout-amber { background: #fffbeb; border-left-color: #d97706; }
+        .callout-red { background: #fef2f2; border-left-color: #b91c1c; }
+
+        .flow-box { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; align-items: center; }
+        .flow-step { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.5rem 1rem; font-size: 0.82rem; font-weight: 600; }
+        .flow-arrow { color: var(--text-light); font-size: 1.2rem; }
+
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } .doc-card { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Cyber &amp; AI Risk</span>
+        <h1>Cyber &amp; AI Risk Program &mdash; <em>TradeFlow Inc.</em></h1>
+        <p class="subtitle">End-to-end cyber and AI risk program for a multi-regulated fintech broker-dealer: 12-risk cyber register mapped to NIST CSF &amp; ISO 27001, 10-risk AI register aligned to NIST AI RMF &amp; EU AI Act, third-party vendor assessment of a critical market data provider, 3-jurisdiction regulatory landscape mapping, and a full AI governance policy with lifecycle controls, kill switch, and monitoring thresholds.</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> TradeFlow Inc. (250 employees)</div>
+            <div class="meta-item"><strong>Industry:</strong> Fintech / Broker-Dealer API</div>
+            <div class="meta-item"><strong>Frameworks:</strong> NIST CSF, ISO 27001, NIST AI RMF, EU AI Act, SEC/FINRA, GDPR, MiFID II, DORA</div>
+            <div class="meta-item"><strong>Scale:</strong> 200 Institutional Clients &bull; 6M Retail Accounts &bull; 35 Countries</div>
+            <div class="meta-item"><strong>Date:</strong> April 2026</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>TradeFlow Inc. is a US-headquartered, self-clearing broker-dealer that provides brokerage infrastructure via institutional-grade APIs. Founded in 2018 in Chicago, TradeFlow enables fintech companies, investment advisors, wealth managers, hedge funds, and neo-banks to embed trading functionality into their own applications. The company serves ~200 institutional clients powering ~6 million retail brokerage accounts across 35 countries, and is regulated by the SEC, FINRA, MiFID II (Dublin), and FCA (London).</p>
+    <p>In January 2026, TradeFlow launched <strong>TradeFlow Insight</strong> &mdash; a transformer-based AI recommendation engine providing personalised stock and ETF suggestions to 1.8 million retail accounts across 62 institutional clients. This project delivers a comprehensive 6-document cyber and AI risk programme covering the company profile, cyber risk assessment, AI risk assessment, vendor risk assessment, regulatory landscape mapping, and AI governance policy.</p>
+
+    <div class="doc-card"><div class="doc-num">1</div><div class="doc-info"><h4>Company &amp; System Profile</h4><p>Company overview, 3 products, GCP infrastructure, regulatory context, and TradeFlow Insight system details</p></div></div>
+    <div class="doc-card"><div class="doc-num">2</div><div class="doc-info"><h4>Cyber Risk Assessment</h4><p>12-risk register aligned to NIST CSF &amp; ISO 27001 &mdash; from API access to BC/DR</p></div></div>
+    <div class="doc-card"><div class="doc-num">3</div><div class="doc-info"><h4>AI Risk Assessment</h4><p>10-risk register aligned to NIST AI RMF &amp; EU AI Act &mdash; bias, explainability, regulatory classification, adversarial threats</p></div></div>
+    <div class="doc-card"><div class="doc-num">4</div><div class="doc-info"><h4>Third-Party Vendor Risk Assessment</h4><p>MarketBridge Data Solutions: 8-area security assessment, 6-risk vendor register, AI-specific vendor risks, contractual protections</p></div></div>
+    <div class="doc-card"><div class="doc-num">5</div><div class="doc-info"><h4>Regulatory Landscape &amp; Compliance Mapping</h4><p>3-jurisdiction regulatory analysis: US (SEC, FINRA), EU (AI Act, GDPR, MiFID II, DORA), UK (FCA)</p></div></div>
+    <div class="doc-card"><div class="doc-num">6</div><div class="doc-info"><h4>AI Governance Policy &amp; Controls</h4><p>Governance structure, model lifecycle, human oversight, kill switch, monitoring thresholds, incident response</p></div></div>
+
+    <!-- Document 1: Company & System Profile -->
+    <h2>2. Company &amp; System Profile</h2>
+
+    <table class="info-table">
+        <tr><th>Legal Name</th><td>TradeFlow Inc.</td></tr>
+        <tr><th>Headquarters</th><td>Chicago, Illinois, USA</td></tr>
+        <tr><th>Founded</th><td>2018</td></tr>
+        <tr><th>Funding</th><td>$280M across Series A&ndash;D</td></tr>
+        <tr><th>Employees</th><td>~250 (globally distributed)</td></tr>
+        <tr><th>Regulatory Status</th><td>SEC-registered broker-dealer, FINRA member, EU MiFID II authorised (Dublin), FCA authorised (London)</td></tr>
+        <tr><th>Clients</th><td>~200 institutional clients (fintechs, advisors, wealth managers, hedge funds)</td></tr>
+        <tr><th>End Users</th><td>~6 million brokerage accounts</td></tr>
+        <tr><th>Asset Classes</th><td>Stocks, ETFs, options, crypto, fixed income</td></tr>
+        <tr><th>Infrastructure</th><td>Google Cloud Platform (GCP), multi-region (us-central1, europe-west1)</td></tr>
+        <tr><th>Certifications</th><td>SOC 2 Type II, ISO 27001</td></tr>
+    </table>
+
+    <h3>Products &amp; Services</h3>
+    <div class="risk-card">
+        <h4>TradeFlow Brokerage API</h4>
+        <p>REST API enabling clients to embed trading, account management, and portfolio viewing. Handles order routing, settlement, custody, and regulatory reporting.</p>
+    </div>
+    <div class="risk-card">
+        <h4>TradeFlow Market Data Service</h4>
+        <p>Real-time and historical market data feed covering all supported asset classes. Delivered via WebSocket and REST endpoints for pricing, charts, and portfolio performance.</p>
+    </div>
+    <div class="risk-card">
+        <h4>TradeFlow Insight (AI Feature &mdash; launched Q1 2026)</h4>
+        <table class="info-table">
+            <tr><th>Model Architecture</th><td>Transformer-based recommendation model fine-tuned on historical trading data</td></tr>
+            <tr><th>Input Data</th><td>User portfolio holdings, risk tolerance (1&ndash;10), 90-day trade history, real-time market data from MarketBridge</td></tr>
+            <tr><th>Output</th><td>Ranked list of up to 10 stock/ETF suggestions with confidence scores (0&ndash;100) and rationale text</td></tr>
+            <tr><th>Adoption</th><td>62 of 200 clients (31%), ~1.8M accounts exposed</td></tr>
+            <tr><th>Human Oversight</th><td>Informational only &mdash; no automated trade execution. Clients display mandatory disclaimers.</td></tr>
+            <tr><th>Retraining</th><td>Monthly on rolling 24-month market data window</td></tr>
+        </table>
+    </div>
+
+    <h3>Cloud Architecture</h3>
+    <p>TradeFlow runs entirely on GCP spanning two regions. EU client data never leaves europe-west1. Key components: GKE for microservices, Cloud SQL (PostgreSQL) for transactions, BigQuery for analytics and model training, Cloud Armor for DDoS, AES-256 at rest, TLS 1.3 in transit, OAuth 2.0 API authentication with rate limiting, and 24/7 NOC monitoring.</p>
+
+    <!-- Document 2: Cyber Risk Assessment -->
+    <h2>3. Cyber Risk Assessment</h2>
+    <p>This assessment identifies 12 cybersecurity risks scored on a 5&times;5 Likelihood&ndash;Impact matrix, aligned to the NIST Cybersecurity Framework and mapped to ISO 27001 Annex A controls. Each risk is scored for inherent (before controls) and residual (after controls) risk. TradeFlow's risk appetite: no residual risk at High or Critical level.</p>
+
+    <h3>Scoring Framework</h3>
+    <table class="risk-table">
+        <tr><th>Score Range</th><th>Level</th><th>Treatment</th></tr>
+        <tr><td>1&ndash;6</td><td class="risk-low">Low</td><td>Accept with monitoring</td></tr>
+        <tr><td>7&ndash;14</td><td class="risk-medium">Medium</td><td>Reduce with controls, review quarterly</td></tr>
+        <tr><td>15&ndash;19</td><td class="risk-high">High</td><td>Reduce to Medium within defined timeline</td></tr>
+        <tr><td>20&ndash;25</td><td class="risk-critical">Critical</td><td>Immediate action, executive escalation</td></tr>
+    </table>
+
+    <h3>12-Risk Cyber Register</h3>
+
+    <div class="risk-card">
+        <h4>C01 &mdash; Unauthorised Access to Trading API</h4>
+        <p>Attackers compromise API credentials (OAuth tokens or API keys) to execute unauthorised trades or exfiltrate account data. Highest-impact risk &mdash; API directly handles financial transactions.</p>
+        <p><strong>NIST CSF:</strong> PR.AC, DE.CM &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.9.1, A.9.4</p>
+        <p>Inherent: <span class="score score-critical">20 &mdash; Critical</span> &rarr; Residual: <span class="score score-medium">10 &mdash; Medium</span></p>
+        <p><strong>Controls:</strong> OAuth 2.0 with 15-min token expiry, API key rotation every 90 days, rate limiting, IP allowlisting for enterprise clients, real-time anomaly detection on trading patterns, 24/7 SOC monitoring.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C02 &mdash; Cloud Infrastructure Misconfiguration (GCP)</h4>
+        <p>Misconfigured GCP resources (open storage buckets, permissive firewall rules, exposed Kubernetes endpoints) create exploitable attack surface.</p>
+        <p><strong>NIST CSF:</strong> ID.AM, PR.AC &nbsp;|&nbsp; <strong>ISO 27001:</strong> A.12.6, A.13.1</p>
+        <p>Inherent: <span class="score score-high">16 &mdash; High</span> &rarr; Residual: <span class="score score-medium">8 &mdash; Medium</span></p>
+        <p><strong>Controls:</strong> GCP Security Command Center, IaC (Terraform) with peer review, CIS Benchmark enforcement, automated drift detection, monthly audits.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C03 &mdash; Insider Threat &mdash; Privileged Access Misuse</h4>
+        <p>Employee or contractor with elevated privileges abuses access to steal data, manipulate trades, or tamper with the AI model.</p>
+        <p>Inherent: <span class="score score-high">15 &mdash; High</span> &rarr; Residual: <span class="score score-medium">8 &mdash; Medium</span></p>
+        <p><strong>Controls:</strong> Least-privilege RBAC, JIT access, all privileged actions logged and alerted, quarterly access reviews, background checks, separation of duties.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C04 &mdash; DDoS Attack on API Gateway</h4>
+        <p>DDoS overwhelms the API gateway, preventing trade execution during market hours &mdash; a regulatory and financial risk.</p>
+        <p>Inherent: <span class="score score-high">16 &mdash; High</span> &rarr; Residual: <span class="score score-low">6 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> Cloud Armor adaptive DDoS, multi-region failover, auto-scaling, rate limiting, quarterly DDoS simulation exercises.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C05 &mdash; Data Breach &mdash; Client PII and Financial Data</h4>
+        <p>Exfiltration of PII and financial data of 6 million accounts across 35 countries. Severe regulatory exposure under GDPR, FINRA, and SEC.</p>
+        <p>Inherent: <span class="score score-high">15 &mdash; High</span> &rarr; Residual: <span class="score score-medium">8 &mdash; Medium</span></p>
+        <p><strong>Controls:</strong> AES-256 at rest, TLS 1.3 in transit, CMEK, DLP rules, PII masking in logs, annual penetration testing, breach response plan tested semi-annually.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C06 &mdash; Supply Chain Attack via Software Dependencies</h4>
+        <p>Compromised third-party library or container image introduces malicious code. Lessons from SolarWinds and Log4Shell.</p>
+        <p>Inherent: <span class="score score-medium">12 &mdash; Medium</span> &rarr; Residual: <span class="score score-medium">8 &mdash; Medium</span></p>
+        <p><strong>Controls:</strong> SBOM for all services, automated scanning (Snyk), signed container images, pinned dependency versions, monthly vulnerability review.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C07 &mdash; Inadequate Logging and Audit Trail</h4>
+        <p>Insufficient logging prevents event reconstruction during incidents and fails regulatory examination requirements (FINRA 17a-4 requires 7-year retention).</p>
+        <p>Inherent: <span class="score score-medium">12 &mdash; Medium</span> &rarr; Residual: <span class="score score-low">4 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> Centralised logging (Cloud Logging), SIEM integration (Chronicle), immutable 7-year retention, API and model inference logging, quarterly completeness audits.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C08 &mdash; Phishing and Social Engineering</h4>
+        <p>Targeted phishing against engineering and finance teams to obtain internal system credentials.</p>
+        <p>Inherent: <span class="score score-medium">12 &mdash; Medium</span> &rarr; Residual: <span class="score score-low">6 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> MFA on all accounts (hardware keys for privileged), quarterly phishing simulations, email filtering and sandboxing.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C09 &mdash; Ransomware Attack</h4>
+        <p>Ransomware encrypts production systems, disrupting trading operations. Double extortion risk with data exfiltration.</p>
+        <p>Inherent: <span class="score score-high">15 &mdash; High</span> &rarr; Residual: <span class="score score-medium">8 &mdash; Medium</span></p>
+        <p><strong>Controls:</strong> Cross-region backups with integrity testing, network segmentation, EDR, ransomware-specific IR playbook, cyber insurance.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C10 &mdash; Third-Party Vendor Breach (MarketBridge)</h4>
+        <p>MarketBridge compromised, injecting manipulated market data or exposing TradeFlow data. See Document 4 for full vendor assessment.</p>
+        <p>Inherent: <span class="score score-medium">12 &mdash; Medium</span> &rarr; Residual: <span class="score score-medium">8 &mdash; Medium</span></p>
+        <p><strong>Controls:</strong> Annual vendor assessment, SOC 2 review, contractual right to audit, data validation on incoming data, MarketBridge has no access to user data.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C11 &mdash; Weak Vulnerability Management</h4>
+        <p>Unpatched vulnerabilities in OS, libraries, or applications create exploitable entry points.</p>
+        <p>Inherent: <span class="score score-medium">12 &mdash; Medium</span> &rarr; Residual: <span class="score score-low">6 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> Weekly scanning, Critical/High CVEs patched within 7/30 days, GKE auto-upgrade, bi-annual external pen test.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>C12 &mdash; Business Continuity &amp; Disaster Recovery Failure</h4>
+        <p>Major outage exceeds recovery capabilities, resulting in extended trading downtime with regulatory consequences.</p>
+        <p>Inherent: <span class="score score-medium">10 &mdash; Medium</span> &rarr; Residual: <span class="score score-low">5 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> Multi-region GCP, automated failover, RTO 1 hour / RPO 15 minutes, quarterly DR testing, FINRA BCP filed.</p>
+    </div>
+
+    <h3>Cyber Risk Heat Map</h3>
+    <table class="risk-table">
+        <tr><th>ID</th><th>Risk</th><th>Inherent</th><th>Residual</th><th>NIST CSF</th></tr>
+        <tr><td>C01</td><td>API Unauthorised Access</td><td class="risk-critical">20 Critical</td><td class="risk-medium">10 Medium</td><td>PR.AC, DE.CM</td></tr>
+        <tr><td>C02</td><td>Cloud Misconfiguration</td><td class="risk-high">16 High</td><td class="risk-medium">8 Medium</td><td>ID.AM, PR.AC</td></tr>
+        <tr><td>C03</td><td>Insider Threat</td><td class="risk-high">15 High</td><td class="risk-medium">8 Medium</td><td>PR.AC, DE.CM</td></tr>
+        <tr><td>C04</td><td>DDoS Attack</td><td class="risk-high">16 High</td><td class="risk-low">6 Low</td><td>PR.PT, DE.AE</td></tr>
+        <tr><td>C05</td><td>Data Breach (PII)</td><td class="risk-high">15 High</td><td class="risk-medium">8 Medium</td><td>PR.DS, DE.DP</td></tr>
+        <tr><td>C06</td><td>Supply Chain Attack</td><td class="risk-medium">12 Medium</td><td class="risk-medium">8 Medium</td><td>ID.SC, PR.IP</td></tr>
+        <tr><td>C07</td><td>Inadequate Logging</td><td class="risk-medium">12 Medium</td><td class="risk-low">4 Low</td><td>DE.AE, RS.AN</td></tr>
+        <tr><td>C08</td><td>Phishing</td><td class="risk-medium">12 Medium</td><td class="risk-low">6 Low</td><td>PR.AT, DE.CM</td></tr>
+        <tr><td>C09</td><td>Ransomware</td><td class="risk-high">15 High</td><td class="risk-medium">8 Medium</td><td>PR.IP, RC.RP</td></tr>
+        <tr><td>C10</td><td>Vendor Breach</td><td class="risk-medium">12 Medium</td><td class="risk-medium">8 Medium</td><td>ID.SC</td></tr>
+        <tr><td>C11</td><td>Vulnerability Mgmt</td><td class="risk-medium">12 Medium</td><td class="risk-low">6 Low</td><td>PR.IP, ID.RA</td></tr>
+        <tr><td>C12</td><td>BC/DR Failure</td><td class="risk-medium">10 Medium</td><td class="risk-low">5 Low</td><td>RC.RP, RC.IM</td></tr>
+    </table>
+
+    <div class="callout">
+        <strong>Residual Risk Summary:</strong> After controls, no risk remains at High or Critical. 6 risks sit at Medium (ongoing monitoring) and 6 at Low (accepted). The highest residual is C01 (API Access) at 10, reflecting that a financial API will always be a high-value target.
+    </div>
+
+    <!-- Document 3: AI Risk Assessment -->
+    <h2>4. AI Risk Assessment &mdash; TradeFlow Insight</h2>
+    <p>This assessment identifies 10 AI-specific risks for TradeFlow Insight, aligned to the NIST AI Risk Management Framework (AI RMF) and the EU AI Act. TradeFlow Insight qualifies as a potential high-risk AI system under the Act because it influences financial decisions for individual users (Article 6 and Annex III). Risk appetite: no residual risk should exceed Medium level.</p>
+
+    <h3>10-Risk AI Register</h3>
+
+    <div class="risk-card">
+        <h4>AI01 &mdash; Model Bias and Unfair Recommendations</h4>
+        <p>Training data and model architecture systematically favour large-cap US stocks and established ETFs, disadvantaging non-US investors and those seeking diversification. Bias originates from MarketBridge data composition, US market dominance in training data, and correlation between portfolio size and access to diverse securities.</p>
+        <p><strong>NIST AI RMF:</strong> Map, Measure, Manage &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 10, 15</p>
+        <p>Inherent: <span class="score score-high">16 &mdash; High</span> &rarr; Residual: <span class="score score-low">6 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> Monthly bias audit with demographic/geographic stratification, fairness metrics (disparate impact, equalized odds), explicit training on international securities, quarterly CIO review, complaints dashboard.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI02 &mdash; Inadequate Explainability of Recommendations</h4>
+        <p>Transformer architecture is inherently opaque. Users cannot understand why the model selected a particular stock or ETF. Regulatory risk under SEC Regulation SHO, FINRA Rule 4512, and EU AI Act Article 13.</p>
+        <p><strong>NIST AI RMF:</strong> Map, Measure, Manage &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 13, 14</p>
+        <p>Inherent: <span class="score score-high">16 &mdash; High</span> &rarr; Residual: <span class="score score-low">6 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> SHAP values for each recommendation, top 5 contributing factors surfaced to user, explainability report attached, quarterly user feedback surveys, compliance review of disclosure language.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI03 &mdash; Regulatory Classification Ambiguity</h4>
+        <div class="callout-red callout">
+            <strong>Highest-severity risk (25/25 inherent):</strong> Is TradeFlow Insight &ldquo;investment advice&rdquo; under SEC Rule 206(4)-1 and FINRA Rule 4512, or merely &ldquo;information&rdquo;? If classified as advice, TradeFlow must register as an investment adviser, comply with fiduciary duty, maintain E&amp;O insurance, and conduct suitability analysis. Misclassification exposes the firm to enforcement action, civil litigation, and forced operational changes.
+        </div>
+        <p><strong>NIST AI RMF:</strong> Govern &nbsp;|&nbsp; <strong>EU AI Act:</strong> Art. 6, 8</p>
+        <p>Inherent: <span class="score score-critical">25 &mdash; Critical</span> &rarr; Residual: <span class="score score-medium">10 &mdash; Medium</span></p>
+        <p><strong>Controls:</strong> Formal legal opinion from external SEC/FINRA counsel (Q2 2026), written disclosure to all institutional clients, pre-approval of all user-facing messaging by legal, quarterly reassessment, proactive SEC/FINRA no-action letter if warranted.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI04 &mdash; Data Governance Risks</h4>
+        <p>Trained on 24 months of trade data, portfolios, risk profiles, and real-time market data. Risks include: insufficient user consent for AI training, over-retention, cross-border transfers without GDPR adequacy/SCCs, and de-identification shortcomings.</p>
+        <p>Inherent: <span class="score score-high">16 &mdash; High</span> &rarr; Residual: <span class="score score-medium">8 &mdash; Medium</span></p>
+        <p><strong>Controls:</strong> Updated consent form disclosing AI usage, 24-month retention justified, SCCs for EU model training, annual DPIA, data minimisation review, quarterly DPO review.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI05 &mdash; Model Drift and Performance Degradation</h4>
+        <p>Market conditions shift rapidly (bull to bear, sector rotations). Model trained during 2024&ndash;25 may underperform during 2026 regime changes without detection.</p>
+        <p>Inherent: <span class="score score-high">16 &mdash; High</span> &rarr; Residual: <span class="score score-low">6 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> Weekly performance dashboard (adoption rate, 30-day return vs. benchmark), automated alerts if adoption drops &gt;10% WoW, monthly backtesting, threshold-based retraining (Sharpe ratio &lt;0.5), documented rollback runbook.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI06 &mdash; Adversarial Manipulation and Gaming</h4>
+        <p>Users could submit crafted portfolio inputs for pump-and-dump schemes, portfolio spoofing, or model extraction attacks to reverse-engineer decision boundaries.</p>
+        <p>Inherent: <span class="score score-medium">12 &mdash; Medium</span> &rarr; Residual: <span class="score score-low">6 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> Input validation (reject implausible portfolios), rate limiting (50 calls/day), anomaly detection, correlation checks across user IDs, FINRA surveillance integration.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI07 &mdash; Hallucination and Invalid Output</h4>
+        <p>Model could recommend delisted stocks, non-existent tickers, or OFAC-sanctioned companies. Damages credibility and creates compliance violations.</p>
+        <p>Inherent: <span class="score score-high">15 &mdash; High</span> &rarr; Residual: <span class="score score-low">5 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> Post-processing validation against live MarketBridge security master, OFAC/EU sanctions check, price staleness check (&lt;5 min), automated filtering with substitute candidates, weekly rejected recommendation audit.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI08 &mdash; Privacy Violation and Training Data Leakage</h4>
+        <p>Transformer model trained on millions of user records could memorise individual trading patterns. Membership inference, model inversion, and extraction attacks could expose sensitive financial information.</p>
+        <p>Inherent: <span class="score score-high">15 &mdash; High</span> &rarr; Residual: <span class="score score-low">4 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> Differential privacy (epsilon=2.0), aggregated statistics over individual records, extraction attack detection, annual external privacy assessment, GDPR consent framework, 30-day log retention limit.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI09 &mdash; Prompt Injection via API</h4>
+        <p>Malformed API requests with embedded instructions could trick the system into leaking training data, bypassing validation, or manipulating behaviour.</p>
+        <p>Inherent: <span class="score score-medium">9 &mdash; Medium</span> &rarr; Residual: <span class="score score-low">6 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> Strict JSON schema validation, API sandboxing (isolated container), rate limiting, OAuth 2.0 scoped tokens, quarterly pen testing of Insight API, security headers (CSP, X-Frame-Options).</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI10 &mdash; Lack of Human Oversight and Intervention</h4>
+        <p>Recommendations flow model-to-user with no human-in-the-loop review. Harmful trades (penny stock concentration, illiquid securities) could reach users without intervention.</p>
+        <p>Inherent: <span class="score score-high">16 &mdash; High</span> &rarr; Residual: <span class="score score-low">6 &mdash; Low</span></p>
+        <p><strong>Controls:</strong> &ldquo;Review Required&rdquo; mode for institutional clients, CCO override for user cohorts, daily compliance anomaly report, escalation runbook, quarterly case reviews of complaints and model errors.</p>
+    </div>
+
+    <h3>AI Risk Heat Map</h3>
+    <table class="risk-table">
+        <tr><th>ID</th><th>Risk</th><th>Inherent</th><th>Residual</th><th>NIST AI RMF</th></tr>
+        <tr><td>AI01</td><td>Model Bias</td><td class="risk-high">16 High</td><td class="risk-low">6 Low</td><td>Map, Measure, Manage</td></tr>
+        <tr><td>AI02</td><td>Explainability</td><td class="risk-high">16 High</td><td class="risk-low">6 Low</td><td>Map, Measure, Manage</td></tr>
+        <tr><td>AI03</td><td>Regulatory Classification</td><td class="risk-critical">25 Critical</td><td class="risk-medium">10 Medium</td><td>Govern</td></tr>
+        <tr><td>AI04</td><td>Data Governance</td><td class="risk-high">16 High</td><td class="risk-medium">8 Medium</td><td>Govern, Map</td></tr>
+        <tr><td>AI05</td><td>Model Drift</td><td class="risk-high">16 High</td><td class="risk-low">6 Low</td><td>Measure, Manage</td></tr>
+        <tr><td>AI06</td><td>Adversarial Manipulation</td><td class="risk-medium">12 Medium</td><td class="risk-low">6 Low</td><td>Map, Manage</td></tr>
+        <tr><td>AI07</td><td>Hallucination</td><td class="risk-high">15 High</td><td class="risk-low">5 Low</td><td>Measure</td></tr>
+        <tr><td>AI08</td><td>Privacy Violation</td><td class="risk-high">15 High</td><td class="risk-low">4 Low</td><td>Map, Manage</td></tr>
+        <tr><td>AI09</td><td>Prompt Injection</td><td class="risk-medium">9 Medium</td><td class="risk-low">6 Low</td><td>Map, Manage</td></tr>
+        <tr><td>AI10</td><td>Lack of Human Oversight</td><td class="risk-high">16 High</td><td class="risk-low">6 Low</td><td>Govern, Manage</td></tr>
+    </table>
+
+    <div class="callout">
+        <strong>AI Residual Risk Summary:</strong> One risk remains at Medium (AI03 &mdash; Regulatory Classification, score 10) reflecting genuine legal ambiguity. Nine risks sit at Low. All residual risks are within TradeFlow's Medium appetite threshold.
+    </div>
+
+    <!-- Document 4: Vendor Risk Assessment -->
+    <h2>5. Third-Party Vendor Risk Assessment &mdash; MarketBridge</h2>
+    <p>MarketBridge Data Solutions is TradeFlow's critical market data provider, supplying real-time pricing, historical data, and market signals that directly feed the Insight AI engine. This assessment covers security programme, operational resilience, data integrity, and AI-specific vendor risks.</p>
+
+    <h3>Vendor Profile</h3>
+    <table class="info-table">
+        <tr><th>Vendor</th><td>MarketBridge Data Solutions</td></tr>
+        <tr><th>Founded</th><td>2015 &mdash; New York City</td></tr>
+        <tr><th>Employees</th><td>~120</td></tr>
+        <tr><th>Client Base</th><td>80+ financial institutions</td></tr>
+        <tr><th>Certifications</th><td>SOC 2 Type II, ISO 27001, GDPR &amp; CCPA compliant</td></tr>
+        <tr><th>Infrastructure</th><td>AWS, multi-region, 99.95% uptime SLA, &lt;50ms latency</td></tr>
+    </table>
+
+    <h3>Data Flow Architecture</h3>
+    <div class="callout">
+        <strong>Key Design Principle:</strong> TradeFlow shares NO customer data with MarketBridge &mdash; only API authentication credentials. Data we do not share cannot be leaked. This eliminates an entire category of vendor-related data breach risks.
+    </div>
+    <table class="risk-table">
+        <tr><th>Data Type</th><th>Direction</th><th>Sensitivity</th></tr>
+        <tr><td>Market Pricing &amp; Signals</td><td>MarketBridge &rarr; TradeFlow</td><td>Non-Public Market Data</td></tr>
+        <tr><td>API Credentials</td><td>TradeFlow &rarr; MarketBridge</td><td>Authentication Secret</td></tr>
+        <tr><td>Customer Data</td><td>N/A &mdash; Not Shared</td><td>Highly Confidential</td></tr>
+    </table>
+
+    <h3>8-Area Security Assessment</h3>
+    <table class="risk-table">
+        <tr><th>Area</th><th>Status</th><th>Key Findings</th></tr>
+        <tr><td>Information Security Programme</td><td><span class="status-green">GREEN</span></td><td>ISO 27001 ISMS, SOC 2 Type II, CISO and steering committee</td></tr>
+        <tr><td>Access Controls</td><td><span class="status-green">GREEN</span></td><td>RBAC, MFA, PAM with session recording, quarterly reviews</td></tr>
+        <tr><td>Encryption</td><td><span class="status-green">GREEN</span></td><td>AES-256 at rest, TLS 1.3 in transit, AWS KMS with auto-rotation</td></tr>
+        <tr><td>Incident Response</td><td><span class="status-green">GREEN</span></td><td>Documented IR plan, 24-hour breach notification, annual exercises</td></tr>
+        <tr><td>Business Continuity</td><td><span class="status-amber">AMBER</span></td><td>Multi-region AWS, 99.95% SLA. Condition: quarterly DR test results required</td></tr>
+        <tr><td>Data Handling</td><td><span class="status-green">GREEN</span></td><td>Data minimisation, retention policies, no third-party sharing</td></tr>
+        <tr><td>Subprocessor Management</td><td><span class="status-amber">AMBER</span></td><td>AWS subprocessor list documented but audit trail incomplete</td></tr>
+        <tr><td>Regulatory Compliance</td><td><span class="status-green">GREEN</span></td><td>SOC 2, ISO 27001, FINRA, GDPR/CCPA verified</td></tr>
+    </table>
+
+    <h3>AI-Specific Vendor Risks</h3>
+    <div class="risk-card">
+        <h4>Data Integrity &mdash; Manipulated Market Data</h4>
+        <p>If MarketBridge feeds are compromised, injected market signals could poison Insight model outputs, causing poor recommendations. <strong>Mitigation:</strong> Anomaly detection on inbound data, cross-validation with alternative sources, circuit breakers that halt the AI model if data quality degrades.</p>
+    </div>
+    <div class="risk-card">
+        <h4>Data Freshness &mdash; Stale Market Data</h4>
+        <p>Delayed or incomplete data causes stale recommendations. <strong>Mitigation:</strong> SLA specifies &lt;50ms latency, real-time monitoring with alerts at &gt;100ms, model rejects data older than 5 minutes.</p>
+    </div>
+    <div class="risk-card">
+        <h4>Vendor Lock-In &mdash; Single Source Dependency</h4>
+        <p>MarketBridge is the sole market data provider. <strong>Mitigation:</strong> 180-day termination notice, API abstraction layer for provider swapping, evaluation of Bloomberg/Refinitiv for redundancy.</p>
+    </div>
+
+    <h3>Vendor Risk Register (6 Risks)</h3>
+    <table class="risk-table">
+        <tr><th>ID</th><th>Risk</th><th>Inherent</th><th>Residual</th></tr>
+        <tr><td>V01</td><td>Manipulated Market Data Injection</td><td class="risk-high">15 High</td><td class="risk-medium">8 Medium</td></tr>
+        <tr><td>V02</td><td>Service Outage</td><td class="risk-medium">12 Medium</td><td class="risk-low">6 Low</td></tr>
+        <tr><td>V03</td><td>Data Breach</td><td class="risk-medium">9 Medium</td><td class="risk-low">6 Low</td></tr>
+        <tr><td>V04</td><td>Vendor Lock-In</td><td class="risk-medium">12 Medium</td><td class="risk-low">6 Low</td></tr>
+        <tr><td>V05</td><td>Regulatory Non-Compliance</td><td class="risk-medium">12 Medium</td><td class="risk-low">6 Low</td></tr>
+        <tr><td>V06</td><td>Subprocessor Risk</td><td class="risk-medium">9 Medium</td><td class="risk-low">6 Low</td></tr>
+    </table>
+
+    <h3>Contractual Protections</h3>
+    <ul>
+        <li><strong>Audit Rights:</strong> On-site audit with 10 days&rsquo; notice, every 24 months minimum. SOC 2 and ISO 27001 review annually.</li>
+        <li><strong>Breach Notification:</strong> 24-hour notification, full report within 5 business days.</li>
+        <li><strong>SLA:</strong> 99.95% monthly availability, &lt;50ms p99 latency. Credits: 5% of monthly fee per 0.1% below target (max 30%).</li>
+        <li><strong>Data Handling:</strong> No use of TradeFlow data beyond service delivery. Deletion within 30 days of termination.</li>
+        <li><strong>Termination:</strong> 180-day notice for convenience. Immediate for material breach (30-day cure). Orderly transition cooperation.</li>
+    </ul>
+
+    <div class="callout-amber callout">
+        <strong>DataPulse Lesson Applied:</strong> The NovaAI DataPulse breach demonstrated that data shared with vendors can be leaked. TradeFlow deliberately architected the MarketBridge relationship so NO customer data flows to the vendor. If MarketBridge is breached, TradeFlow customer data cannot be exposed because MarketBridge never had access.
+    </div>
+
+    <!-- Document 5: Regulatory Landscape -->
+    <h2>6. Regulatory Landscape &amp; Compliance Mapping</h2>
+    <p>TradeFlow operates across three jurisdictions as a broker-dealer, sitting at the intersection of financial services regulation, cybersecurity regulation, and emerging AI regulation. This document maps all applicable regulatory obligations.</p>
+
+    <h3>US Regulatory Landscape</h3>
+
+    <div class="risk-card">
+        <h4>SEC &amp; FINRA &mdash; Broker-Dealer Obligations</h4>
+        <ul>
+            <li><strong>Broker-Dealer Registration</strong> (Section 15, Securities Exchange Act) &mdash; ongoing fitness, capital, and audit requirements</li>
+            <li><strong>Regulation SCI</strong> (17 CFR Part 242) &mdash; system compliance and integrity, incident notification, annual vulnerability assessments</li>
+            <li><strong>Trade Surveillance</strong> (FINRA Rule 6730) &mdash; monitoring for manipulation. If Insight concentrates trading in specific securities, surveillance must detect patterns.</li>
+            <li><strong>Books &amp; Records</strong> (SEC Rule 17a-4, FINRA Rule 4530) &mdash; 6-year retention of all trading activity, AI recommendation logs, compliance overrides</li>
+            <li><strong>Customer Protection</strong> (SEC Rule 15c3-3) &mdash; asset segregation and net capital requirements</li>
+            <li><strong>Anti-Fraud</strong> (SEC Rule 10b-5, FINRA 5210&ndash;5290) &mdash; all communications including AI-generated recommendations must not be deceptive</li>
+        </ul>
+    </div>
+
+    <div class="callout-red callout">
+        <strong>Critical Regulatory Risk &mdash; AI as &ldquo;Investment Advice&rdquo;:</strong> The SEC has clarified (2024&ndash;2025) that AI-generated stock recommendations may constitute &ldquo;investment advice&rdquo; if they are personalised and go beyond generic information. If classified as advice, TradeFlow must register as an investment adviser and comply with fiduciary standards. TradeFlow positions Insight as an &ldquo;informational tool&rdquo; with disclaimers, but this is subject to regulatory challenge &mdash; scored as Critical risk (AI03).
+    </div>
+
+    <div class="risk-card">
+        <h4>NIST Cybersecurity Framework (CSF)</h4>
+        <p>Effectively mandatory for financial institutions due to SEC guidance, insurance requirements, and OCC/Federal Reserve references. TradeFlow has achieved substantial alignment. No major gaps identified.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>State-Level AI Regulation</h4>
+        <ul>
+            <li><strong>Colorado AI Act (2024):</strong> Requires high-risk AI impact assessments &mdash; Insight may qualify</li>
+            <li><strong>NYC Local Law 144:</strong> AI bias audits in hiring &mdash; signals regulatory direction toward algorithmic transparency</li>
+            <li><strong>SEC Proposed Rules (2024&ndash;2025):</strong> Conflicts of interest in AI, predictive analytics suitability, algorithm governance</li>
+        </ul>
+    </div>
+
+    <h3>EU Regulatory Landscape</h3>
+
+    <div class="risk-card">
+        <h4>EU AI Act (Regulation 2024/1689)</h4>
+        <p>TradeFlow Insight is likely NOT classified as high-risk under Annex III as currently written (stock recommendations are not explicitly listed). However, TradeFlow treats Insight AS IF high-risk, implementing Articles 6, 8, 37, and 50 requirements. The definition is evolving and could be expanded via delegated acts.</p>
+        <ul>
+            <li><strong>Article 6:</strong> Conformity assessment including risk assessment, testing, and quality management</li>
+            <li><strong>Article 8:</strong> Technical documentation of AI design, training data, validation, and limitations</li>
+            <li><strong>Article 37:</strong> Post-market monitoring for bias, drift, and recommendation quality</li>
+            <li><strong>Article 50:</strong> Transparency &mdash; users must know they interact with AI and understand how recommendations work</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h4>GDPR</h4>
+        <p>Applies because EU-based clients and their investors are identifiable natural persons. Key tensions: Article 6 lawful basis (contract), Article 22 automated decision-making (TradeFlow argues recommendations are informational, not decisions), and Article 25 data minimisation for AI training.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>MiFID II &amp; DORA</h4>
+        <ul>
+            <li><strong>MiFID II:</strong> Investment services directive. If Insight is &ldquo;advice,&rdquo; TradeFlow needs MiFID II &ldquo;investment advice&rdquo; authorisation from ESMA &mdash; parallel to the SEC classification question.</li>
+            <li><strong>DORA (Digital Operational Resilience Act):</strong> Maps critical third-party dependencies, incident logging/reporting, penetration testing, vendor exit plans. Insight is critical to service &mdash; must be tested under stress and have a failure plan. MarketBridge vendor assessment supports DORA compliance.</li>
+        </ul>
+    </div>
+
+    <h3>UK Regulatory Landscape</h3>
+    <div class="risk-card">
+        <h4>FCA &amp; UK GDPR</h4>
+        <p>FCA authorisation for the London subsidiary. Consumer Duty (2023) imposes &ldquo;good outcomes&rdquo; obligation for AI recommendations. UK GDPR mirrors EU GDPR with UK-specific adequacy decisions. FCA AI and Machine Learning guidance requires fairness, explainability, and governance documentation.</p>
+    </div>
+
+    <h3>Regulatory Compliance Summary</h3>
+    <table class="risk-table">
+        <tr><th>Jurisdiction</th><th>Key Regulations</th><th>Critical Risk</th></tr>
+        <tr><td>United States</td><td>SEC, FINRA, Reg SCI, Rule 17a-4, NIST CSF</td><td class="risk-critical">AI as &ldquo;investment advice&rdquo;</td></tr>
+        <tr><td>European Union</td><td>EU AI Act, GDPR, MiFID II, DORA</td><td class="risk-high">High-risk classification expansion</td></tr>
+        <tr><td>United Kingdom</td><td>FCA, UK GDPR, Consumer Duty</td><td class="risk-medium">&ldquo;Good outcomes&rdquo; for AI</td></tr>
+    </table>
+
+    <!-- Document 6: AI Governance Policy -->
+    <h2>7. AI Governance Policy &amp; Controls</h2>
+    <p>This policy establishes the governance framework, ownership structure, and monitoring programme for all AI systems deployed within TradeFlow. It ensures accountability, transparency, fairness, continuous monitoring, and regulatory compliance.</p>
+
+    <h3>Six Governance Principles</h3>
+    <table class="risk-table">
+        <tr><th>Principle</th><th>Description</th></tr>
+        <tr><td><strong>Safety</strong></td><td>AI systems must not cause financial harm. Recommendations are never automatically executed. Failures must be detected and contained immediately.</td></tr>
+        <tr><td><strong>Fairness</strong></td><td>No systematic bias disadvantaging any user segment by account size, geography, trading style, or demographics.</td></tr>
+        <tr><td><strong>Transparency</strong></td><td>Users must always know they interact with AI, understand how it works, and know its limitations.</td></tr>
+        <tr><td><strong>Accountability</strong></td><td>Every AI decision and failure has a named owner. Ownership concentrated in specific roles (Model Owner, Risk Owner).</td></tr>
+        <tr><td><strong>Privacy</strong></td><td>AI systems minimise personal data usage. Data minimisation principles embedded in model development.</td></tr>
+        <tr><td><strong>Compliance</strong></td><td>All AI systems meet or exceed all applicable regulatory requirements across all jurisdictions.</td></tr>
+    </table>
+
+    <h3>Governance Structure</h3>
+
+    <div class="risk-card">
+        <h4>AI Governance Committee</h4>
+        <p><strong>Members:</strong> CISO (Chair), CCO (Vice Chair), CTO, Head of Data Science, DPO, General Counsel</p>
+        <p><strong>Cadence:</strong> Monthly standing meetings (90 min minimum). Emergency meetings within 24 hours for critical AI incidents.</p>
+        <p><strong>Responsibilities:</strong> Review and approve all new AI models before production. Quarterly review of performance and fairness metrics. Oversee AI incident response. Review regulatory updates. Approve material model changes. Receive briefings on emerging AI threats (prompt injection, adversarial attacks).</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI Model Owner &mdash; Head of Data Science</h4>
+        <p>Accountable for end-to-end lifecycle of all production AI models: performance metrics (accuracy, latency, precision, recall), fairness and bias monitoring, monthly retraining approval, root cause analysis for degradation, and AI kill switch execution. Can escalate directly to CISO or CEO/Board.</p>
+    </div>
+
+    <div class="risk-card">
+        <h4>AI Risk Owner &mdash; Cyber GRC Lead</h4>
+        <p>Maintains AI Risk Register, conducts quarterly control testing (fairness metrics, kill switch functionality), generates audit evidence for external auditors (SOC 2, ISO 27001), coordinates with DPO on data protection, and interfaces with external auditors on AI governance scope.</p>
+    </div>
+
+    <h3>Escalation Path</h3>
+    <div class="flow-box">
+        <div class="flow-step">Tier 1: Data Science &rarr; AI Model Owner</div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-step">Tier 2: Model Owner &rarr; CISO (Committee Chair)</div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-step">Tier 3: Committee &rarr; CEO &rarr; Board</div>
+    </div>
+
+    <h3>Model Lifecycle Governance</h3>
+    <table class="risk-table">
+        <tr><th>Phase</th><th>Activities</th></tr>
+        <tr><td><strong>Development</strong></td><td>Bias testing, fairness evaluation, security review (adversarial robustness, prompt injection), DPIA, regulatory classification by legal</td></tr>
+        <tr><td><strong>Pre-Deployment Review</strong></td><td>Unanimous AI Governance Committee approval. Model must pass accuracy baseline, fairness metrics, security review, DPO sign-off, regulatory classification, and legal-approved disclosure language.</td></tr>
+        <tr><td><strong>Production Monitoring</strong></td><td>Daily: automated accuracy metrics. Weekly: fairness metrics review. Monthly: formal retraining cycle. Quarterly: comprehensive fairness audit.</td></tr>
+        <tr><td><strong>Change Management</strong></td><td>Material changes (architecture, hyperparameters, new data sources) require impact assessment + committee approval (2-week lead time) + 14-day client notification + opt-in confirmation.</td></tr>
+        <tr><td><strong>Retirement</strong></td><td>Written decommissioning plan, user transition plan, archive of final model weights and metrics, 60-day client notification.</td></tr>
+    </table>
+
+    <h3>Human Oversight Controls</h3>
+    <ul>
+        <li><strong>Mandatory Disclaimer:</strong> All clients contractually required to display: &ldquo;TradeFlow Insight recommendations are informational only and do not constitute investment advice.&rdquo;</li>
+        <li><strong>No Auto-Execution:</strong> Insight cannot execute trades. Hardcoded &mdash; no trade execution endpoints available from Insight API.</li>
+        <li><strong>Global Kill Switch:</strong> Head of Data Science or CISO can disable Insight globally within 15 minutes. Automatic client notification within 1 hour.</li>
+        <li><strong>Client-Level Disable:</strong> Any client can turn off Insight instantly via API or UI. No approval required.</li>
+        <li><strong>Quarterly Outcome Review:</strong> 500+ recommendation sample reviewed for outcomes, false positive rates, and underperforming cohorts.</li>
+    </ul>
+
+    <h3>Monitoring Thresholds</h3>
+    <table class="risk-table">
+        <tr><th>Metric</th><th>Target</th><th>Alert</th><th>Critical</th></tr>
+        <tr><td>Recommendation Accuracy</td><td>&ge;65%</td><td class="risk-medium">&lt;62%</td><td class="risk-critical">&lt;55%</td></tr>
+        <tr><td>Diversity Score</td><td>&lt;15% duplication</td><td class="risk-medium">&gt;18%</td><td class="risk-critical">&gt;25%</td></tr>
+        <tr><td>Asset Class Coverage</td><td>All classes &gt;5%</td><td class="risk-medium">Any &lt;4%</td><td class="risk-critical">Any &lt;2%</td></tr>
+        <tr><td>Mean Fairness Gap</td><td>&lt;3%</td><td class="risk-medium">&gt;5%</td><td class="risk-critical">&gt;10%</td></tr>
+        <tr><td>Input Drift Score</td><td>&lt;0.05</td><td class="risk-medium">&gt;0.08</td><td class="risk-critical">&gt;0.15</td></tr>
+        <tr><td>Output Drift Score</td><td>&lt;0.05</td><td class="risk-medium">&gt;0.08</td><td class="risk-critical">&gt;0.15</td></tr>
+        <tr><td>Model Latency (p95)</td><td>&lt;200ms</td><td class="risk-medium">&gt;300ms</td><td class="risk-critical">&gt;500ms</td></tr>
+    </table>
+    <p>Alert thresholds trigger a review by Head of Data Science within 24 hours. Critical thresholds trigger escalation to Committee Chair and may trigger the kill switch.</p>
+
+    <h3>AI Incident Response</h3>
+    <div class="risk-card">
+        <h4>What Constitutes an AI Incident</h4>
+        <ul>
+            <li>Model recommends a delisted or non-tradeable security</li>
+            <li>Widespread identical recommendations (&gt;30% of users receiving same stock) &mdash; herding risk</li>
+            <li>Fairness metric breach (&gt;10% gap between user segments)</li>
+            <li>Regulatory query or examination request about recommendations</li>
+            <li>Accuracy drops below 55% within a 7-day window</li>
+            <li>Drift score exceeds critical threshold</li>
+        </ul>
+    </div>
+
+    <div class="flow-box">
+        <div class="flow-step">Detect (Continuous)</div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-step">Triage (1 Hour)</div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-step">Contain (Immediate P1/P2)</div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-step">Investigate (24 Hours)</div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-step">Remediate</div>
+        <span class="flow-arrow">&rarr;</span>
+        <div class="flow-step">Report (24 Hours)</div>
+    </div>
+
+    <h3>Framework Integration</h3>
+    <table class="risk-table">
+        <tr><th>Framework</th><th>AI Governance Integration</th></tr>
+        <tr><td><strong>SOC 2 Type II</strong></td><td>New controls in Security (model access, API key rotation), Processing Integrity (accuracy monitoring, fairness testing), and Confidentiality (data minimisation). Tested annually by external auditors.</td></tr>
+        <tr><td><strong>ISO 27001</strong></td><td>AI risks added to ISMS risk register. Assessment includes AI threats (prompt injection, model poisoning, adversarial attacks). AI governance policies incorporated into ISMS framework.</td></tr>
+        <tr><td><strong>NIST CSF</strong></td><td>Identify: asset inventory includes AI models. Protect: access controls enforce model governance. AI governance embedded into existing NIST CSF programme.</td></tr>
+    </table>
+
+    <!-- Program Summary -->
+    <h2>8. Program Summary</h2>
+    <table class="risk-table">
+        <tr><th>Deliverable</th><th>Count</th><th>Details</th></tr>
+        <tr><td>Documents Produced</td><td><strong>6</strong></td><td>Company profile, cyber risk, AI risk, vendor risk, regulatory landscape, AI governance policy</td></tr>
+        <tr><td>Cyber Risks Assessed</td><td><strong>12</strong></td><td>1 Critical &rarr; Medium, 5 High &rarr; Medium/Low, 6 Medium &rarr; Low/Medium</td></tr>
+        <tr><td>AI Risks Assessed</td><td><strong>10</strong></td><td>1 Critical &rarr; Medium, 7 High &rarr; Low, 2 Medium &rarr; Low</td></tr>
+        <tr><td>Vendor Risks Assessed</td><td><strong>6</strong></td><td>1 High &rarr; Medium, 5 Medium &rarr; Low</td></tr>
+        <tr><td>Total Risks</td><td><strong>28</strong></td><td>All reduced to Medium or Low residual &mdash; within risk appetite</td></tr>
+        <tr><td>Jurisdictions Mapped</td><td><strong>3</strong></td><td>US (SEC, FINRA), EU (AI Act, GDPR, MiFID II, DORA), UK (FCA)</td></tr>
+        <tr><td>Frameworks Applied</td><td><strong>8</strong></td><td>NIST CSF, ISO 27001, NIST AI RMF, EU AI Act, SEC/FINRA, GDPR, MiFID II, DORA</td></tr>
+        <tr><td>Governance Principles</td><td><strong>6</strong></td><td>Safety, Fairness, Transparency, Accountability, Privacy, Compliance</td></tr>
+        <tr><td>Monitoring Metrics</td><td><strong>7</strong></td><td>Accuracy, Diversity, Coverage, Fairness, Input Drift, Output Drift, Latency</td></tr>
+        <tr><td>Kill Switch Capability</td><td><strong>15 min</strong></td><td>Global disable by CISO or Head of Data Science</td></tr>
+    </table>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti. All rights reserved.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trust Architecture — SecureBank Digital | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #dcfce7; color: #15803d; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .status-complete { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .maturity-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .maturity-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .maturity-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Zero Trust</span>
+        <h1>Zero Trust Architecture Implementation &mdash; <em>SecureBank Digital</em></h1>
+        <p class="subtitle">Designed and implemented a NIST SP 800-207 Zero Trust architecture for a 750-employee digital bank processing 2.8M daily transactions and $3.2B in deposits</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> SecureBank Digital</div>
+            <div class="meta-item"><strong>Industry:</strong> Digital Banking</div>
+            <div class="meta-item"><strong>Frameworks:</strong> NIST SP 800-207, NIST CSF, CIS Controls v8</div>
+            <div class="meta-item"><strong>Regulation:</strong> OCC, FDIC, FFIEC, BSA/AML</div>
+            <div class="meta-item"><strong>Date:</strong> March 2026</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>SecureBank Digital is a 750-employee challenger bank in Charlotte, NC, offering mobile-first banking to 500K+ customers across the US. The bank processes 2.8 million transactions daily and manages $3.2 billion in customer deposits under OCC, FDIC, and Federal Reserve oversight.</p>
+    <p>Following high-profile breaches at competitor institutions and updated FFIEC guidance on authentication and access controls, the Board of Directors mandated a Zero Trust transformation. This project assessed the current perimeter-based security model, mapped 6 critical assets, identified 5 access risks, implemented 12 Zero Trust controls based on NIST SP 800-207 principles, and established 4 governance policies.</p>
+
+    <table class="info-table">
+        <tr><th>Deliverables</th><td>6 Critical Assets, 5 Access Risks, 12 ZT Controls, 4 Policies</td></tr>
+        <tr><th>Customers</th><td>500K+ across the US, 2.8M daily transactions, $3.2B deposits</td></tr>
+        <tr><th>Classification</th><td>CONFIDENTIAL &mdash; Banking Security Architecture</td></tr>
+    </table>
+
+    <!-- Critical Asset Map -->
+    <h2>2. Critical Asset Map &mdash; 6 Assets</h2>
+
+    <div class="risk-card">
+        <h3>Asset 1: Core Banking Platform (Temenos T24/Transact)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>CTO</td></tr>
+            <tr><th>Environment</th><td>Production &mdash; AWS multi-AZ, RTO: 1 hour, RPO: Zero</td></tr>
+        </table>
+        <ul>
+            <li>Processes ALL customer banking operations: account management for 500K+ customers, real-time transaction processing (2.8M daily), loan origination ($450M portfolio)</li>
+            <li>Stores complete customer financial profiles, 7-year transaction history, KYC/CDD records</li>
+            <li>Currently accessed by 280 employees across 12 departments via VPN with broad network access</li>
+            <li><strong>Zero Trust change:</strong> Access granted based on verified identity + device health + role authorization + behavior analysis + transaction context</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 2: Customer Identity &amp; Access Management (CIAM) Platform</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>VP of Digital Banking</td></tr>
+            <tr><th>Environment</th><td>Production &mdash; Auth0 (Okta CIAM)</td></tr>
+        </table>
+        <ul>
+            <li>Manages authentication for 500K+ mobile and online banking users</li>
+            <li>Biometric authentication (Face ID, Touch ID), FIDO2 WebAuthn, step-up authentication for high-risk transactions</li>
+            <li>Processes 1.2 million authentication events daily</li>
+            <li><strong>Zero Trust change:</strong> Every transaction evaluated &mdash; continuous verification without unnecessary friction based on risk level</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 3: Customer Data Warehouse (AWS Aurora PostgreSQL)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Database</td></tr>
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Chief Data Officer</td></tr>
+            <tr><th>Environment</th><td>Production &mdash; 8TB, 500M+ rows, AES-256 encryption</td></tr>
+        </table>
+        <ul>
+            <li>Stores 500K+ customer profiles with full PII (SSN, DOB, address), account balances ($3.2B), 7-year transaction history</li>
+            <li>Includes KYC/CDD records, SAR filings, loan documentation</li>
+            <li><strong>Zero Trust change:</strong> Just-in-time access only, query-level controls per role, behavioral analytics on access patterns, data masking in non-production</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 4: Payment Processing Gateway (FedNow, ACH, Wire)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>VP of Payment Operations</td></tr>
+            <tr><th>Environment</th><td>Production &mdash; $180M daily payment volume</td></tr>
+        </table>
+        <ul>
+            <li>Connects to Federal Reserve payment networks: FedNow, FedACH, Fedwire, plus Visa/Mastercard</li>
+            <li>Contains payment routing logic, fraud scoring, OFAC sanctions screening, BSA/AML monitoring</li>
+            <li>35 payment operations staff currently have broad VPN access</li>
+            <li><strong>Zero Trust change:</strong> Transaction-level authorization, segregation of duties enforcement, real-time sanctions screening, velocity controls</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 5: Employee Identity Provider (Okta Workforce Identity)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>CISO</td></tr>
+            <tr><th>Environment</th><td>Production &mdash; 750 employees + 50 contractors</td></tr>
+        </table>
+        <ul>
+            <li>Central authentication for ALL internal systems: AWS IAM, Core Banking, Jira, Salesforce, Workday, M365, and 45+ SaaS apps</li>
+            <li>Identity Governance: joiner/mover/leaver automation (4-hour provisioning, 15-minute deprovisioning)</li>
+            <li>Device Trust integration verifies device health before granting access</li>
+            <li><strong>Zero Trust change:</strong> Okta replaces the firewall as the primary access control &mdash; the Identity Provider IS the security perimeter</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Asset 6: Zscaler Zero Trust Exchange (Network Access Replacement)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Network Device</td></tr>
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Director of Network Security</td></tr>
+            <tr><th>Environment</th><td>Production &mdash; 600/750 employees migrated (80%)</td></tr>
+        </table>
+        <ul>
+            <li>Replaces traditional VPN with application-specific micro-tunnels &mdash; users connect to specific apps, never join the corporate network</li>
+            <li>ZIA: secure internet access with SSL inspection, cloud firewall, DLP</li>
+            <li>ZPA: secure internal app access without network exposure</li>
+            <li><strong>Zero Trust change:</strong> Eliminates lateral movement entirely &mdash; compromised credentials only reach authorized apps, not the full network</li>
+        </ul>
+    </div>
+
+    <!-- Access Risk Assessment -->
+    <h2>3. Access Risk Assessment &mdash; 5 Risks</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Risk ID</th>
+                <th>Risk Title</th>
+                <th>Category</th>
+                <th>Likelihood</th>
+                <th>Impact</th>
+                <th>Score</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ZT-R1</td>
+                <td>Lateral Movement After Credential Compromise</td>
+                <td>Access Control</td>
+                <td>4</td>
+                <td>5</td>
+                <td>20</td>
+                <td class="risk-critical">CRITICAL</td>
+            </tr>
+            <tr>
+                <td>ZT-R2</td>
+                <td>Account Takeover Through Weak Customer Authentication</td>
+                <td>Application Security</td>
+                <td>4</td>
+                <td>4</td>
+                <td>16</td>
+                <td class="risk-critical">CRITICAL</td>
+            </tr>
+            <tr>
+                <td>ZT-R3</td>
+                <td>Privileged Access Abuse by Insiders</td>
+                <td>Access Control</td>
+                <td>3</td>
+                <td>5</td>
+                <td>15</td>
+                <td class="risk-critical">CRITICAL</td>
+            </tr>
+            <tr>
+                <td>ZT-R4</td>
+                <td>Unmanaged Device Access Bypassing Endpoint Controls</td>
+                <td>Endpoint Security</td>
+                <td>3</td>
+                <td>4</td>
+                <td>12</td>
+                <td class="risk-high">HIGH</td>
+            </tr>
+            <tr>
+                <td>ZT-R5</td>
+                <td>Third-Party/API Access Exceeding Minimum Permissions</td>
+                <td>Vendor Risk</td>
+                <td>3</td>
+                <td>4</td>
+                <td>12</td>
+                <td class="risk-high">HIGH</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="risk-card">
+        <h3>ZT-R1: Lateral Movement After Credential Compromise <span class="score score-critical">CRITICAL &mdash; 20</span></h3>
+        <ul>
+            <li>Current VPN grants broad network connectivity once authenticated &mdash; compromised credential gives attacker same access as legitimate user</li>
+            <li>Flat network allows scanning, discovery, and lateral movement to core banking, customer DB, and payment systems</li>
+            <li>Phishing success rates in banking average 8-12%; VPN credentials actively traded on dark web</li>
+            <li><strong>Treatment:</strong> Replace VPN with Zscaler ZPA (application-specific tunnels), implement micro-segmentation, enforce default-deny network posture</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>ZT-R2: Account Takeover Through Weak Customer Auth <span class="score score-critical">CRITICAL &mdash; 16</span></h3>
+        <ul>
+            <li>85% of customer interactions occur via digital channels with password + SMS 2FA</li>
+            <li>SMS 2FA vulnerable to SIM-swapping ($68M FBI-reported losses in 2022) and SS7 interception</li>
+            <li>Coordinated ATO campaigns can affect hundreds of accounts simultaneously</li>
+            <li><strong>Treatment:</strong> Migrate to FIDO2 WebAuthn with biometrics, risk-based step-up authentication, behavioral fraud engine</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>ZT-R3: Privileged Access Abuse by Insiders <span class="score score-critical">CRITICAL &mdash; 15</span></h3>
+        <ul>
+            <li>45 employees have standing privileged access to production: 12 DBAs, 8 sysadmins, 15 infra engineers, 10 app admins</li>
+            <li>Standing access enables data exfiltration, record modification, backdoor creation, security control disabling</li>
+            <li><strong>Treatment:</strong> Eliminate all standing privileges via CyberArk JIT access &mdash; request, approve, use, auto-revoke (max 4-hour windows)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>ZT-R4: Unmanaged Device Access <span class="score score-high">HIGH &mdash; 12</span></h3>
+        <ul>
+            <li>Current model authenticates users but does not verify device health &mdash; personal/contractor devices may lack EDR, patches, encryption</li>
+            <li>60% of employees work remotely 3+ days/week; 50+ contractors use unmanaged devices</li>
+            <li><strong>Treatment:</strong> Okta Device Trust requiring MDM enrollment, patched OS, active EDR, disk encryption before any access is granted</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>ZT-R5: Third-Party/API Over-Permissioning <span class="score score-high">HIGH &mdash; 12</span></h3>
+        <ul>
+            <li>35+ third-party API integrations authenticated with static API keys &mdash; broad permissions, no expiry, shared across environments</li>
+            <li>Compromised vendor API key grants attacker access with full integration permissions</li>
+            <li><strong>Treatment:</strong> Replace static keys with OAuth 2.0 short-lived tokens + mutual TLS, minimum-necessary scoped permissions, quarterly access reviews</li>
+        </ul>
+    </div>
+
+    <!-- Zero Trust Control Catalog -->
+    <h2>4. Zero Trust Control Catalog &mdash; 12 Controls</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Control Name</th>
+                <th>Framework</th>
+                <th>Reference</th>
+                <th>Frequency</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Identity-Centric Access with Okta Adaptive MFA</td>
+                <td>NIST CSF</td>
+                <td>NIST SP 800-207 Tenet 4 | PR.AC-7 | CIS 6.3</td>
+                <td>Continuous</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Zscaler ZTNA Replacing VPN</td>
+                <td>NIST CSF</td>
+                <td>NIST SP 800-207 Tenet 2 | PR.AC-5 | CIS 12.2</td>
+                <td>Continuous</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Micro-Segmentation of Core Banking</td>
+                <td>NIST CSF</td>
+                <td>NIST SP 800-207 Approach 2 | PR.AC-5 | CIS 12.8</td>
+                <td>Continuous</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Just-in-Time Privileged Access (CyberArk)</td>
+                <td>NIST CSF</td>
+                <td>NIST SP 800-207 Tenet 3 | PR.AC-4 | CIS 6.5</td>
+                <td>Per-request</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>FIDO2 Phishing-Resistant Customer Auth</td>
+                <td>NIST CSF</td>
+                <td>NIST SP 800-63B AAL3 | PR.AC-7 | CIS 6.3</td>
+                <td>Continuous</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Continuous Device Trust Verification</td>
+                <td>NIST CSF</td>
+                <td>NIST SP 800-207 Tenet 5 | DE.CM-7 | CIS 1.1</td>
+                <td>Continuous</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>API Zero Trust (OAuth 2.0 + mTLS)</td>
+                <td>NIST CSF</td>
+                <td>NIST SP 800-207 M2M | PR.AC-1 | CIS 3.10</td>
+                <td>Continuous</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Data Loss Prevention (Classification-Driven)</td>
+                <td>CIS</td>
+                <td>CIS 3.1 | NIST CSF PR.DS-1 | SP 800-207 Tenet 6</td>
+                <td>Continuous</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>SIEM with Zero Trust Analytics (Splunk)</td>
+                <td>NIST CSF</td>
+                <td>NIST SP 800-207 Tenet 7 | DE.AE-2 | CIS 8.2</td>
+                <td>24/7 Real-time</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Microsegmented Network (Default-Deny)</td>
+                <td>CIS</td>
+                <td>CIS 12.2 | NIST CSF PR.AC-5 | SP 800-207 Approach 2</td>
+                <td>Continuous</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>Zero Trust Maturity Metrics Dashboard</td>
+                <td>NIST CSF</td>
+                <td>NIST SP 800-207 | ID.GV-4 | CIS 18.2</td>
+                <td>Monthly/Quarterly</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>Regulatory Compliance Integration</td>
+                <td>NIST CSF</td>
+                <td>NIST CSF ID.GV-3 | CIS 18.1</td>
+                <td>Continuous/Annual</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="risk-card">
+        <h3>Control 1: Identity-Centric Access with Okta Adaptive MFA</h3>
+        <ul>
+            <li>Replaced network-based access with identity-based access through Okta Workforce Identity</li>
+            <li>Every request evaluated against: verified identity (FIDO2 YubiKeys / Okta Verify), device health (MDM, OS patches, EDR), risk signals (IP reputation, geo anomalies, credential breach DBs), and context (time, sensitivity, behavior)</li>
+            <li>High-risk access (core banking, payments, customer DB) requires step-up authentication even within active sessions</li>
+            <li>Serves as the Policy Decision Point (PDP) per NIST 800-207</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 2: Zscaler Zero Trust Network Access Replacing VPN</h3>
+        <ul>
+            <li>Replaced traditional VPN with Zscaler Private Access (ZPA) &mdash; application-specific micro-tunnels, users never join the corporate network</li>
+            <li>600/750 employees migrated (80%); 45 VPN concentrators scheduled for decommission</li>
+            <li>ZIA provides SSL inspection, cloud firewall, URL filtering, DLP, and sandboxing</li>
+            <li>Every session logged: user identity, device posture, app accessed, data volume, risk score</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 3: Micro-Segmentation of Core Banking Platform</h3>
+        <ul>
+            <li>AWS Security Groups + Network ACLs + Istio service mesh for application-level segmentation</li>
+            <li>CBS, Customer DB, Payment Gateway each have independent security boundaries</li>
+            <li>Inter-service communication via mTLS through service mesh &mdash; only explicitly defined flows allowed</li>
+            <li>Default-deny posture: all traffic not matching defined flows is blocked</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 4: Just-in-Time Privileged Access with CyberArk</h3>
+        <ul>
+            <li>Eliminated ALL standing privileged access for 45 employees with permanent admin rights</li>
+            <li>Request-Approve-Use-Revoke workflow: specify system, task, duration (max 4 hours), manager + security approval</li>
+            <li>Session recording (screen capture + keystroke logging) for all Critical system access</li>
+            <li>Automatic credential rotation after each session; break-glass procedure for emergencies</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 5: FIDO2 Phishing-Resistant Customer Authentication</h3>
+        <ul>
+            <li>Migrating 500K+ customers from password + SMS 2FA to FIDO2 WebAuthn with biometrics</li>
+            <li>Mobile: Face ID / Touch ID as FIDO2 authenticators; Web: Windows Hello, macOS Touch ID, security keys</li>
+            <li>Risk-based step-up auth: low-risk (check balance) = seamless; high-risk (large transfer, new payee) = full re-verification</li>
+            <li>35% of mobile users migrated; full migration targeted Q4 2026</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 6: Continuous Device Trust Verification</h3>
+        <ul>
+            <li>Pre-access checks via Okta Device Trust: MDM enrollment, OS within 30 days of latest patch, CrowdStrike EDR active, disk encryption enabled</li>
+            <li>Hourly continuous checks &mdash; degraded posture during active session triggers immediate session termination</li>
+            <li>Contractors: Zscaler Client Connector with DLP, clipboard restrictions, watermarked screen display</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 7: API Zero Trust with OAuth 2.0 and Mutual TLS</h3>
+        <ul>
+            <li>Replaced static API keys for 35+ third-party integrations with mTLS + OAuth 2.0 (1-hour token expiry)</li>
+            <li>Minimum-necessary scoped permissions per integration (e.g., Plaid: read-only balance + routing only)</li>
+            <li>API Gateway with rate limiting, request validation, anomaly detection</li>
+            <li>Quarterly API access review verifying permissions remain minimum necessary</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 8: Data Loss Prevention (Classification-Driven)</h3>
+        <ul>
+            <li>DLP across all channels: Zscaler ZIA (outbound), M365 Purview (email), CrowdStrike (endpoint), API Gateway (responses)</li>
+            <li>4-tier classification: Restricted (SSN, account numbers, SARs), Confidential (internal reports, employee data), Internal, Public</li>
+            <li>Microsoft Purview automated weekly scans auto-classifying untagged sensitive data</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 9: SIEM with Zero Trust Analytics (Splunk)</h3>
+        <ul>
+            <li>Aggregates telemetry from Okta, Zscaler, CyberArk, CrowdStrike, AWS CloudTrail, CBS, Payment Gateway, CIAM</li>
+            <li>ZT correlation rules: impossible travel, privilege escalation, anomalous data access, session hijacking, device posture changes</li>
+            <li>24/7 SOC with 15-minute SLA for high-severity alerts; 7-year log retention per BSA/AML</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 10: Microsegmented Network with Default-Deny</h3>
+        <ul>
+            <li>All segments operate on default-deny &mdash; no traffic allowed unless explicitly permitted with business justification</li>
+            <li>AWS Security Groups (instance-level) + Network ACLs (subnet-level) + Istio service mesh (application-level)</li>
+            <li>East-west traffic encrypted with mTLS; north-south through WAF + API Gateway</li>
+            <li>Quarterly penetration testing validates no unauthorized paths exist between segments</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 11: Zero Trust Maturity Metrics Dashboard</h3>
+        <ul>
+            <li>Tracks maturity across 5 CISA dimensions: Identity, Device, Network, Application, Data</li>
+            <li>Monthly reports to CISO, quarterly to Board, annual maturity assessment for OCC examiners</li>
+            <li>Key metrics: % apps federated (92%), phishing-resistant MFA (85%), VPN-to-ZPA migration (80%), micro-segmentation (78%)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 12: Regulatory Compliance Integration (FFIEC, OCC, BSA/AML)</h3>
+        <ul>
+            <li>ZT controls mapped to: FFIEC Authentication Guidance, FFIEC CAT domains, OCC Heightened Standards, BSA/AML monitoring</li>
+            <li>Regulatory-ready evidence: Okta access logs, CyberArk session recordings, Zscaler logs, maturity dashboard</li>
+            <li>Annual mock OCC examination conducted internally to validate readiness</li>
+        </ul>
+    </div>
+
+    <!-- Policy Library -->
+    <h2>5. Policy Library &mdash; 4 Governance Policies</h2>
+
+    <div class="risk-card">
+        <h3>Policy 1: Zero Trust Access Policy <span class="status-complete">Approved</span></h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>CISO</td></tr>
+            <tr><th>Review Date</th><td>September 30, 2026</td></tr>
+        </table>
+        <ul>
+            <li><strong>No Implicit Trust:</strong> No user, device, or network location trusted by default &mdash; every request authenticated, authorized, and continuously validated</li>
+            <li><strong>Identity-First:</strong> Access based on verified identity, not network location</li>
+            <li><strong>Least Privilege:</strong> Minimum access for current task; standing privileged access prohibited</li>
+            <li><strong>Continuous Verification:</strong> Sessions re-evaluated on changing risk signals</li>
+            <li><strong>Assume Breach:</strong> Architecture assumes perimeter already compromised; controls limit blast radius</li>
+            <li><strong>Device Trust:</strong> Only managed, healthy, compliant devices can access systems</li>
+            <li><strong>Encryption Everywhere:</strong> All data encrypted at rest and in transit regardless of location</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Policy 2: Privileged Access Management Policy <span class="status-complete">Approved</span></h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>CISO</td></tr>
+            <tr><th>Review Date</th><td>September 30, 2026</td></tr>
+        </table>
+        <ul>
+            <li><strong>Zero Standing Privileges:</strong> No permanent admin access; all credentials vaulted in CyberArk</li>
+            <li><strong>JIT Access:</strong> Specify system, task, justification, duration (max 4 hours) with manager + security approval</li>
+            <li><strong>Session Recording:</strong> Screen capture + keystroke logging for Critical systems; 7-year retention</li>
+            <li><strong>Credential Rotation:</strong> Automatic password rotation after each privileged session</li>
+            <li><strong>Quarterly Review:</strong> All privileged access patterns reviewed to identify unnecessary access</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Policy 3: Third-Party and API Security Policy <span class="status-complete">Approved</span></h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>VP of Payment Operations</td></tr>
+            <tr><th>Review Date</th><td>September 30, 2026</td></tr>
+        </table>
+        <ul>
+            <li><strong>Mutual Authentication:</strong> All API integrations use mTLS; static API keys prohibited for new integrations</li>
+            <li><strong>Minimum Scope:</strong> Each integration receives only required data fields/operations; quarterly scope review</li>
+            <li><strong>Short-Lived Tokens:</strong> OAuth 2.0 tokens expire after 1 hour with refresh</li>
+            <li><strong>Vendor Assessment:</strong> Annual SOC 2 review, penetration test results, security questionnaire</li>
+            <li><strong>Offboarding:</strong> All credentials and access revoked within 24 hours when vendor relationship ends</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Policy 4: Data Classification and Protection Policy <span class="status-complete">Approved</span></h3>
+        <table class="info-table">
+            <tr><th>Owner</th><td>Chief Data Officer</td></tr>
+            <tr><th>Review Date</th><td>September 30, 2026</td></tr>
+        </table>
+        <ul>
+            <li><strong>4-Tier Classification:</strong> Restricted (SSNs, account numbers, SARs), Confidential (internal reports, employee PII), Internal (policies, procedures), Public (marketing)</li>
+            <li><strong>Data Minimization:</strong> Store only minimum necessary; non-production uses tokenized/synthetic data</li>
+            <li><strong>Retention &amp; Disposal:</strong> 7 years for BSA/AML, 5 years for regulatory filings; cryptographic erasure after retention</li>
+            <li><strong>Cross-Border:</strong> All data remains in US-based data centers; no international processing</li>
+            <li><strong>DLP Enforcement:</strong> Automated controls prevent Restricted/Confidential data from leaving authorized channels</li>
+        </ul>
+    </div>
+
+    <!-- Zero Trust Maturity Summary -->
+    <h2>6. Zero Trust Maturity Summary</h2>
+
+    <table class="maturity-table">
+        <thead>
+            <tr>
+                <th>ZT Pillar</th>
+                <th>Current State</th>
+                <th>Target</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Identity</strong></td>
+                <td>92% apps federated, 85% phishing-resistant MFA</td>
+                <td>100% by Q4 2026</td>
+            </tr>
+            <tr>
+                <td><strong>Device</strong></td>
+                <td>88% Device Trust, 96% health compliance</td>
+                <td>100% by Q3 2026</td>
+            </tr>
+            <tr>
+                <td><strong>Network</strong></td>
+                <td>80% on ZPA, 95% default-deny</td>
+                <td>100% by Q2 2026</td>
+            </tr>
+            <tr>
+                <td><strong>Application</strong></td>
+                <td>78% micro-segmented, 65% APIs on OAuth</td>
+                <td>100% by Q4 2026</td>
+            </tr>
+            <tr>
+                <td><strong>Data</strong></td>
+                <td>82% classified, DLP active on all channels</td>
+                <td>100% by Q3 2026</td>
+            </tr>
+            <tr>
+                <td><strong>Policies</strong></td>
+                <td>4 policies approved, Board-endorsed</td>
+                <td>Complete</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>7. Next Steps</h2>
+    <ul>
+        <li>Complete VPN-to-ZPA migration for remaining 150 employees and decommission 45 VPN concentrators</li>
+        <li>Federate remaining 8% of legacy banking applications through Okta</li>
+        <li>Achieve 100% FIDO2 customer migration by Q4 2026</li>
+        <li>Complete micro-segmentation for remaining 22% of applications</li>
+        <li>Migrate all 35+ API integrations from static keys to OAuth 2.0 + mTLS</li>
+        <li>Conduct annual mock OCC examination and update maturity dashboard for examiner review</li>
+    </ul>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti. All rights reserved.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCP/DR for Critical Infrastructure — CriticalOps Inc | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #fefce8; color: #a16207; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .status-effective { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-partial { background: #fefce8; color: #a16207; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .rto-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .rto-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .rto-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Business Continuity</span>
+        <h1>Business Continuity &amp; Disaster Recovery &mdash; <em>CriticalOps Inc</em></h1>
+        <p class="subtitle">Led BCP/DR planning for a critical infrastructure operator managing SCADA systems across 12 water treatment plants and 28 power grid substations serving 10M+ citizens; defined RTO/RPO for 5 critical assets, assessed 4 continuity risks, and implemented 8 business continuity controls</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> CriticalOps Inc</div>
+            <div class="meta-item"><strong>Industry:</strong> Critical Infrastructure (Water &amp; Energy)</div>
+            <div class="meta-item"><strong>Frameworks:</strong> CISA, NERC CIP, EPA AWIA, COBIT, ISO 27001</div>
+            <div class="meta-item"><strong>Scale:</strong> 900 Employees &bull; 12 Water Plants &bull; 28 Substations &bull; 10M+ Citizens</div>
+            <div class="meta-item"><strong>Date:</strong> March 2026</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>CriticalOps Inc is a 900-employee critical infrastructure operator managing SCADA (Supervisory Control and Data Acquisition) systems for water treatment facilities and power grid substations serving over 10 million citizens across 3 states. Classified as critical infrastructure under CISA guidelines and subject to NERC CIP standards, CriticalOps must maintain operational resilience capable of withstanding cyberattacks, natural disasters, equipment failures, and supply chain disruptions.</p>
+    <p>This project conducts a Business Impact Analysis (BIA), identifies 5 critical assets with defined RTO/RPO requirements, assesses 4 continuity risks, and documents 8 business continuity controls mapped to ISO 27001 and COBIT frameworks.</p>
+
+    <table class="risk-table">
+        <tr>
+            <th>Deliverable</th>
+            <th>Count</th>
+            <th>Details</th>
+        </tr>
+        <tr><td>Critical Assets</td><td><strong>5</strong></td><td>Each with defined RTO/RPO based on public safety impact</td></tr>
+        <tr><td>Continuity Risks</td><td><strong>4</strong></td><td>3 Critical + 1 High &mdash; scored on likelihood &times; impact (1&ndash;25 scale)</td></tr>
+        <tr><td>BC Controls</td><td><strong>8</strong></td><td>6 Effective + 2 Partially Effective &mdash; mapped to ISO 27001, COBIT, NIST CSF</td></tr>
+    </table>
+
+    <!-- Critical Asset Inventory -->
+    <h2>2. Critical Asset Inventory &mdash; RTO/RPO Definitions</h2>
+    <p>Critical infrastructure assets differ from typical IT assets because their failure has physical consequences. The BIA identifies which assets, if unavailable, would cause the most severe impact to public safety, regulatory compliance, and operational continuity.</p>
+
+    <!-- RTO/RPO Summary Table -->
+    <table class="rto-table">
+        <tr>
+            <th>Asset</th>
+            <th>Classification</th>
+            <th>RTO</th>
+            <th>RPO</th>
+        </tr>
+        <tr>
+            <td>Water SCADA Master Control</td>
+            <td><span class="score score-critical">Critical</span></td>
+            <td><strong>15 minutes</strong></td>
+            <td><strong>Zero</strong></td>
+        </tr>
+        <tr>
+            <td>Energy Management System (EMS)</td>
+            <td><span class="score score-critical">Critical</span></td>
+            <td><strong>5 minutes</strong></td>
+            <td><strong>Zero</strong></td>
+        </tr>
+        <tr>
+            <td>Historian Database</td>
+            <td><span class="score score-critical">Critical</span></td>
+            <td><strong>4 hours</strong></td>
+            <td><strong>15 minutes</strong></td>
+        </tr>
+        <tr>
+            <td>OT Network Infrastructure</td>
+            <td><span class="score score-critical">Critical</span></td>
+            <td><strong>30 minutes</strong></td>
+            <td><strong>N/A</strong></td>
+        </tr>
+        <tr>
+            <td>EOC / DR Site</td>
+            <td><span class="score score-critical">Critical</span></td>
+            <td><strong>2 hours</strong> (activation)</td>
+            <td>Per replicated systems</td>
+        </tr>
+    </table>
+
+    <!-- Asset 1 -->
+    <div class="risk-card">
+        <h3>Asset 1: SCADA Master Control System (Water Treatment)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Classification</th><td><span class="score score-critical">Critical</span></td></tr>
+            <tr><th>Owner</th><td>Director of Water Operations</td></tr>
+            <tr><th>RTO / RPO</th><td><strong>15 minutes / Zero</strong> (real-time system, no data loss acceptable)</td></tr>
+            <tr><th>Description</th><td>Primary SCADA system controlling 12 water treatment plants serving 6M citizens. Monitors and controls chemical dosing (chlorine, fluoride, sodium hydroxide), filtration, pump station operations, reservoir levels, and real-time water quality sensors. Processes 45,000 data points/second from 8,000+ field sensors and actuators. Runs on a dedicated OT network air-gapped from the corporate IT network. Redundant servers with automatic failover. 24/7 staffed control room.</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 2 -->
+    <div class="risk-card">
+        <h3>Asset 2: SCADA Energy Management System (Power Grid)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Classification</th><td><span class="score score-critical">Critical</span></td></tr>
+            <tr><th>Owner</th><td>Director of Grid Operations</td></tr>
+            <tr><th>RTO / RPO</th><td><strong>5 minutes / Zero</strong> (NERC CIP requirement for real-time operations)</td></tr>
+            <tr><th>Description</th><td>Energy Management System controlling 28 power grid substations across 3 states, managing electricity distribution to 4M households and 200+ critical facilities (hospitals, emergency services, data centers). Controls substation breaker operations, load balancing, voltage regulation, fault detection, and renewable energy integration. Processes 30,000 telemetry points/second. Subject to NERC CIP mandatory compliance audits. Hot standby failover in under 30 seconds.</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 3 -->
+    <div class="risk-card">
+        <h3>Asset 3: Historian Database (Operational Data Archive)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Database</td></tr>
+            <tr><th>Classification</th><td><span class="score score-critical">Critical</span></td></tr>
+            <tr><th>Owner</th><td>Chief Data Officer</td></tr>
+            <tr><th>RTO / RPO</th><td><strong>4 hours / 15 minutes</strong> (replication lag)</td></tr>
+            <tr><th>Description</th><td>PI Historian database storing 10+ years of operational telemetry from both water and energy operations: sensor readings, equipment states, alarm events, water quality trends, grid performance data, and incident investigation records. Approximately 50TB with 500M+ data points added daily. Replicated to warm standby with 15-minute lag. Serves as the regulatory evidence base for EPA and NERC compliance audits.</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 4 -->
+    <div class="risk-card">
+        <h3>Asset 4: OT Network Infrastructure (Air-Gapped Industrial Network)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Network Device</td></tr>
+            <tr><th>Classification</th><td><span class="score score-critical">Critical</span></td></tr>
+            <tr><th>Owner</th><td>OT Security Manager</td></tr>
+            <tr><th>RTO / RPO</th><td><strong>30 minutes / N/A</strong></td></tr>
+            <tr><th>Description</th><td>Dedicated Operational Technology network physically separated (air-gapped) from corporate IT and the internet. Contains industrial switches/routers, Palo Alto industrial firewalls with ICS-specific signatures, hardware data diodes (one-way OT&rarr;IT flow), serial-to-IP converters for legacy devices, GPS time synchronization, and redundant communication paths (primary fiber + backup microwave/cellular) to all 12 water plants and 28 substations. Physical access requires badge + biometric authentication.</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 5 -->
+    <div class="risk-card">
+        <h3>Asset 5: Emergency Operations Center (EOC) &amp; DR Site</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Server / Facility</td></tr>
+            <tr><th>Classification</th><td><span class="score score-critical">Critical</span></td></tr>
+            <tr><th>Owner</th><td>Business Continuity Manager</td></tr>
+            <tr><th>RTO / RPO</th><td><strong>2 hours activation</strong> / Per replicated systems</td></tr>
+            <tr><th>Description</th><td>Secondary control center and DR site located 150 miles from primary &mdash; different seismic zone, different flood plain, different power grid. Contains redundant SCADA/EMS servers with hot standby, Historian replica (15-min lag), independent communication links (separate fiber + satellite), 7-day generator fuel supply, 30-day self-sufficiency (sleeping quarters for 20, full kitchen). Tier III data center standards. Tested quarterly with full failover exercises.</td></tr>
+        </table>
+    </div>
+
+    <!-- Continuity Risk Assessment -->
+    <h2>3. Continuity Risk Assessment</h2>
+    <p>These 4 risks represent the highest threats to operational continuity for critical infrastructure serving 10M+ citizens. Risk Score = Likelihood &times; Impact (1&ndash;25 scale).</p>
+
+    <table class="risk-table">
+        <tr>
+            <th>Risk</th>
+            <th>Category</th>
+            <th>Likelihood</th>
+            <th>Impact</th>
+            <th>Score</th>
+            <th>Rating</th>
+        </tr>
+        <tr>
+            <td>Cyberattack on SCADA Systems</td>
+            <td>Availability</td>
+            <td>4 &ndash; Likely</td>
+            <td>5 &ndash; Severe</td>
+            <td>20</td>
+            <td class="risk-critical">CRITICAL</td>
+        </tr>
+        <tr>
+            <td>Natural Disaster Destroying Primary Control Center</td>
+            <td>Physical Security</td>
+            <td>3 &ndash; Possible</td>
+            <td>5 &ndash; Severe</td>
+            <td>15</td>
+            <td class="risk-critical">CRITICAL</td>
+        </tr>
+        <tr>
+            <td>Key Personnel Unavailability During Extended Emergency</td>
+            <td>Human Resources</td>
+            <td>4 &ndash; Likely</td>
+            <td>4 &ndash; Major</td>
+            <td>16</td>
+            <td class="risk-critical">CRITICAL</td>
+        </tr>
+        <tr>
+            <td>Supply Chain Disruption Affecting SCADA Replacement Parts</td>
+            <td>Vendor Risk</td>
+            <td>3 &ndash; Possible</td>
+            <td>4 &ndash; Major</td>
+            <td>12</td>
+            <td class="risk-high">HIGH</td>
+        </tr>
+    </table>
+
+    <!-- Risk 1 -->
+    <div class="risk-card">
+        <h3>Risk 1: Cyberattack on SCADA Systems <span class="score score-critical">CRITICAL &mdash; 20</span></h3>
+        <table class="info-table">
+            <tr><th>Category</th><td>Availability</td></tr>
+            <tr><th>Status</th><td>Open</td></tr>
+            <tr><th>Owner</th><td>OT Security Manager + Business Continuity Manager</td></tr>
+        </table>
+        <p>Nation-state actors and cybercriminal groups actively target water and energy SCADA systems. Attack vectors include spear-phishing of employees with OT access, exploitation of the IT/OT boundary, supply chain attacks through compromised vendor software updates, insider threats, and exploitation of legacy industrial protocols (Modbus, DNP3) that lack authentication. A successful attack could alter chemical dosing in water treatment (public health emergency), trip circuit breakers causing widespread power outages, or damage physical equipment through manipulation of control parameters.</p>
+        <ul>
+            <li><strong>Likelihood 4 (Likely):</strong> CISA reports critical infrastructure targeting increased 300% since 2020; Russian-linked groups (Sandworm, Volt Typhoon) specifically target water and energy systems</li>
+            <li><strong>Impact 5 (Severe):</strong> Compromised water treatment could poison a city&rsquo;s supply affecting millions; this is a public safety and national security risk measured in human lives</li>
+        </ul>
+    </div>
+
+    <!-- Risk 2 -->
+    <div class="risk-card">
+        <h3>Risk 2: Natural Disaster Destroying Primary Control Center <span class="score score-critical">CRITICAL &mdash; 15</span></h3>
+        <table class="info-table">
+            <tr><th>Category</th><td>Physical Security</td></tr>
+            <tr><th>Status</th><td>Open</td></tr>
+            <tr><th>Owner</th><td>Business Continuity Manager</td></tr>
+        </table>
+        <p>The primary control center could be destroyed or rendered inoperable by earthquake, hurricane, fire, or prolonged regional power outage. Loss means loss of centralized SCADA monitoring for all 12 water plants and 28 substations, loss of the primary Historian database, and potential loss of communication infrastructure if fiber routes are damaged.</p>
+        <ul>
+            <li><strong>Likelihood 3 (Possible):</strong> Climate change is increasing frequency and severity of extreme weather; the Texas Winter Storm, Hurricane Katrina, and 2011 Joplin tornado all destroyed critical infrastructure facilities</li>
+            <li><strong>Impact 5 (Severe):</strong> Complete loss of centralized control over water and power serving 10M citizens; this risk is why the EOC/DR site exists 150 miles away</li>
+        </ul>
+    </div>
+
+    <!-- Risk 3 -->
+    <div class="risk-card">
+        <h3>Risk 3: Key Personnel Unavailability During Extended Emergency <span class="score score-critical">CRITICAL &mdash; 16</span></h3>
+        <table class="info-table">
+            <tr><th>Category</th><td>Human Resources</td></tr>
+            <tr><th>Status</th><td>Open</td></tr>
+            <tr><th>Owner</th><td>HR Director + Business Continuity Manager</td></tr>
+        </table>
+        <p>CriticalOps requires specialized SCADA operators, control system engineers, and OT security specialists who are extremely difficult to replace. Only 18 operators are certified for water SCADA and 12 for energy EMS. Single points of failure exist for 3 critical roles: OT Security Manager, Lead SCADA Engineer, and Historian Database Administrator. No formal cross-training program currently exists for these specialized roles.</p>
+        <ul>
+            <li><strong>Likelihood 4 (Likely):</strong> COVID-19 proved 30&ndash;40% workforce unavailability is not theoretical; severe weather events simultaneously affect employees&rsquo; personal lives</li>
+            <li><strong>Impact 4 (Major):</strong> Operations can continue with reduced staff using manual procedures, but decision-making quality degrades under fatigue and stress</li>
+        </ul>
+    </div>
+
+    <!-- Risk 4 -->
+    <div class="risk-card">
+        <h3>Risk 4: Supply Chain Disruption Affecting SCADA Replacement Parts <span class="score score-high">HIGH &mdash; 12</span></h3>
+        <table class="info-table">
+            <tr><th>Category</th><td>Vendor Risk</td></tr>
+            <tr><th>Status</th><td>Open</td></tr>
+            <tr><th>Owner</th><td>Procurement Director + OT Security Manager</td></tr>
+        </table>
+        <p>SCADA systems rely on specialized hardware (PLCs, RTUs, HMIs) from a small number of manufacturers (Siemens, Schneider Electric, ABB, Rockwell Automation). Currently: only 2-week spare parts inventory for critical PLCs and RTUs, no alternative vendor qualified for the primary SCADA platform, and 3 critical components are single-sourced with 9+ month lead times.</p>
+        <ul>
+            <li><strong>Likelihood 3 (Possible):</strong> Global chip shortage of 2021&ndash;2023 proved supply chain disruption is real; industrial component lead times remain elevated</li>
+            <li><strong>Impact 4 (Major):</strong> Without replacement parts, failed equipment forces degraded manual mode or shutdown; 2-week inventory insufficient for extended events</li>
+        </ul>
+    </div>
+
+    <!-- Business Continuity Controls -->
+    <h2>4. Business Continuity Controls</h2>
+    <p>These 8 controls establish operational resilience for critical infrastructure, mapped to ISO 27001, COBIT, and NIST CSF.</p>
+
+    <table class="risk-table">
+        <tr>
+            <th>Control</th>
+            <th>Framework</th>
+            <th>Reference</th>
+            <th>Frequency</th>
+            <th>Effectiveness</th>
+        </tr>
+        <tr>
+            <td>Redundant SCADA Architecture with Automatic Failover</td>
+            <td>ISO 27001</td>
+            <td>A.8.14, COBIT APO09, NIST CSF PR.PT-5</td>
+            <td>Continuous</td>
+            <td><span class="status-effective">Effective</span></td>
+        </tr>
+        <tr>
+            <td>DR Site with Full Operational Capability</td>
+            <td>ISO 27001</td>
+            <td>A.5.30, COBIT DSS04, NIST CSF RC.RP-1</td>
+            <td>Quarterly</td>
+            <td><span class="status-effective">Effective</span></td>
+        </tr>
+        <tr>
+            <td>OT/IT Network Segmentation with Air Gap</td>
+            <td>ISO 27001</td>
+            <td>A.8.22, COBIT APO13, NERC CIP-005, NIST CSF PR.AC-5</td>
+            <td>Continuous</td>
+            <td><span class="status-effective">Effective</span></td>
+        </tr>
+        <tr>
+            <td>Manual Override Procedures</td>
+            <td>COBIT</td>
+            <td>DSS04.04, ISO 27001 A.5.30, NIST CSF RC.RP-1</td>
+            <td>Monthly</td>
+            <td><span class="status-effective">Effective</span></td>
+        </tr>
+        <tr>
+            <td>Critical Spare Parts &amp; Vendor Diversification</td>
+            <td>COBIT</td>
+            <td>APO10, ISO 27001 A.5.21, NIST CSF ID.SC-2</td>
+            <td>Monthly</td>
+            <td><span class="status-partial">Partially Effective</span></td>
+        </tr>
+        <tr>
+            <td>Workforce Continuity &amp; Cross-Training</td>
+            <td>ISO 27001</td>
+            <td>A.6.3, COBIT APO07, NIST CSF PR.AT-1</td>
+            <td>Quarterly</td>
+            <td><span class="status-partial">Partially Effective</span></td>
+        </tr>
+        <tr>
+            <td>Cyber Incident Response Plan for ICS/SCADA</td>
+            <td>ISO 27001</td>
+            <td>A.5.24&ndash;5.28, COBIT DSS02, NIST CSF RS.RP-1</td>
+            <td>Quarterly</td>
+            <td><span class="status-effective">Effective</span></td>
+        </tr>
+        <tr>
+            <td>BIA and RTO/RPO Governance</td>
+            <td>COBIT</td>
+            <td>DSS04.02, ISO 27001 A.5.30, NIST CSF ID.BE-5</td>
+            <td>Annual</td>
+            <td><span class="status-effective">Effective</span></td>
+        </tr>
+    </table>
+
+    <!-- Control 1 -->
+    <div class="risk-card">
+        <h3>Control 1: Redundant SCADA Architecture with Automatic Failover <span class="status-effective">Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>ISO 27001 A.8.14 &bull; COBIT APO09 &bull; NIST CSF PR.PT-5</td></tr>
+            <tr><th>Frequency</th><td>Continuous (automatic failover in 30 seconds)</td></tr>
+            <tr><th>Owner</th><td>Director of Water Operations + Director of Grid Operations</td></tr>
+        </table>
+        <p>All SCADA and EMS systems operate in active/hot-standby configuration with automatic failover in 30 seconds. Field devices at all 12 water plants and 28 substations are configured with dual communication paths to both primary and standby servers. Failover tested monthly with planned switchovers.</p>
+        <ul>
+            <li>Water SCADA: primary in Control Center A, hot standby in Control Center B (same campus, different building, separate power feed)</li>
+            <li>Energy EMS: primary in Grid Control Center, hot standby in the EOC/DR site</li>
+            <li>RTO achieved: 30 seconds (well within 15-minute water and 5-minute energy requirements)</li>
+        </ul>
+    </div>
+
+    <!-- Control 2 -->
+    <div class="risk-card">
+        <h3>Control 2: Disaster Recovery Site with Full Operational Capability <span class="status-effective">Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>ISO 27001 A.5.30 &bull; COBIT DSS04 &bull; NIST CSF RC.RP-1</td></tr>
+            <tr><th>Frequency</th><td>Quarterly (full failover exercise)</td></tr>
+            <tr><th>Owner</th><td>Business Continuity Manager</td></tr>
+        </table>
+        <p>The EOC/DR site provides complete redundancy with quarterly full failover exercises where all operations are transferred, the primary site is simulated as destroyed, and operations run from the EOC for 4+ hours.</p>
+        <ul>
+            <li><strong>Most Recent Exercise Results:</strong> Water SCADA failover in 12 minutes (target 15), Energy EMS failover in 4 minutes (target 5), Historian available in 3.5 hours (target 4)</li>
+            <li>All targets met with documented lessons learned and corrective actions</li>
+        </ul>
+    </div>
+
+    <!-- Control 3 -->
+    <div class="risk-card">
+        <h3>Control 3: OT/IT Network Segmentation with Air Gap &amp; Data Diodes <span class="status-effective">Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>ISO 27001 A.8.22 &bull; COBIT APO13 &bull; NERC CIP-005 &bull; NIST CSF PR.AC-5</td></tr>
+            <tr><th>Frequency</th><td>Continuous (enforced by physical architecture)</td></tr>
+            <tr><th>Owner</th><td>OT Security Manager</td></tr>
+        </table>
+        <p>The OT network is physically separated from IT and internet through 5 enforcement layers:</p>
+        <ul>
+            <li><strong>Layer 1 &ndash; Physical:</strong> OT equipment in secured rooms with badge + biometric access; no Wi-Fi in OT zones</li>
+            <li><strong>Layer 2 &ndash; Air Gap:</strong> No routable network path between OT and the internet</li>
+            <li><strong>Layer 3 &ndash; Data Diodes:</strong> Hardware-enforced one-way data flow (OT&rarr;IT only) for Historian replication</li>
+            <li><strong>Layer 4 &ndash; Industrial Firewalls:</strong> Palo Alto with ICS protocol inspection at IT/OT boundary</li>
+            <li><strong>Layer 5 &ndash; Protocol Isolation:</strong> OT uses Modbus, DNP3, IEC 61850 (not routable on IT network)</li>
+            <li>Air gap verified quarterly through penetration testing &mdash; no successful crossing achieved</li>
+        </ul>
+    </div>
+
+    <!-- Control 4 -->
+    <div class="risk-card">
+        <h3>Control 4: Manual Override Procedures for All Critical Operations <span class="status-effective">Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>COBIT DSS04.04 &bull; ISO 27001 A.5.30 &bull; NIST CSF RC.RP-1</td></tr>
+            <tr><th>Frequency</th><td>Monthly (manual operation drills at each facility)</td></tr>
+            <tr><th>Owner</th><td>Director of Water Operations + Director of Grid Operations</td></tr>
+        </table>
+        <p>Every water treatment plant and power substation maintains documented manual override procedures for operation without SCADA.</p>
+        <ul>
+            <li><strong>Water Plants:</strong> Manual chemical dosing, manual pump operation via local control panels, manual water quality instrument readings</li>
+            <li><strong>Substations:</strong> Manual breaker operation, manual voltage regulation, radio-coordinated load management</li>
+            <li>Monthly 2-hour drills with SCADA deliberately disconnected; annual 8-hour extended manual operation exercise</li>
+            <li>Cross-facility coordination uses dedicated radio network independent of IT/OT networks</li>
+        </ul>
+    </div>
+
+    <!-- Control 5 -->
+    <div class="risk-card">
+        <h3>Control 5: Critical Spare Parts Inventory &amp; Vendor Diversification <span class="status-partial">Partially Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>COBIT APO10 &bull; ISO 27001 A.5.21 &bull; NIST CSF ID.SC-2</td></tr>
+            <tr><th>Frequency</th><td>Monthly (inventory review) + Annual (vendor assessment)</td></tr>
+            <tr><th>Owner</th><td>Procurement Director</td></tr>
+        </table>
+        <p>Maintains on-site inventory of critical SCADA components: PLCs (8 spares), RTUs (12), HMI workstations (6), industrial switches (10), serial-to-IP converters (20), and power supplies (15). Inventory levels cover simultaneous failure of 3 critical components plus 1 buffer.</p>
+        <ul>
+            <li><strong>Gap:</strong> Current 2-week inventory is insufficient for extended events</li>
+            <li><strong>Gap:</strong> Secondary vendor qualification is in evaluation phase (2 candidates) but not yet complete</li>
+            <li><strong>Gap:</strong> 3 single-source components with 9+ month lead times remain unaddressed</li>
+            <li>Emergency procurement agreements with primary vendors guarantee 48-hour delivery during declared emergencies</li>
+        </ul>
+    </div>
+
+    <!-- Control 6 -->
+    <div class="risk-card">
+        <h3>Control 6: Workforce Continuity &amp; Cross-Training Program <span class="status-partial">Partially Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>ISO 27001 A.6.3 &bull; COBIT APO07 &bull; NIST CSF PR.AT-1</td></tr>
+            <tr><th>Frequency</th><td>Quarterly (cross-training) + Annual (succession planning)</td></tr>
+            <tr><th>Owner</th><td>HR Director + Operations Directors</td></tr>
+        </table>
+        <p>Addresses key personnel risk through cross-training, succession planning, pandemic preparedness, and mutual aid agreements.</p>
+        <ul>
+            <li><strong>Cross-Training:</strong> Each critical SCADA role targets minimum 2 backup-qualified operators &mdash; currently 60% of roles have 2+ backups</li>
+            <li><strong>Succession Planning:</strong> Successors identified for 3 single-point-of-failure roles but not yet fully trained</li>
+            <li><strong>Pandemic Preparedness:</strong> Remote SCADA monitoring from approved home locations (secured VPN, monitoring only)</li>
+            <li><strong>Gap:</strong> Mutual aid agreements signed with only 2 of 5 target neighboring utilities</li>
+        </ul>
+    </div>
+
+    <!-- Control 7 -->
+    <div class="risk-card">
+        <h3>Control 7: Cyber Incident Response Plan for ICS/SCADA <span class="status-effective">Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>ISO 27001 A.5.24&ndash;5.28 &bull; COBIT DSS02 &bull; NIST CSF RS.RP-1 &bull; CISA ICS-CERT</td></tr>
+            <tr><th>Frequency</th><td>Quarterly (tabletop) + Annual (full-scale simulation)</td></tr>
+            <tr><th>Owner</th><td>OT Security Manager</td></tr>
+        </table>
+        <p>ICS-specific incident response plan prioritizing operational safety over standard IT security practices.</p>
+        <ul>
+            <li><strong>Detection:</strong> OT-specific monitoring tools (Claroty/Dragos for ICS network monitoring, not standard IT SIEM)</li>
+            <li><strong>Containment:</strong> Prioritizes operational safety &mdash; SCADA systems controlling active water treatment are not immediately isolated without ensuring safe manual operation first</li>
+            <li><strong>Reporting:</strong> CISA notification within 72 hours per CIRCIA; coordination with FBI, CISA ICS-CERT, EPA Water ISAC, DOE E-ISAC</li>
+            <li><strong>Recovery:</strong> PLC firmware integrity verification required before returning to automated SCADA control</li>
+            <li><strong>Exercises:</strong> Quarterly tabletops rotating 4 scenarios (ransomware, insider threat, supply chain compromise, DR activation); annual full-scale simulation with CISA participation</li>
+        </ul>
+    </div>
+
+    <!-- Control 8 -->
+    <div class="risk-card">
+        <h3>Control 8: Business Impact Analysis &amp; RTO/RPO Governance <span class="status-effective">Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>COBIT DSS04.02 &bull; ISO 27001 A.5.30 &bull; NIST CSF ID.BE-5</td></tr>
+            <tr><th>Frequency</th><td>Annual (full BIA review) + triggered by significant changes</td></tr>
+            <tr><th>Owner</th><td>Business Continuity Manager</td></tr>
+        </table>
+        <p>Formal BIA process documenting all critical business functions ranked by impact on public safety, regulatory compliance, financial loss, and reputational damage. BIA is approved by CEO and Board of Directors and shared with regulators upon request.</p>
+        <ul>
+            <li>BIA drives: DR investment priorities, testing frequency, spare parts inventory levels, and staffing requirements</li>
+            <li>Updated annually and triggered when: new facilities added, significant technology changes, regulatory changes, or real incidents reveal gaps</li>
+        </ul>
+    </div>
+
+    <!-- Program Summary -->
+    <h2>5. BCP/DR Program Summary</h2>
+
+    <table class="risk-table">
+        <tr>
+            <th>Component</th>
+            <th>Details</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>Critical Assets</td>
+            <td><strong>5</strong> with defined RTO/RPO</td>
+            <td><span class="status-effective">Complete</span></td>
+        </tr>
+        <tr>
+            <td>RTOs Defined</td>
+            <td>Water: 15 min, Energy: 5 min, Historian: 4 hr, OT Net: 30 min, EOC: 2 hr</td>
+            <td><span class="status-effective">Validated Quarterly</span></td>
+        </tr>
+        <tr>
+            <td>Continuity Risks</td>
+            <td><strong>4</strong> (3 Critical: scores 20, 16, 15 &bull; 1 High: score 12)</td>
+            <td><span class="status-effective">Documented</span></td>
+        </tr>
+        <tr>
+            <td>BC Controls</td>
+            <td><strong>8</strong> (6 Effective + 2 Partially Effective)</td>
+            <td><span class="status-partial">6 Operational, 2 Improving</span></td>
+        </tr>
+        <tr>
+            <td>DR Site</td>
+            <td>150 miles away, different seismic/flood/power zone</td>
+            <td><span class="status-effective">Operational &amp; Tested Quarterly</span></td>
+        </tr>
+        <tr>
+            <td>Manual Override</td>
+            <td>All 12 water plants + 28 substations</td>
+            <td><span class="status-effective">Tested Monthly</span></td>
+        </tr>
+    </table>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti. All rights reserved.
+</footer>
+
+</body>
+</html>

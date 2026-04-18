@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOC 2 Type II Audit Readiness — DataFlow Analytics | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: linear-gradient(180deg, #292524 0%, #1c1917 100%);
+            border-bottom: 1px solid #44403c;
+            box-shadow: 0 4px 16px rgba(41, 37, 36, 0.3);
+            padding: 0 2rem;
+        }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #ffffff; text-decoration: none; }
+        .nav-logo span { color: #ffffff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; transition: color 0.2s; }
+        .back-link:hover { color: #fb923c; }
+
+        .project-hero {
+            padding: 7rem 2rem 3rem;
+            background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%);
+            border-bottom: 1px solid var(--border);
+        }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #dcfce7; color: #15803d; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+
+        .risk-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow);
+        }
+        .risk-card h3 { margin-top: 0; }
+
+        .pass-badge { display: inline-block; background: #dcfce7; color: #15803d; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .status-complete { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+
+        @media (max-width: 768px) {
+            .project-hero h1 { font-size: 1.8rem; }
+            .info-table th { width: 120px; }
+            .meta-row { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Audit Readiness</span>
+        <h1>SOC 2 Type II Audit Preparation &mdash; <em>DataFlow Analytics</em></h1>
+        <p class="subtitle">End-to-end SOC 2 Type II readiness program for an AI-powered BI platform serving Fortune 500 clients</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> DataFlow Analytics (300 employees)</div>
+            <div class="meta-item"><strong>Industry:</strong> AI / Business Intelligence SaaS</div>
+            <div class="meta-item"><strong>Frameworks:</strong> SOC 2 Trust Services Criteria, NIST CSF 2.0</div>
+            <div class="meta-item"><strong>Scope:</strong> 12 Controls, 4 Systems, 5 Evidence Items, 5 Tests</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <h2>1. Executive Summary</h2>
+    <p>DataFlow Analytics is a 300-employee company providing AI-powered business intelligence solutions to Fortune 500 clients. Enterprise customers are contractually requiring SOC 2 Type II attestation before renewing or signing contracts. This project prepares DataFlow for its first SOC 2 Type II audit by documenting 12 controls against the Trust Services Criteria, cataloging 4 in-scope systems, collecting 5 evidence items, and recording 5 control tests to simulate auditor readiness validation.</p>
+
+    <h2>2. In-Scope Systems Catalog</h2>
+
+    <div class="risk-card">
+        <h3>System 1: DataFlow BI Platform (Core Application)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>VP of Engineering</td></tr>
+            <tr><th>Description</th><td>Main SaaS application (React + Python/FastAPI) used by 180 enterprise companies with 12,000+ active users. Handles authentication, data uploads, ML model processing, and report generation. Runs on AWS ECS using containerized microservices.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 2: Customer Data Warehouse (PostgreSQL on AWS RDS)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Lead Data Engineer</td></tr>
+            <tr><th>Description</th><td>PostgreSQL on AWS RDS Multi-AZ storing ~8TB of data from 180 client organizations. Tenant-based row-level security, AES-256 encryption with AWS KMS customer-managed keys. Daily automated backups retained for 35 days with 5-minute point-in-time recovery.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 3: AWS Cloud Infrastructure Account</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Director of Infrastructure</td></tr>
+            <tr><th>Description</th><td>Production AWS account hosting ECS clusters, RDS databases, S3 data pipelines, CloudFront CDN, VPC with private subnets, WAF, KMS, CloudTrail audit logging, GuardDuty threat detection, and IAM for 45 engineering staff.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 4: Okta Identity Provider (SSO &amp; MFA)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>High</td></tr>
+            <tr><th>Owner</th><td>IT Director</td></tr>
+            <tr><th>Description</th><td>Central identity provider for SSO and Adaptive MFA. Admins use YubiKey hardware tokens; employees use TOTP via Okta Verify. Integrated with BambooHR for automated provisioning/deprovisioning. Supports SAML 2.0 federation for enterprise client SSO. 300 employees + 12,000+ client users.</td></tr>
+        </table>
+    </div>
+
+    <h2>3. SOC 2 Control Catalog &mdash; 12 Controls</h2>
+
+    <div class="risk-card">
+        <h3>C-01: Logical Access Control &mdash; Role-Based Access</h3>
+        <p><strong>SOC 2:</strong> CC6.1 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> PR.AA-01, PR.AA-05</p>
+        <ul>
+            <li>5 RBAC roles: Admin (8), Developer (25, read-only prod), Data Engineer (6), Support (12, read-only), Client User (12,000+)</li>
+            <li>Access requests via Jira Service Desk with business justification and manager approval</li>
+            <li>Quarterly access reviews by role owners; least privilege enforced</li>
+            <li>No permanent admin access &mdash; temporary privileged access via AWS SSM Session Manager</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-02: Multi-Factor Authentication Enforcement</h3>
+        <p><strong>SOC 2:</strong> CC6.1, CC6.6 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> PR.AA-03</p>
+        <ul>
+            <li>MFA required for all access with no exceptions</li>
+            <li>Admins: hardware YubiKey 5 NFC; employees: TOTP via Okta Verify</li>
+            <li>Adaptive MFA triggers extra verification for new devices, locations, or off-hours access</li>
+            <li>Login blocked if MFA not completed &mdash; no bypass possible</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-03: User Provisioning &amp; Deprovisioning</h3>
+        <p><strong>SOC 2:</strong> CC6.2, CC6.3 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> PR.AA-01, PR.AA-02</p>
+        <ul>
+            <li>Automated via Okta + BambooHR integration</li>
+            <li>New hires auto-provisioned with correct role based on department/job title</li>
+            <li>Terminated employees disabled within 1 hour; all sessions revoked</li>
+            <li>Monthly reconciliation report comparing Okta accounts vs BambooHR employee list</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-04: Data Encryption at Rest and in Transit</h3>
+        <p><strong>SOC 2:</strong> CC6.7, C1.1 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> PR.DS-01, PR.DS-02</p>
+        <ul>
+            <li>At rest: AES-256 via AWS KMS customer-managed keys (RDS, S3, EBS)</li>
+            <li>In transit: TLS 1.3 required; TLS 1.2 and below disabled on all public endpoints</li>
+            <li>RDS parameter group enforces SSL (rds.force_ssl = 1)</li>
+            <li>KMS keys rotated automatically every year</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-05: Network Segmentation &amp; Firewall Controls</h3>
+        <p><strong>SOC 2:</strong> CC6.6 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> PR.IR-01, PR.IR-04</p>
+        <ul>
+            <li>ECS runs in private subnets &mdash; traffic only through ALB + CloudFront</li>
+            <li>RDS in isolated private subnets &mdash; accessible only by application layer via security groups</li>
+            <li>AWS WAF protects against OWASP Top 10 (SQL injection, XSS)</li>
+            <li>Deny-by-default security groups; VPC flow logs sent to CloudWatch</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-06: Vulnerability Management &amp; Patching</h3>
+        <p><strong>SOC 2:</strong> CC7.1, CC3.2 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> DE.CM-09, ID.RA-01</p>
+        <ul>
+            <li>Weekly Qualys scans on all production systems</li>
+            <li>Trivy container image scanning in CI/CD &mdash; Critical/High CVEs auto-block deployment</li>
+            <li>Patch SLAs: Critical (CVSS 9.0+) within 48 hours; High (7.0-8.9) within 14 days</li>
+            <li>Annual pen test by Cobalt (Nov 2025): 0 Critical, 1 High (fixed in 5 days), 3 Medium (fixed in 30 days)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-07: Change Management Process</h3>
+        <p><strong>SOC 2:</strong> CC8.1 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> PR.PS-01</p>
+        <ul>
+            <li>All changes via feature branch + pull request with peer review</li>
+            <li>CI/CD pipeline: unit tests (85%+ coverage), Semgrep SAST, container scanning, staging QA</li>
+            <li>Infrastructure changes via Terraform with same review/approval process</li>
+            <li>Emergency changes require CISO approval + 48-hour post-change review</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-08: Security Monitoring &amp; Alerting (SIEM)</h3>
+        <p><strong>SOC 2:</strong> CC7.2, CC7.1 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> DE.AE-02, DE.CM-01</p>
+        <ul>
+            <li>Datadog SIEM collecting: CloudTrail, VPC Flow Logs, Okta, application logs, RDS audit logs</li>
+            <li>Automated alerts: 5+ failed logins in 10 min, admin actions off-hours, large data exports, new geo logins, security group/IAM changes</li>
+            <li>High-severity alerts &rarr; PagerDuty &rarr; on-call engineer (30-min response SLA)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-09: Incident Response Plan &amp; Procedures</h3>
+        <p><strong>SOC 2:</strong> CC7.3, CC7.4 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> RS.MA-01, RS.CO-02</p>
+        <ul>
+            <li>4 severity levels (P1-P4) with defined escalation paths and roles (Incident Commander, Tech Lead, Comms Lead)</li>
+            <li>Client notification: 24 hours for confidentiality incidents, 4 hours for availability incidents</li>
+            <li>Annual tabletop exercise (Jan 2026); post-incident review within 5 business days</li>
+            <li>Evidence preservation procedures and regulatory notification requirements documented</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-10: Business Continuity &amp; Disaster Recovery</h3>
+        <p><strong>SOC 2:</strong> A1.2, A1.3 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> PR.IR-02, RC.RP-01</p>
+        <ul>
+            <li>Multi-AZ RDS failover, ECS across 3 AZs with auto-scaling</li>
+            <li>DR: primary us-east-1, backup us-west-2; RTO target 2 hours, RPO target 15 minutes</li>
+            <li>Latest DR test (Sep 2025): achieved RTO 1.5 hours, RPO 12 minutes (both under target)</li>
+            <li>Daily backups retained 35 days; BCP reviewed quarterly, approved by CTO</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-11: Risk Assessment Process</h3>
+        <p><strong>SOC 2:</strong> CC3.1, CC3.2 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> ID.RA-01, ID.RA-05</p>
+        <ul>
+            <li>Annual risk assessment for all in-scope systems using 5x5 likelihood/impact matrix</li>
+            <li>Risks mapped to SOC 2 criteria with documented treatment (mitigate, accept, transfer, avoid)</li>
+            <li>Most recent assessment: 18 risks identified, all with documented treatments</li>
+            <li>Tracked in GRC tool; updated for major changes, new systems, or incidents</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-12: Confidential Data Classification &amp; Handling</h3>
+        <p><strong>SOC 2:</strong> C1.1, C1.2 &nbsp;|&nbsp; <strong>NIST CSF 2.0:</strong> PR.DS-10, PR.DS-11</p>
+        <ul>
+            <li>3-tier classification: Confidential (client data), Internal (business data), Public (marketing)</li>
+            <li>Client data auto-classified as Confidential at upload; encrypted AES-256 + TLS 1.3</li>
+            <li>No export to local devices without DLP approval</li>
+            <li>Contract termination: cryptographic erasure via KMS key deletion; 90-day retention default; deletion certificate issued</li>
+        </ul>
+    </div>
+
+    <h2>4. Evidence Collection &mdash; 5 Evidence Items</h2>
+
+    <div class="risk-card">
+        <h3>Evidence 1: Okta MFA Enrollment &amp; Enforcement Report</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>System Export</td></tr>
+            <tr><th>Related Control</th><td>C-02: Multi-Factor Authentication</td></tr>
+            <tr><th>Location</th><td>Okta Admin Console &gt; Reports &gt; MFA Enrollment Status</td></tr>
+        </table>
+        <ul>
+            <li>Shows 100% MFA enrollment for all 300 employees and 12,000+ client users</li>
+            <li>Confirms MFA policy set to "Required" with no bypass exceptions</li>
+            <li>Verifies admin accounts use YubiKey hardware tokens</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Evidence 2: Quarterly Access Review Records</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Document</td></tr>
+            <tr><th>Related Control</th><td>C-01: Logical Access Control</td></tr>
+            <tr><th>Location</th><td>Confluence &gt; Security &gt; Access Reviews &gt; Q4-2025 &amp; Q1-2026</td></tr>
+        </table>
+        <ul>
+            <li>Full user list reviewed per system with reviewer name and completion date</li>
+            <li>Role assignments verified against HR job titles; terminated employees checked</li>
+            <li>Corrective actions documented (e.g., access removed for role changes)</li>
+            <li>System owner sign-off for each review</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Evidence 3: AWS CloudTrail Log Integrity &amp; Retention</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Screenshot</td></tr>
+            <tr><th>Related Control</th><td>C-08: Security Monitoring (SIEM)</td></tr>
+            <tr><th>Location</th><td>AWS Console &gt; CloudTrail + Datadog SIEM Dashboard</td></tr>
+        </table>
+        <ul>
+            <li>CloudTrail enabled for all regions; management + data events logged</li>
+            <li>Log file validation enabled; S3 bucket with versioning + MFA-delete protection</li>
+            <li>Retention: 12 months online, 7 years in Glacier</li>
+            <li>Datadog dashboard showing active log collection and alert investigation</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Evidence 4: Penetration Test Executive Summary</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Report</td></tr>
+            <tr><th>Related Control</th><td>C-06: Vulnerability Management</td></tr>
+            <tr><th>Location</th><td>GRC Tool &gt; Evidence Repository &gt; Cobalt-Nov2025</td></tr>
+        </table>
+        <ul>
+            <li>Annual pen test by Cobalt (Nov 2025) covering BI platform, AWS infrastructure, authentication</li>
+            <li>Testing methods: OWASP Testing Guide + PTES framework</li>
+            <li>Results: 0 Critical, 1 High (fixed in 5 days), 3 Medium (fixed in 30 days)</li>
+            <li>All findings remediated and retested; executive summary only shared with auditor</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Evidence 5: Disaster Recovery Test Report</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Report</td></tr>
+            <tr><th>Related Control</th><td>C-10: Business Continuity &amp; DR</td></tr>
+            <tr><th>Location</th><td>Confluence &gt; Infrastructure &gt; DR Tests &gt; Sep-2025</td></tr>
+        </table>
+        <ul>
+            <li>Simulated complete outage of primary AWS region (us-east-1)</li>
+            <li>RTO achieved: 1.5 hours (target: 2 hours); RPO achieved: 12 minutes (target: 15 minutes)</li>
+            <li>Issues documented with resolutions; lessons learned and action items tracked</li>
+            <li>CTO sign-off confirming test completion and results acceptance</li>
+        </ul>
+    </div>
+
+    <h2>5. Control Testing &mdash; 5 Readiness Validation Tests</h2>
+
+    <div class="risk-card">
+        <h3>Test 1: Logical Access Control</h3>
+        <span class="pass-badge">PASS</span> <span style="color: var(--text-light); font-size: 0.85rem; margin-left: 0.5rem;">Feb 15, 2026</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>Sampled 30 random user accounts across all in-scope systems</li>
+            <li>All 30 had documented Jira access requests with manager approval</li>
+            <li>All 30 role assignments matched BambooHR job functions</li>
+            <li>Zero terminated employees with active accounts; 3 departures disabled within 1 hour</li>
+            <li>Q4 2025 access review completed Dec 12, 2025 with all system owner sign-offs</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Test 2: Multi-Factor Authentication Enforcement</h3>
+        <span class="pass-badge">PASS</span> <span style="color: var(--text-light); font-size: 0.85rem; margin-left: 0.5rem;">Feb 16, 2026</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>Exported Okta MFA report: 100% of 300 employees have MFA enabled</li>
+            <li>Okta policy confirmed: MFA "Required" with zero exception rules</li>
+            <li>Login without MFA tested on BI Platform and AWS Console &mdash; both denied</li>
+            <li>All 8 admin accounts confirmed using YubiKey hardware tokens</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Test 3: Change Management Process</h3>
+        <span class="pass-badge">PASS</span> <span style="color: var(--text-light); font-size: 0.85rem; margin-left: 0.5rem;">Feb 20, 2026</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>Sampled 15 production changes from GitHub (Nov 2025 &ndash; Jan 2026)</li>
+            <li>All 15 had pull requests with descriptions and peer review approval</li>
+            <li>All 15 passed full CI/CD pipeline (unit tests, SAST, container scan, staging QA)</li>
+            <li>Zero direct commits to main branch; 1 emergency change with CISO approval + 48hr review</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Test 4: Data Encryption at Rest and in Transit</h3>
+        <span class="pass-badge">PASS</span> <span style="color: var(--text-light); font-size: 0.85rem; margin-left: 0.5rem;">Feb 22, 2026</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>RDS encryption confirmed: AES-256 with customer-managed KMS key</li>
+            <li>S3 bucket policy blocks unencrypted uploads &mdash; tested and verified</li>
+            <li>SSL Labs scan: A+ grade; TLS 1.3 supported, TLS 1.0/1.1 disabled</li>
+            <li>RDS force_ssl enabled; KMS key rotation active with last rotation date documented</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Test 5: Incident Response Plan</h3>
+        <span class="pass-badge">PASS</span> <span style="color: var(--text-light); font-size: 0.85rem; margin-left: 0.5rem;">Feb 25, 2026</span>
+        <ul style="margin-top: 0.75rem;">
+            <li>IRP v3.2 (Jan 2026) confirmed current with all required sections</li>
+            <li>Tabletop exercise conducted Jan 15, 2026 with 12 participants</li>
+            <li>2 follow-up tasks completed: updated emergency contacts + revised P1 comms template</li>
+            <li>Client notification SLAs documented: 24 hours (confidentiality), 4 hours (availability)</li>
+        </ul>
+    </div>
+
+    <h2>6. Audit Readiness Summary</h2>
+    <table class="risk-table">
+        <tr><th>Component</th><th>Count</th><th>Status</th><th>Readiness</th></tr>
+        <tr><td><strong>SOC 2 Controls</strong></td><td>12 documented</td><td>All Effective</td><td><span class="status-complete">Ready</span></td></tr>
+        <tr><td><strong>In-Scope Systems</strong></td><td>4 cataloged</td><td>3 Critical, 1 High</td><td><span class="status-complete">Ready</span></td></tr>
+        <tr><td><strong>Evidence Items</strong></td><td>5 collected</td><td>All within audit period</td><td><span class="status-complete">Ready</span></td></tr>
+        <tr><td><strong>Control Tests</strong></td><td>5 completed</td><td>5 Pass, 0 Fail</td><td><span class="status-complete">Ready</span></td></tr>
+    </table>
+
+    <h2>7. Next Steps</h2>
+    <div class="risk-card">
+        <ul>
+            <li><strong>Select audit firm:</strong> Engage a CPA firm experienced with SaaS SOC 2 audits (e.g., Schellman, A-LIGN, Coalfire)</li>
+            <li><strong>Define observation period:</strong> Agree on 6-12 month window (e.g., July 2026 &ndash; June 2027)</li>
+            <li><strong>Formal readiness assessment:</strong> Pre-audit gap analysis by the audit firm</li>
+            <li><strong>Maintain controls consistently:</strong> One missed quarterly review or late patch becomes an exception</li>
+            <li><strong>Collect evidence continuously:</strong> Calendar reminders for monthly reconciliations, quarterly reviews, annual tests</li>
+            <li><strong>Prepare report distribution:</strong> Secure NDA-protected portal for sharing SOC 2 report with Fortune 500 clients</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    <p><a href="../index.html#projects" style="color: var(--primary); text-decoration: none; font-weight: 600;">&larr; Back to All Projects</a></p>
+    <p style="margin-top: 0.75rem;">&copy; 2026 Tejaswini Dondeti. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

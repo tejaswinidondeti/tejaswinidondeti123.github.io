@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tejaswini Dondeti | GRC Portfolio (Warm)</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --input-bg: #fffefb;
+            --border: #e7e5e4;
+            --mobile-nav-bg: #f5efe6;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --shadow-md: 0 6px 20px rgba(41,37,36,0.08);
+            --shadow-lg: 0 16px 48px rgba(41,37,36,0.1);
+            --radius: 6px;
+        }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.65; }
+        .section-header h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 700; }
+        .section-header p { color: var(--text-light); font-size: 1.05rem; }
+        .about-text h3 { font-family: 'Fraunces', Georgia, serif; }
+        .about-text p { color: var(--text-light); margin-bottom: 1rem; }
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: linear-gradient(180deg, #292524 0%, #1c1917 100%);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #44403c;
+            box-shadow: 0 4px 16px rgba(41, 37, 36, 0.3);
+            padding: 0 2rem;
+        }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; position: relative; }
+        .nav-logo { font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 1.05rem; color: #ffffff; text-decoration: none; letter-spacing: 0.02em; }
+        .nav-logo span { color: #ffffff; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: #d6d3d1; font-size: 0.92rem; font-weight: 600; }
+        .nav-links a:hover { color: #fb923c; }
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: left; padding: 6rem 2rem 4rem;
+            background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%);
+        }
+        .hero-inner {
+            max-width: 1120px; margin: 0 auto; width: 100%;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+        }
+        .hero-content { max-width: 600px; }
+        .hero-graphic { display: flex; align-items: center; justify-content: center; }
+        .hero-graphic svg { width: 100%; max-width: 480px; height: auto; }
+        .hero-badge {
+            display: inline-block; padding: 0.3rem 0.9rem; border-radius: 4px;
+            background: var(--primary-light); color: var(--primary); font-size: 0.72rem; font-weight: 700;
+            margin-bottom: 1.5rem; letter-spacing: 0.14em; text-transform: uppercase;
+        }
+        .hero h1 { font-family: 'Times New Roman', Times, serif; font-size: 3.1rem; font-weight: 700; line-height: 1.12; margin-bottom: 1rem; }
+        .hero h1 span { color: var(--primary); font-style: normal; }
+        .hero p { font-size: 1.12rem; color: var(--text-light); margin-bottom: 2rem; max-width: 600px; text-align: justify; }
+        .hero-tagline span { color: var(--primary); font-weight: 700; font-size: 1.25rem; }
+        .hero-buttons { display: flex; gap: 1.25rem; justify-content: flex-start; flex-wrap: wrap; margin-bottom: 2rem; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.6rem;
+            border-radius: 4px; font-size: 0.92rem; font-weight: 600; text-decoration: none;
+            cursor: pointer; border: none; transition: all 0.2s;
+        }
+        .btn-primary {
+            min-width: 220px; justify-content: center;
+            background: #c2410c; color: #fff; border-radius: 16px;
+            border: 2px solid #c2410c; font-size: 1rem; font-weight: 700;
+            box-shadow: 0 0 18px rgba(194, 65, 12, 0.35);
+        }
+        .btn-primary:hover { background: #9a3412; border-color: #9a3412; }
+        .btn-outline {
+            min-width: 220px; justify-content: center;
+            background: transparent; color: #c2410c; border: 2px solid #c2410c;
+            border-radius: 16px; font-size: 1rem; font-weight: 700;
+        }
+        .btn-outline:hover { background: rgba(194, 65, 12, 0.08); color: #9a3412; border-color: #9a3412; }
+        .hero-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .hero-link {
+            width: 76px;
+            height: 76px;
+            border-radius: 999px;
+            background: #121212;
+            color: #f3f4f6;
+            border: 1px solid #2a2a2a;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            transition: all 0.2s;
+        }
+        .hero-link:hover {
+            color: #fb923c;
+            border-color: #fb923c;
+            transform: translateY(-2px);
+        }
+        .hero-link svg { width: 28px; height: 28px; fill: currentColor; }
+        .about-section { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .about-contact { display: flex; flex-direction: column; gap: 1.25rem; max-width: 380px; margin-left: auto; }
+        .about-contact-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 1rem 1.25rem; background: var(--card-bg); border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+        .about-contact-icon {
+            width: 72px; height: 72px; border-radius: 16px;
+            background: var(--primary-light);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            font-size: 2.2rem;
+        }
+        .about-contact-text { display: flex; flex-direction: column; }
+        .about-contact-text a { color: var(--primary); text-decoration: none; font-weight: 500; font-size: 1.05rem; }
+        .about-contact-text a:hover { text-decoration: underline; }
+        .about-contact-text span { font-size: 0.82rem; color: var(--text-light); margin-top: 0.1rem; }
+        .stat { background: var(--card-bg); border: 1px solid var(--border); }
+        .projects-section { background: var(--bg); }
+        .exp-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 1.5rem; box-shadow: var(--shadow); margin-bottom: 1.5rem;
+        }
+        .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+        .exp-title { font-size: 1.1rem; font-weight: 700; }
+        .exp-company { font-size: 0.88rem; color: var(--primary); font-weight: 600; font-style: italic; }
+        .exp-list { list-style: none; padding: 0; }
+        .exp-list li {
+            position: relative; padding-left: 1.25rem; margin-bottom: 0.65rem;
+            font-size: 0.88rem; color: var(--text-light); text-align: justify; line-height: 1.55;
+        }
+        .exp-list li::before {
+            content: ''; position: absolute; left: 0; top: 0.55rem;
+            width: 7px; height: 7px; border-radius: 50%; background: #22d3ee;
+        }
+        .contact-section { background: var(--bg-alt); }
+        .skill-card { box-shadow: var(--shadow); }
+        .project-card { box-shadow: var(--shadow); }
+                .tag-risk { background: #fef2f2; color: #b91c1c; }
+        .tag-compliance { background: #f0fdf4; color: #15803d; }
+        .tag-governance { background: #eff6ff; color: #1d4ed8; }
+        .tag-audit { background: #fefce8; color: #a16207; }
+        .tag-security { background: #faf5ff; color: #7e22ce; }
+        .tag-policy { background: #fff7ed; color: #c2410c; }
+    </style>
+
+    <style>
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        section { padding: 5rem 2rem; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .container { max-width: 1120px; margin: 0 auto; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .about-text h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+        .stat { text-align: center; padding: 1.25rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+        .stat-number { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 0.8rem; color: var(--text-light); margin-top: 0.25rem; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+        .skill-card {
+            padding: 1.75rem; border: 1px solid var(--border); border-radius: var(--radius);
+            transition: all 0.2s; background: var(--card-bg);
+        }
+        .skill-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); border-color: var(--primary); }
+        .skill-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .skill-card h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+        .skill-card p { font-size: 0.9rem; color: var(--text-light); }
+        .skills-buttons {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem;
+        }
+        .skill-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.7rem 1.1rem; background: #1c1917; color: #fef2e8;
+            border: 1px solid #44403c; border-radius: 8px;
+            font-size: 0.88rem; font-weight: 500; transition: all 0.2s;
+            text-decoration: none; cursor: default;
+        }
+        .skill-btn:hover {
+            border-color: #c2410c; background: #292524;
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(194, 65, 12, 0.15);
+        }
+        .skill-btn::before {
+            content: ''; width: 8px; height: 8px; border-radius: 50%;
+            background: #22d3ee; flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+            .skills-buttons { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .skills-buttons { grid-template-columns: 1fr; }
+        }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
+        .project-card {
+            border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+            transition: all 0.25s; background: var(--card-bg);
+        }
+        .project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+        .project-banner { height: 10px; width: 100%; }
+        .project-body { padding: 1.5rem; }
+        .project-tag {
+            display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;
+        }
+        .project-body h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .project-body p { font-size: 0.88rem; color: var(--text-light); margin-bottom: 1rem; line-height: 1.55; }
+        .project-tools { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+        .tool-badge {
+            padding: 0.2rem 0.6rem; background: var(--bg-alt); border-radius: 4px;
+            font-size: 0.75rem; color: var(--text-light); border: 1px solid var(--border);
+        }
+        .project-link {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            font-size: 0.85rem; font-weight: 600; color: var(--primary); text-decoration: none;
+        }
+        .project-link:hover { text-decoration: underline; }
+        .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+        .cert-card {
+            display: flex; align-items: center; gap: 1rem; padding: 1.25rem;
+            border: 1px solid var(--border); border-radius: var(--radius); transition: all 0.2s;
+            background: var(--card-bg);
+        }
+        .cert-card:hover { box-shadow: var(--shadow-md); }
+        .cert-icon { font-size: 2rem; }
+        .cert-info h4 { font-size: 0.95rem; margin-bottom: 0.15rem; }
+        .cert-info p { font-size: 0.8rem; color: var(--text-light); }
+        .cert-buttons { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+        .cert-btn {
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+            padding: 1.25rem 2rem; background: #1c1917; color: #fef2e8;
+            border: 1px solid #44403c; border-radius: 10px;
+            text-decoration: none; transition: all 0.25s; min-width: 320px;
+        }
+        .cert-btn:hover {
+            border-color: #c2410c; transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(194, 65, 12, 0.2);
+        }
+        .cert-btn-title { font-size: 1.1rem; font-weight: 700; text-align: center; }
+        .cert-btn-sub { font-size: 0.82rem; color: #78716c; }
+        .cert-btn-link { font-size: 0.8rem; color: #22d3ee; font-weight: 600; margin-top: 0.25rem; }
+        .cert-btn:hover .cert-btn-link { text-decoration: underline; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .contact-info h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+        .contact-info p { color: var(--text-light); margin-bottom: 1.5rem; }
+        .contact-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+        .contact-item-icon {
+            width: 40px; height: 40px; border-radius: 8px; background: var(--primary-light);
+            display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+        }
+        .contact-item-text a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        .contact-item-text span { font-size: 0.8rem; color: var(--text-light); display: block; }
+        .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+        .contact-form input, .contact-form textarea {
+            padding: 0.85rem 1rem; border: 1.5px solid var(--border); border-radius: 8px;
+            font-family: inherit; font-size: 0.9rem; background: var(--input-bg); color: var(--text);
+            transition: border-color 0.2s;
+        }
+        .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--primary); }
+        .contact-form textarea { resize: vertical; min-height: 120px; }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        .theme-picker { margin-top: 1.25rem; font-size: 0.78rem; line-height: 1.8; }
+        .theme-picker a { color: var(--primary); margin: 0 0.35rem; font-weight: 600; }
+        .theme-picker span { color: var(--text-light); margin-right: 0.25rem; }
+        .mobile-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text); }
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; position: absolute; top: 64px; left: 0; right: 0;
+                flex-direction: column; background: #1c1917; border-bottom: 1px solid #44403c;
+                padding: 1rem 2rem; gap: 0.75rem; box-shadow: var(--shadow-md);
+            }
+            .nav-links.show { display: flex; }
+            .mobile-toggle { display: block; }
+            .hero-inner { grid-template-columns: 1fr; }
+            .hero-graphic { display: none; }
+            .hero h1 { font-size: 2.2rem; }
+            .about-grid, .contact-grid { grid-template-columns: 1fr; }
+            .about-stats { grid-template-columns: repeat(3, 1fr); }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    
+    </style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a href="#home" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="Menu">&#9776;</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+    <div class="hero-inner">
+        <div class="hero-content fade-in">
+            <h1><span>Tejaswini Dondeti</span></h1>
+            <p class="hero-tagline"><span>GRC Analyst | Compliance | Risk Management</span></p>
+            <p>Certified GRC professional specialising in AI governance, cyber risk, and regulatory compliance. Master&rsquo;s in Network Security and 2+ years of operations experience in a regulated telecommunications environment. Built end-to-end governance programs spanning the EU AI Act, NIST AI RMF, ISO 42001, NIST CSF, ISO 27001, SOC 2, SEC/FINRA, GDPR, MiFID II, and DORA across healthcare, fintech, and frontier AI industries.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                <a href="#projects" class="btn btn-outline">View Projects</a>
+            </div>
+        </div>
+        <div class="hero-graphic fade-in">
+            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#1c1917;stop-opacity:1"/>
+                        <stop offset="100%" style="stop-color:#292524;stop-opacity:1"/>
+                    </linearGradient>
+                    <linearGradient id="hex-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#c2410c;stop-opacity:0.6"/>
+                        <stop offset="100%" style="stop-color:#fb923c;stop-opacity:0.3"/>
+                    </linearGradient>
+                </defs>
+                <!-- Background circle -->
+                <circle cx="250" cy="250" r="240" fill="url(#bg-grad)" opacity="0.95"/>
+                <!-- Decorative circuit lines -->
+                <line x1="50" y1="250" x2="120" y2="250" stroke="#c2410c" stroke-width="1" opacity="0.3"/>
+                <line x1="380" y1="250" x2="450" y2="250" stroke="#c2410c" stroke-width="1" opacity="0.3"/>
+                <line x1="250" y1="50" x2="250" y2="120" stroke="#c2410c" stroke-width="1" opacity="0.3"/>
+                <line x1="250" y1="380" x2="250" y2="450" stroke="#c2410c" stroke-width="1" opacity="0.3"/>
+                <line x1="100" y1="100" x2="155" y2="155" stroke="#c2410c" stroke-width="1" opacity="0.2"/>
+                <line x1="345" y1="345" x2="400" y2="400" stroke="#c2410c" stroke-width="1" opacity="0.2"/>
+                <line x1="400" y1="100" x2="345" y2="155" stroke="#c2410c" stroke-width="1" opacity="0.2"/>
+                <line x1="155" y1="345" x2="100" y2="400" stroke="#c2410c" stroke-width="1" opacity="0.2"/>
+                <!-- Small dots on circuit lines -->
+                <circle cx="50" cy="250" r="3" fill="#fb923c" opacity="0.5"/>
+                <circle cx="450" cy="250" r="3" fill="#fb923c" opacity="0.5"/>
+                <circle cx="250" cy="50" r="3" fill="#fb923c" opacity="0.5"/>
+                <circle cx="250" cy="450" r="3" fill="#fb923c" opacity="0.5"/>
+                <!-- Center hexagon - GRC -->
+                <polygon points="250,175 295,197 295,241 250,263 205,241 205,197" fill="none" stroke="#c2410c" stroke-width="2.5" opacity="0.9"/>
+                <text x="250" y="225" text-anchor="middle" fill="#fb923c" font-family="DM Sans, sans-serif" font-size="22" font-weight="700">GRC</text>
+                <!-- Top hex - Governance (gears) -->
+                <polygon points="250,85 285,105 285,140 250,160 215,140 215,105" fill="none" stroke="url(#hex-stroke)" stroke-width="1.5"/>
+                <text x="250" y="130" text-anchor="middle" fill="#d6d3d1" font-size="22">&#9881;</text>
+                <!-- Top-right hex - Lock/Security -->
+                <polygon points="340,130 375,150 375,185 340,205 305,185 305,150" fill="none" stroke="url(#hex-stroke)" stroke-width="1.5"/>
+                <text x="340" y="175" text-anchor="middle" fill="#d6d3d1" font-size="20">&#128274;</text>
+                <!-- Right hex - Handshake/Compliance -->
+                <polygon points="365,220 400,240 400,275 365,295 330,275 330,240" fill="none" stroke="url(#hex-stroke)" stroke-width="1.5"/>
+                <text x="365" y="265" text-anchor="middle" fill="#d6d3d1" font-size="20">&#9989;</text>
+                <!-- Bottom-right hex - Target/Risk -->
+                <polygon points="340,310 375,330 375,365 340,385 305,365 305,330" fill="none" stroke="url(#hex-stroke)" stroke-width="1.5"/>
+                <text x="340" y="355" text-anchor="middle" fill="#d6d3d1" font-size="20">&#127919;</text>
+                <!-- Bottom hex - People -->
+                <polygon points="250,355 285,375 285,410 250,430 215,410 215,375" fill="none" stroke="url(#hex-stroke)" stroke-width="1.5"/>
+                <text x="250" y="400" text-anchor="middle" fill="#d6d3d1" font-size="20">&#128101;</text>
+                <!-- Bottom-left hex - Search/Audit -->
+                <polygon points="160,310 195,330 195,365 160,385 125,365 125,330" fill="none" stroke="url(#hex-stroke)" stroke-width="1.5"/>
+                <text x="160" y="355" text-anchor="middle" fill="#d6d3d1" font-size="20">&#128269;</text>
+                <!-- Left hex - Code/Tech -->
+                <polygon points="135,220 170,240 170,275 135,295 100,275 100,240" fill="none" stroke="url(#hex-stroke)" stroke-width="1.5"/>
+                <text x="135" y="265" text-anchor="middle" fill="#d6d3d1" font-size="20">&#128187;</text>
+                <!-- Top-left hex - AI -->
+                <polygon points="160,130 195,150 195,185 160,205 125,185 125,150" fill="none" stroke="url(#hex-stroke)" stroke-width="1.5"/>
+                <text x="160" y="176" text-anchor="middle" fill="#d6d3d1" font-family="DM Sans, sans-serif" font-size="14" font-weight="700">AI</text>
+                <!-- Connecting lines from center to outer hexagons -->
+                <line x1="250" y1="175" x2="250" y2="160" stroke="#c2410c" stroke-width="1" opacity="0.4"/>
+                <line x1="295" y1="197" x2="305" y2="185" stroke="#c2410c" stroke-width="1" opacity="0.4"/>
+                <line x1="295" y1="241" x2="330" y2="255" stroke="#c2410c" stroke-width="1" opacity="0.4"/>
+                <line x1="295" y1="241" x2="305" y2="330" stroke="#c2410c" stroke-width="1" opacity="0.2"/>
+                <line x1="250" y1="263" x2="250" y2="355" stroke="#c2410c" stroke-width="1" opacity="0.4"/>
+                <line x1="205" y1="241" x2="195" y2="330" stroke="#c2410c" stroke-width="1" opacity="0.2"/>
+                <line x1="205" y1="241" x2="170" y2="255" stroke="#c2410c" stroke-width="1" opacity="0.4"/>
+                <line x1="205" y1="197" x2="195" y2="185" stroke="#c2410c" stroke-width="1" opacity="0.4"/>
+                <!-- Label -->
+                <text x="380" y="295" fill="#fb923c" font-family="DM Sans, sans-serif" font-size="10" font-weight="600" opacity="0.8">Governance</text>
+                <text x="380" y="307" fill="#fb923c" font-family="DM Sans, sans-serif" font-size="10" font-weight="600" opacity="0.8">Risk &amp;</text>
+                <text x="380" y="319" fill="#fb923c" font-family="DM Sans, sans-serif" font-size="10" font-weight="600" opacity="0.8">Compliance</text>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-text fade-in">
+                <h3>About Me</h3>
+                <p style="text-align: justify;">
+GRC professional with deep expertise in AI governance and cyber risk management. Specialising in building governance programs for high-risk AI systems under the EU AI Act, NIST AI RMF, and ISO 42001 &mdash; from frontier foundation models and financial AI recommendation engines to high-risk recruitment systems. Experienced in conducting risk assessments (5&times;5 matrices, 28+ risk registers), regulatory compliance mapping across SEC/FINRA, GDPR, MiFID II, and DORA, and designing AI governance policies with lifecycle controls, kill switches, and monitoring thresholds.
+                </p>
+                <p style="text-align: justify;">
+                    Complementary strengths in traditional GRC: SOC 2 Type II audit readiness, ISO 27001 risk assessments for cloud migrations, third-party vendor risk management, and incident response with root cause analysis. Proven ability to translate complex multi-jurisdictional regulatory requirements into actionable governance programs across healthcare, fintech, and frontier AI industries.
+                </p>
+            </div>
+            <div class="about-contact fade-in">
+                <div class="about-contact-item">
+                    <div class="about-contact-icon">&#9993;</div>
+                    <div class="about-contact-text">
+                        <a href="mailto:tejaswini.security@gmail.com">tejaswini.security@gmail.com</a>
+                        <span>Email</span>
+                    </div>
+                </div>
+                <div class="about-contact-item">
+                    <div class="about-contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--primary)"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </div>
+                    <div class="about-contact-text">
+                        <a href="https://www.linkedin.com/in/tejaswini-dondeti-66373418a" target="_blank">LinkedIn Profile</a>
+                        <span>LinkedIn</span>
+                    </div>
+                </div>
+                <div class="about-contact-item">
+                    <div class="about-contact-icon">&#9742;</div>
+                    <div class="about-contact-text">
+                        <a href="tel:+19713338331">971-333-8331</a>
+                        <span>Phone</span>
+                    </div>
+                </div>
+                <div class="about-contact-item">
+                    <div class="about-contact-icon">&#128205;</div>
+                    <div class="about-contact-text">
+                        <a href="#">United States</a>
+                        <span>Location</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>Certifications</h2>
+        </div>
+        <div class="cert-buttons fade-in">
+            <a class="cert-btn" href="https://www.credly.com/badges/1a04a620-2ea3-49b7-a0b2-9527c6ca76bd" target="_blank" rel="noopener">
+                <div class="cert-btn-title">Associate of (ISC)&sup2; CGRC</div>
+                <div class="cert-btn-sub">Certified in Governance, Risk &amp; Compliance</div>
+                <div class="cert-btn-link">View on Credly &rarr;</div>
+            </a>
+            <a class="cert-btn" href="https://www.credly.com/badges/7eda21a7-25b1-4d00-946f-c3e541e68f22" target="_blank" rel="noopener">
+                <div class="cert-btn-title">CompTIA Security+</div>
+                <div class="cert-btn-sub">Security Fundamentals</div>
+                <div class="cert-btn-link">View on Credly &rarr;</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>Skills</h2>
+            <p>Frameworks, tools, and methodologies I work with</p>
+        </div>
+        <div class="skills-buttons fade-in">
+            <div class="skill-btn">AI Governance &amp; ISO 42001</div>
+            <div class="skill-btn">EU AI Act (Reg. 2024/1689)</div>
+            <div class="skill-btn">NIST AI Risk Management Framework</div>
+            <div class="skill-btn">NIST Cybersecurity Framework (CSF)</div>
+            <div class="skill-btn">ISO 27001 / ISMS</div>
+            <div class="skill-btn">SOC 2 Type II Audit Readiness</div>
+            <div class="skill-btn">Risk Assessment &amp; Risk Registers</div>
+            <div class="skill-btn">Third-Party Vendor Risk Management</div>
+            <div class="skill-btn">Incident Response &amp; Root Cause Analysis</div>
+            <div class="skill-btn">GDPR / MiFID II / DORA</div>
+            <div class="skill-btn">SEC / FINRA Regulatory Compliance</div>
+            <div class="skill-btn">AI Model Lifecycle Governance</div>
+            <div class="skill-btn">Policy Development &amp; Review</div>
+            <div class="skill-btn">Regulatory Landscape Mapping</div>
+            <div class="skill-btn">Compliance Monitoring &amp; Reporting</div>
+            <div class="skill-btn">Audit Support &amp; Evidence Collection</div>
+            <div class="skill-btn">Stakeholder &amp; Board Communication</div>
+            <div class="skill-btn">Multi-Jurisdiction Compliance</div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="projects-section">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>Projects</h2>
+            <p>A showcase of my GRC work &mdash; click any project to learn more</p>
+        </div>
+        <div class="projects-grid">
+
+            <!-- 1. AI Governance — Healthcare & FinTech -->
+            <div class="project-card fade-in">
+                <div class="project-banner" style="background: linear-gradient(90deg, #9333ea, #d8b4fe);"></div>
+                <div class="project-body">
+                    <span class="project-tag tag-governance">Governance</span>
+                    <h3>AI Governance &mdash; Healthcare &amp; FinTech</h3>
+                    <p><strong>Mindful AI</strong> &bull; AI / Healthcare / FinTech<br>Implemented an AI governance program for high-risk AI systems; assessed 5 AI-specific risks including algorithmic bias and model drift using NIST AI RMF methodology.</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">ISO 42001</span>
+                        <span class="tool-badge">NIST AI RMF</span>
+                        <span class="tool-badge">EU AI Act</span>
+                    </div>
+                    <a href="projects/project-ai-governance.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 2. TradeFlow Cyber & AI Risk Program -->
+            <div class="project-card fade-in">
+                <div class="project-banner" style="background: linear-gradient(90deg, #1d4ed8, #60a5fa);"></div>
+                <div class="project-body">
+                    <span class="project-tag tag-risk">Cyber &amp; AI Risk</span>
+                    <h3>Cyber &amp; AI Risk Program &mdash; TradeFlow Inc.</h3>
+                    <p><strong>TradeFlow Inc.</strong> &bull; Fintech / Broker-Dealer API<br>Built a 6-document cyber and AI risk program for a multi-regulated fintech broker-dealer: 12-risk cyber register (NIST CSF, ISO 27001), 10-risk AI register (NIST AI RMF, EU AI Act), vendor risk assessment, 3-jurisdiction regulatory mapping (SEC/FINRA, GDPR, MiFID II, DORA), and AI governance policy with kill switch and monitoring thresholds.</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">NIST CSF &amp; AI RMF</span>
+                        <span class="tool-badge">SEC/FINRA</span>
+                        <span class="tool-badge">EU AI Act</span>
+                    </div>
+                    <a href="projects/project-tradeflow.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 3. Frontier AI Governance Program -->
+            <div class="project-card fade-in">
+                <div class="project-banner" style="background: linear-gradient(90deg, #7c3aed, #c4b5fd);"></div>
+                <div class="project-body">
+                    <span class="project-tag tag-governance">Governance</span>
+                    <h3>Frontier AI Governance Program</h3>
+                    <p><strong>NovaAI Labs</strong> &bull; Frontier AI / Foundation Models<br>Built an AI governance program for a 2,500-employee frontier AI provider with 200M+ consumer users and 50,000+ enterprise API customers; classified 8 AI systems under EU AI Act risk tiers and assessed NIST AI RMF maturity across GOVERN, MAP, MEASURE, MANAGE functions.</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">EU AI Act</span>
+                        <span class="tool-badge">NIST AI RMF 1.0</span>
+                        <span class="tool-badge">ISO 42001</span>
+                    </div>
+                    <a href="projects/project-novaai-governance.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 4. Responsible AI Program -->
+            <div class="project-card fade-in">
+                <div class="project-banner" style="background: linear-gradient(90deg, #6d28d9, #a78bfa);"></div>
+                <div class="project-body">
+                    <span class="project-tag tag-policy">Policy &amp; Operating Model</span>
+                    <h3>Responsible AI Program &mdash; Policy, Operating Model &amp; Review Process</h3>
+                    <p><strong>NovaAI Labs</strong> &bull; Frontier AI / Foundation Models<br>Authored a complete frontier AI governance program: a Responsible AI Policy with 8 principles, an Operating Model with 8 governance bodies and a 10-decision authority matrix, and an end-to-end AI Use Case Review process with 6 stages and 4 review pathways from 2 weeks (standard) to 12 weeks (frontier).</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">EU AI Act Art. 51&ndash;53</span>
+                        <span class="tool-badge">EU AI Pact</span>
+                        <span class="tool-badge">Bletchley Declaration</span>
+                    </div>
+                    <a href="projects/project-novaai-program.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 5. DataPulse Third-Party Breach -->
+            <div class="project-card fade-in">
+                <div class="project-banner" style="background: linear-gradient(90deg, #b91c1c, #f87171);"></div>
+                <div class="project-body">
+                    <span class="project-tag tag-risk">Incident Response</span>
+                    <h3>DataPulse Third-Party Breach &mdash; IR, Timeline &amp; RCA</h3>
+                    <p><strong>NovaAI Labs</strong> &bull; Vendor Breach / Severity 1<br>Drove the incident response, 158-day timeline reconstruction, and root cause analysis for a Severity 1 third-party vendor breach exposing 847,312 customer records across 31,243 enterprise organizations; delivered a 5-Whys RCA, 7 contributing factors, and a 12-action corrective programme that capped customer churn at 1.2%.</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">GDPR Art. 33/34</span>
+                        <span class="tool-badge">EU AI Act Art. 73</span>
+                        <span class="tool-badge">5 Whys RCA</span>
+                    </div>
+                    <a href="projects/project-datapulse-incident.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 6. NovaHire AI Risk Assessment & Board Review -->
+            <div class="project-card fade-in">
+                <div class="project-banner" style="background: linear-gradient(90deg, #b91c1c, #fca5a5);"></div>
+                <div class="project-body">
+                    <span class="project-tag tag-risk">Risk Assessment</span>
+                    <h3>NovaHire &mdash; AI Risk Assessment &amp; Board Review</h3>
+                    <p><strong>NovaAI Labs</strong> &bull; High-Risk AI / Employment<br>Conducted a 7-risk assessment and Board-level governance review of NovaHire, a recruitment NLP system classified High-Risk under EU AI Act Annex III; escalated confirmed bias findings (18% gender, 22% age) across 180,000+ candidates and a 90-day remediation plan to the Board Risk &amp; Audit Committee.</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">EU AI Act Annex III</span>
+                        <span class="tool-badge">GDPR Art. 22</span>
+                        <span class="tool-badge">NIST AI RMF</span>
+                    </div>
+                    <a href="projects/project-novahire-risk.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 7. SOC 2 Type II Audit Readiness -->
+            <div class="project-card fade-in">
+                <div class="project-banner" style="background: linear-gradient(90deg, #16a34a, #4ade80);"></div>
+                <div class="project-body">
+                    <span class="project-tag tag-compliance">Compliance</span>
+                    <h3>SOC 2 Type II Audit Readiness</h3>
+                    <p><strong>DataFlow Analytics</strong> &bull; AI-Powered BI / SaaS<br>Prepared a 300-employee AI-powered business intelligence provider for its first SOC 2 Type II audit; documented 12 controls against the Trust Services Criteria, cataloged 4 in-scope systems, collected 5 evidence items, and recorded 5 control tests to simulate auditor readiness validation.</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">SOC 2</span>
+                        <span class="tool-badge">NIST CSF</span>
+                    </div>
+                    <a href="projects/project-soc2.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 8. ISO 27001 Risk Assessment -->
+            <div class="project-card fade-in">
+                <div class="project-banner" style="background: linear-gradient(90deg, #2563eb, #60a5fa);"></div>
+                <div class="project-body">
+                    <span class="project-tag tag-risk">Risk Assessment</span>
+                    <h3>ISO 27001 Risk Assessment &mdash; SaaS Cloud Migration</h3>
+                    <p><strong>Tech Start Inc</strong> &bull; SaaS / Cloud<br>Conducted ISO 27001:2022 risk assessment for a B2B SaaS company migrating a 5M+ record database to AWS; identified 5 critical risks and designed controls mapped to ISO 27001 Annex A and NIST CSF.</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">ISO 27001:2022</span>
+                        <span class="tool-badge">NIST CSF</span>
+                        <span class="tool-badge">AWS</span>
+                    </div>
+                    <a href="projects/project1-iso27001.html" class="project-link">View Details &rarr;</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>Professional Experience</h2>
+        </div>
+        <div class="exp-card fade-in">
+            <div class="exp-header">
+                <div>
+                    <div class="exp-title">Customer Operation Specialist</div>
+                    <div class="exp-company">Telstra &ndash; TTEC | Australia | Telecommunication Services</div>
+                </div>
+            </div>
+            <ul class="exp-list">
+                <li>Managed 100+ daily service interactions in a heavily regulated telecommunications environment, following strict SOPs and internal compliance procedures for every case type.</li>
+                <li>Processed financial hardship and payment extension cases for consumer and business customers using Siebel, MICA, ICMS, and FLEXCAB (payment extension platforms); all case notes and tickets generated through the Console system.</li>
+                <li>Escalated complex cases to appropriate teams per established escalation protocols, ensuring timely resolution and minimal service disruption.</li>
+                <li>Maintained accurate, complete records of all interactions and escalations through the Console ticketing system, ensuring full documentation for every case.</li>
+                <li>Consistently met 90% SLA adherence across all service metrics; formally recognized as <strong>Best Performance Agent</strong>.</li>
+                <li><strong>Promoted to Subject Matter Expert (SME) within 12 months</strong> &mdash; trained agents on SOPs and service standards, guided the team through complex scenarios, and supported consistent operational performance.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>Education</h2>
+        </div>
+        <div class="exp-card fade-in">
+            <div class="exp-header">
+                <div>
+                    <div class="exp-title">Master of Information Technology &mdash; Network Security</div>
+                    <div class="exp-company">Charles Sturt University, Melbourne, Australia</div>
+                </div>
+            </div>
+        </div>
+        <div class="exp-card fade-in">
+            <div class="exp-header">
+                <div>
+                    <div class="exp-title">Bachelor of Engineering &mdash; Electronics &amp; Communication</div>
+                    <div class="exp-company">SRM University, Chennai, India</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="section-header fade-in">
+            <h2>Let's Connect</h2>
+            <p>Interested in working together? Reach out!</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info fade-in">
+                <h3>Get in touch</h3>
+                <p>I'm always open to discussing new opportunities, GRC challenges, or just connecting with fellow professionals.</p>
+                <div class="contact-item">
+                    <div class="contact-item-icon">&#9993;</div>
+                    <div class="contact-item-text">
+                        <a href="mailto:tejaswini.security@gmail.com">tejaswini.security@gmail.com</a>
+                        <span>Email</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-item-icon">&#128279;</div>
+                    <div class="contact-item-text">
+                        <a href="https://www.linkedin.com/in/tejaswini-dondeti-66373418a" target="_blank">LinkedIn Profile</a>
+                        <span>LinkedIn</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-item-icon">&#128205;</div>
+                    <div class="contact-item-text">
+                        <a href="#">United States</a>
+                        <span>Location</span>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form fade-in" onsubmit="event.preventDefault(); alert('Thank you! Message sent.');">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="text" placeholder="Subject">
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn btn-primary" style="width: fit-content;">Send Message &rarr;</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 Tejaswini Dondeti. All rights reserved.</p>
+</footer>
+
+
+<!-- SCROLL ANIMATIONS -->
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+
+
+<script>
+(function () {
+    var host = location.hostname;
+    if (host !== 'localhost' && host !== '127.0.0.1') return;
+    var url = location.pathname;
+    if (url.endsWith('/')) url += 'index.html';
+    var last = null;
+    setInterval(function () {
+        fetch(url + '?_lr=' + Date.now(), { method: 'HEAD', cache: 'no-store' })
+            .then(function (r) { return r.headers.get('last-modified'); })
+            .then(function (lm) {
+                if (!lm) return;
+                if (last === null) { last = lm; return; }
+                if (lm !== last) location.reload();
+            })
+            .catch(function () {});
+    }, 700);
+})();
+</script>
+
+</body>
+</html>

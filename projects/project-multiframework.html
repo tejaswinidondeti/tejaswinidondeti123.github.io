@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Framework Compliance Gap Analysis — RegTech Solutions | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #fef2f2; color: #dc2626; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-medium { background: #fefce8 !important; color: #a16207; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .score-medium { background: #fefce8; color: #a16207; }
+        .status-complete { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-progress { background: #dbeafe; color: #1d4ed8; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-planned { background: #fefce8; color: #a16207; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Compliance</span>
+        <h1>Multi-Framework Compliance Gap Analysis &mdash; <em>RegTech Solutions</em></h1>
+        <p class="subtitle">Performed simultaneous PCI DSS v4.0, SOC 2 Type II, and HIPAA gap analysis for a 350-employee compliance automation SaaS; harmonized 15 cross-framework controls reducing compliance effort by ~40%</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> RegTech Solutions</div>
+            <div class="meta-item"><strong>Industry:</strong> RegTech / SaaS</div>
+            <div class="meta-item"><strong>Frameworks:</strong> PCI DSS v4.0, SOC 2 Type II, HIPAA</div>
+            <div class="meta-item"><strong>Deliverables:</strong> 15 Controls, 5 Gaps, 5 Remediations, 2 Audits</div>
+            <div class="meta-item"><strong>Date:</strong> March 2026</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>RegTech Solutions is a 350-employee regulatory technology company providing compliance automation software to clients across healthcare, financial services, and retail payments. The platform processes Protected Health Information (PHI) for healthcare clients, cardholder data for payment clients, and handles sensitive financial data under SOC 2 attestation.</p>
+    <p>This project performs a multi-framework gap analysis across PCI DSS v4.0, SOC 2 Type II, and HIPAA simultaneously, assessing 15 cross-framework controls, identifying 5 compliance gaps, planning 5 risk treatment remediations, and establishing 2 audit schedules. Each control addresses requirements from 2&ndash;3 frameworks simultaneously, reducing total compliance effort by approximately 40% through shared control architecture.</p>
+
+    <table class="info-table">
+        <tr><th>Industries Served</th><td>Healthcare (HIPAA), Financial Services (SOC 2), Retail Payments (PCI DSS)</td></tr>
+        <tr><th>Deliverables</th><td>15 Cross-Framework Controls, 5 Gap Risks, 5 Remediation Plans, 2 Audit Schedules</td></tr>
+        <tr><th>Classification</th><td>CONFIDENTIAL</td></tr>
+    </table>
+
+    <!-- Cross-Framework Control Assessment -->
+    <h2>2. Cross-Framework Control Assessment &mdash; 15 Controls</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Control Name</th>
+                <th>PCI DSS</th>
+                <th>SOC 2</th>
+                <th>HIPAA</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Multi-Factor Authentication (Phishing-Resistant)</td><td>8.4.2</td><td>CC6.1</td><td>164.312(d)</td><td>Effective</td></tr>
+            <tr><td>2</td><td>Data Encryption at Rest &amp; in Transit (AES-256 + TLS 1.3)</td><td>3.5 / 4.2</td><td>CC6.7</td><td>164.312(a)(2)(iv)</td><td>Effective</td></tr>
+            <tr><td>3</td><td>Role-Based Access Control with Quarterly Reviews</td><td>7.1 / 7.2</td><td>CC6.3</td><td>164.312(a)(1)</td><td>Effective</td></tr>
+            <tr><td>4</td><td>Comprehensive Audit Logging (1-Year Retention)</td><td>10.1-10.7</td><td>CC7.2</td><td>164.312(b)</td><td>Effective</td></tr>
+            <tr><td>5</td><td>Vulnerability Management &amp; Risk-Based Patching</td><td>6.3 / 11.3</td><td>CC7.1</td><td>164.308(a)(5)</td><td>Effective</td></tr>
+            <tr><td>6</td><td>Incident Response with Multi-Framework Notification</td><td>12.10</td><td>CC7.3-7.4</td><td>164.308(a)(6)</td><td>Effective</td></tr>
+            <tr><td>7</td><td>Vendor &amp; Third-Party Risk Management</td><td>12.8</td><td>CC9.2</td><td>164.308(b)(1)</td><td>Effective</td></tr>
+            <tr><td>8</td><td>Change Management with Security Review Gate</td><td>6.5.1</td><td>CC8.1</td><td>164.312(e)(2)</td><td>Effective</td></tr>
+            <tr><td>9</td><td>Security Awareness Training (Framework-Specific)</td><td>12.6</td><td>CC1.4</td><td>164.308(a)(5)</td><td>Effective</td></tr>
+            <tr><td>10</td><td>Data Classification &amp; Handling Policy</td><td>3.1-3.7</td><td>CC6.5</td><td>164.312(c)(1)</td><td>Effective</td></tr>
+            <tr><td>11</td><td>Network Segmentation (CDE Isolation)</td><td>1.3 / 1.4</td><td>CC6.6</td><td>164.312(e)(1)</td><td>Effective</td></tr>
+            <tr><td>12</td><td>Business Continuity &amp; Disaster Recovery</td><td>12.10.1</td><td>A1.2</td><td>164.308(a)(7)</td><td>Effective</td></tr>
+            <tr><td>13</td><td>Physical Security Controls</td><td>9.1-9.4</td><td>CC6.4</td><td>164.310(a)(1)</td><td>Effective</td></tr>
+            <tr><td>14</td><td>Data Retention &amp; Secure Disposal</td><td>3.1</td><td>CC6.5</td><td>164.310(d)(2)</td><td>Effective</td></tr>
+            <tr><td>15</td><td>Penetration Testing &amp; ASV Scanning</td><td>11.3 / 11.4</td><td>CC4.1</td><td>164.308(a)(8)</td><td>Effective</td></tr>
+        </tbody>
+    </table>
+
+    <div class="risk-card">
+        <h3>Control 1: Multi-Factor Authentication (Phishing-Resistant)</h3>
+        <ul>
+            <li>MFA enforced on ALL access to CDE (PCI DSS), PHI systems (HIPAA), and production infrastructure (SOC 2)</li>
+            <li>FIDO2 hardware keys for administrators, TOTP for standard users via Okta</li>
+            <li>PCI DSS v4.0 requires MFA for ALL access into CDE (not just remote as in v3.2.1)</li>
+            <li>One control satisfies PCI DSS 8.4.2, SOC 2 CC6.1, and HIPAA 164.312(d) simultaneously</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 2: Data Encryption at Rest &amp; in Transit</h3>
+        <ul>
+            <li>AES-256 via AWS KMS customer-managed keys for all data at rest; TLS 1.3 for all data in transit (TLS 1.2 and below disabled)</li>
+            <li>Scope: cardholder data (PCI), PHI (HIPAA), and all production data (SOC 2)</li>
+            <li>Database-level, S3 server-side, and application-level field encryption for PAN provide layered protection</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 3: Role-Based Access Control with Quarterly Reviews</h3>
+        <ul>
+            <li>6 defined roles: Admin (2 people), Engineer, DBA, Support (read-only), Compliance (audit logs), Executive (dashboard)</li>
+            <li>Quarterly access reviews with manager sign-off; terminated employee access revoked within 1 hour via Okta</li>
+            <li>Satisfies PCI DSS need-to-know, SOC 2 CC6.3 role-based access, and HIPAA access controls</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 4: Comprehensive Audit Logging (1-Year Retention)</h3>
+        <ul>
+            <li>All access logged with: user ID, timestamp, action, success/failure, source IP, affected data object</li>
+            <li>Centralized in Splunk SIEM; 1-year online + tamper-proof via write-once S3 with Object Lock</li>
+            <li>PCI DSS has the most prescriptive requirements (10 specific log event types) &mdash; used as the strictest baseline</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 5: Vulnerability Management &amp; Risk-Based Patching</h3>
+        <ul>
+            <li>Weekly automated Qualys scans; annual pen test by PCI-approved ASV</li>
+            <li>Critical CVEs (CVSS 9.0+) patched within 30 days; High (7.0-8.9) within 60 days</li>
+            <li>Container image scanning (Trivy) in CI/CD blocking Critical CVEs before deployment</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 6: Incident Response with Multi-Framework Notification</h3>
+        <ul>
+            <li>Unified IR plan for incidents triggering multiple frameworks simultaneously (breach could involve PCI + HIPAA + SOC 2)</li>
+            <li>Parallel notification tracks: PCI (merchant/acquirer), HIPAA (HHS within 60 days for 500+ individuals), SOC 2 (user entities)</li>
+            <li>Decision matrix determines which frameworks are triggered based on compromised data types</li>
+            <li>Quarterly tabletop exercises testing cross-framework incident scenarios</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 7: Vendor &amp; Third-Party Risk Management</h3>
+        <ul>
+            <li>Vendor register with framework applicability tags; contractual requirements matrix (BAA for PHI, PCI AOC for payment)</li>
+            <li>Annual security questionnaires and SOC 2 report reviews for critical vendors</li>
+            <li>Satisfies PCI DSS 12.8, SOC 2 CC9.2, and HIPAA 164.308(b)(1) BAA requirements</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 8: Change Management with Security Review Gate</h3>
+        <ul>
+            <li>All changes go through: documented request, security impact assessment, peer code review, automated CI/CD scanning (SAST, dependency, container), staging test, production approval</li>
+            <li>Security gate checks whether changes affect PCI scope, HIPAA scope, or SOC 2 controls</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 9: Security Awareness Training (Framework-Specific)</h3>
+        <ul>
+            <li>Annual training with PCI DSS module (cardholder data handling), HIPAA module (PHI/minimum necessary), SOC 2 module (change management, incident reporting)</li>
+            <li>Role-specific training: developers (OWASP Top 10), support (PHI handling), finance (cardholder data)</li>
+            <li>Monthly phishing simulations with healthcare and payment themed lures; current click rate: 3.8%</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 10: Data Classification &amp; Handling Policy</h3>
+        <ul>
+            <li>4-tier classification: Restricted (PAN, PHI, encryption keys), Confidential (business data, employee PII, SOC 2 evidence), Internal, Public</li>
+            <li>Restricted tier requires encryption at rest/transit, access logging, and annual data discovery scans</li>
+            <li>Quarterly Amazon Macie scans verify no unclassified sensitive data exists in S3</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 11: Network Segmentation (CDE Isolation)</h3>
+        <ul>
+            <li>CDE in dedicated VPC; PHI systems in separate VPC; corporate IT in third VPC</li>
+            <li>VPC peering with explicit allow-list rules for specific services only</li>
+            <li>Quarterly segmentation penetration tests; reduces PCI scope from 350-employee network to ~25 systems</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 12: Business Continuity &amp; Disaster Recovery</h3>
+        <ul>
+            <li>RTO: 4 hours for all production systems; RPO: 15 minutes via continuous replication</li>
+            <li>Multi-AZ AWS deployment; annual DR failover test documents actual vs target recovery times</li>
+            <li>Single test satisfies SOC 2 A1.2, PCI DSS 12.10.1, and HIPAA 164.308(a)(7) simultaneously</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 13: Physical Security Controls</h3>
+        <ul>
+            <li>Badge access for all areas, biometric for server rooms; CCTV with 90-day retention</li>
+            <li>Visitor logs, escort requirements, clean desk policy for areas handling cardholder data or PHI</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 14: Data Retention &amp; Secure Disposal</h3>
+        <ul>
+            <li>Cardholder data deleted immediately after authorization (no post-transaction PAN storage per PCI DSS)</li>
+            <li>PHI retained per client BAA terms (typically 6 years); SOC 2 evidence retained 7 years; logs 1 year online + 6 years archived</li>
+            <li>Cryptographic erasure (KMS key deletion) for digital; certified shredding for physical media</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 15: Penetration Testing &amp; ASV Scanning</h3>
+        <ul>
+            <li>Annual pen test by PCI QSA-approved firm: external, internal, application, and segmentation verification</li>
+            <li>Quarterly ASV scans of all external-facing IPs; all findings tracked to remediation with defined SLAs</li>
+            <li>Satisfies PCI DSS 11.3/11.4 (strictest), SOC 2 CC4.1, and HIPAA 164.308(a)(8)</li>
+        </ul>
+    </div>
+
+    <!-- Compliance Gap Risk Assessment -->
+    <h2>3. Compliance Gap Risk Assessment &mdash; 5 Gaps</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Gap ID</th>
+                <th>Gap Title</th>
+                <th>Category</th>
+                <th>Likelihood</th>
+                <th>Impact</th>
+                <th>Score</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GAP-1</td>
+                <td>PCI DSS v4.0 Missing Targeted Risk Analysis</td>
+                <td>Compliance</td>
+                <td>4</td>
+                <td>4</td>
+                <td>16</td>
+                <td class="risk-critical">CRITICAL</td>
+            </tr>
+            <tr>
+                <td>GAP-2</td>
+                <td>PHI &amp; Cardholder Data Commingling in Shared Systems</td>
+                <td>Data Protection</td>
+                <td>3</td>
+                <td>5</td>
+                <td>15</td>
+                <td class="risk-critical">CRITICAL</td>
+            </tr>
+            <tr>
+                <td>GAP-3</td>
+                <td>SOC 2 Type II Observation Period Coverage Gap</td>
+                <td>Compliance</td>
+                <td>4</td>
+                <td>4</td>
+                <td>16</td>
+                <td class="risk-critical">CRITICAL</td>
+            </tr>
+            <tr>
+                <td>GAP-4</td>
+                <td>HIPAA BAA Gaps with Sub-Processors</td>
+                <td>Vendor Risk</td>
+                <td>3</td>
+                <td>4</td>
+                <td>12</td>
+                <td class="risk-high">HIGH</td>
+            </tr>
+            <tr>
+                <td>GAP-5</td>
+                <td>Insufficient Logging for PCI DSS v4.0 New Requirements</td>
+                <td>Access Control</td>
+                <td>3</td>
+                <td>3</td>
+                <td>9</td>
+                <td class="risk-medium">MEDIUM</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="risk-card">
+        <h3>GAP-1: PCI DSS v4.0 Missing Targeted Risk Analysis <span class="score score-critical">CRITICAL &mdash; 16</span></h3>
+        <ul>
+            <li>8 requirements use customized approaches without completed Targeted Risk Analyses (TRAs)</li>
+            <li>24 of 64 new PCI DSS v4.0 requirements not yet assessed for compliance</li>
+            <li>Failed PCI assessment would prevent processing cardholder data &mdash; ~35% of revenue at risk</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>GAP-2: PHI &amp; Cardholder Data Commingling <span class="score score-critical">CRITICAL &mdash; 15</span></h3>
+        <ul>
+            <li>Shared components (auth service, logging, support portal) process both PCI and HIPAA data</li>
+            <li>Data discovery found 3 instances of cardholder data fragments in shared application logs</li>
+            <li>Commingling expands CDE scope to include PHI systems; a breach triggers BOTH PCI and HIPAA notification</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>GAP-3: SOC 2 Type II Observation Period Gap <span class="score score-critical">CRITICAL &mdash; 16</span></h3>
+        <ul>
+            <li>4 new controls implemented in past 3 months have insufficient operating history for 12-month audit period</li>
+            <li>9 months of audit period will show these controls were not in place &mdash; will result in exceptions</li>
+            <li>Mitigation: negotiate 6-month initial observation period to maximize operating history</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>GAP-4: HIPAA BAA Gaps with Sub-Processors <span class="score score-high">HIGH &mdash; 12</span></h3>
+        <ul>
+            <li>BAAs in place for only 3 of 8 sub-processors (AWS, Datadog, Okta)</li>
+            <li>Missing BAAs for Splunk, PagerDuty, Stripe, SendGrid, Twilio &mdash; current HIPAA 164.308(b)(1) violation</li>
+            <li>PHI flowing through services without BAAs constitutes unauthorized disclosure</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>GAP-5: Insufficient Logging Granularity <span class="score score-medium">MEDIUM &mdash; 9</span></h3>
+        <ul>
+            <li>PCI DSS v4.0 requires individual user-level access logging to cardholder data fields (not just system events)</li>
+            <li>SIEM lacks automated log review rules for PCI v4.0 required events</li>
+            <li>Infrastructure exists but needs enhancement &mdash; QSA could flag during next assessment</li>
+        </ul>
+    </div>
+
+    <!-- Risk Treatment Plans -->
+    <h2>4. Risk Treatment Plans &mdash; 5 Remediations</h2>
+
+    <div class="risk-card">
+        <h3>Treatment 1: PCI DSS v4.0 Targeted Risk Analysis <span class="status-progress">In Progress</span></h3>
+        <table class="info-table">
+            <tr><th>Related Gap</th><td>GAP-1: Missing Targeted Risk Analysis</td></tr>
+            <tr><th>Type</th><td>Mitigate</td></tr>
+            <tr><th>Owner</th><td>Compliance Architect</td></tr>
+            <tr><th>Due Date</th><td>May 31, 2026</td></tr>
+        </table>
+        <ul>
+            <li>Complete TRAs for all 8 customized approach requirements with QSA consultant validation</li>
+            <li>Assess remaining 24 of 64 new PCI DSS v4.0 requirements and document compliance status</li>
+            <li>Pre-assessment readiness review with QSA firm 60 days before formal assessment</li>
+            <li>Budget: $45,000 for QSA consulting and TRA development</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Treatment 2: Data Isolation for PHI/PCI Commingling <span class="status-progress">In Progress</span></h3>
+        <table class="info-table">
+            <tr><th>Related Gap</th><td>GAP-2: PHI &amp; Cardholder Data Commingling</td></tr>
+            <tr><th>Type</th><td>Mitigate</td></tr>
+            <tr><th>Owner</th><td>VP of Engineering</td></tr>
+            <tr><th>Due Date</th><td>June 30, 2026</td></tr>
+        </table>
+        <ul>
+            <li>Deploy DLP rules in logging pipeline to detect and redact PAN/PHI before shared storage</li>
+            <li>Separate support portal into PCI-scoped and HIPAA-scoped instances</li>
+            <li>Implement application-level data tagging with classification-based handling rules</li>
+            <li>Quarterly Amazon Macie scans to verify no cross-contamination; QSA to revalidate PCI scope</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Treatment 3: SOC 2 Observation Period Strategy <span class="status-planned">Planned</span></h3>
+        <table class="info-table">
+            <tr><th>Related Gap</th><td>GAP-3: SOC 2 Type II Observation Period Gap</td></tr>
+            <tr><th>Type</th><td>Mitigate</td></tr>
+            <tr><th>Owner</th><td>Compliance Architect</td></tr>
+            <tr><th>Due Date</th><td>April 30, 2026</td></tr>
+        </table>
+        <ul>
+            <li>Negotiate 6-month initial observation period (instead of 12 months) with audit firm</li>
+            <li>Prepare management responses for the 3 months before new controls were implemented</li>
+            <li>Begin collecting evidence immediately: monthly access reviews, change management, IR docs</li>
+            <li>Schedule SOC 2 audit no earlier than September 2026 to maximize operating history</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Treatment 4: HIPAA BAA Execution for Sub-Processors <span class="status-progress">In Progress</span></h3>
+        <table class="info-table">
+            <tr><th>Related Gap</th><td>GAP-4: HIPAA BAA Gaps</td></tr>
+            <tr><th>Type</th><td>Mitigate</td></tr>
+            <tr><th>Owner</th><td>Legal Counsel</td></tr>
+            <tr><th>Due Date</th><td>April 30, 2026</td></tr>
+        </table>
+        <ul>
+            <li>Execute BAAs with 5 missing sub-processors: Splunk, PagerDuty, Stripe, SendGrid, Twilio</li>
+            <li>Verify vendor BAA availability, review terms against HIPAA 164.314, execute with Legal review</li>
+            <li>For vendors without BAA: evaluate PHI exclusion from processing or replace with HIPAA-compliant alternative</li>
+            <li>Target: all 8 sub-processors covered within 60 days</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Treatment 5: PCI DSS v4.0 Logging Enhancement <span class="status-planned">Planned</span></h3>
+        <table class="info-table">
+            <tr><th>Related Gap</th><td>GAP-5: Insufficient Logging Granularity</td></tr>
+            <tr><th>Type</th><td>Mitigate</td></tr>
+            <tr><th>Owner</th><td>Security Operations Lead</td></tr>
+            <tr><th>Due Date</th><td>July 31, 2026</td></tr>
+        </table>
+        <ul>
+            <li>Implement application-level audit logging capturing individual user access to specific cardholder data fields</li>
+            <li>Configure Splunk correlation rules for PCI v4.0 events: all CDE access, admin actions, auth events</li>
+            <li>Implement automated daily log review via Splunk scheduled searches</li>
+            <li>Validate against PCI DSS v4.0 Requirements 10.2.1.1, 10.2.2, and 10.4.1.1 with QSA</li>
+        </ul>
+    </div>
+
+    <!-- Audit Schedule -->
+    <h2>5. Audit Schedule &mdash; 2 Compliance Audits</h2>
+
+    <div class="risk-card">
+        <h3>Audit 1: PCI DSS v4.0 Annual Assessment (QSA-Led)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>PCI DSS v4.0</td></tr>
+            <tr><th>Status</th><td>Planned</td></tr>
+            <tr><th>Lead</th><td>External QSA</td></tr>
+            <tr><th>Start Date</th><td>October 1, 2026</td></tr>
+        </table>
+        <ul>
+            <li>Full PCI DSS v4.0 assessment of the Cardholder Data Environment (CDE)</li>
+            <li>Scope: all 12 requirement families, TRA validation, pen test, quarterly ASV results, policies</li>
+            <li>Pre-assessment readiness review scheduled August 2026</li>
+            <li>Deliverable: Report on Compliance (ROC) and Attestation of Compliance (AOC)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Audit 2: SOC 2 Type II Annual Audit</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>SOC 2 Type II</td></tr>
+            <tr><th>Status</th><td>Planned</td></tr>
+            <tr><th>Lead</th><td>External Auditor</td></tr>
+            <tr><th>Start Date</th><td>September 1, 2026</td></tr>
+        </table>
+        <ul>
+            <li>Trust Services Criteria: Security, Availability, and Confidentiality</li>
+            <li>Observation period: April 1 &ndash; September 30, 2026 (6 months, expanding to 12 in subsequent years)</li>
+            <li>All 15 cross-framework controls assessed; evidence: access reviews, change management, vuln scans, pen test, IR docs, DR test, vendor records</li>
+            <li>Management response prepared for 4 new controls with limited operating history</li>
+        </ul>
+    </div>
+
+    <!-- Compliance Program Summary -->
+    <h2>6. Compliance Program Summary</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr><th>Component</th><th>Details</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Cross-Framework Controls</td><td>15 assessed (all Effective)</td><td>Operational</td></tr>
+            <tr><td>Compliance Gaps</td><td>5 identified (3 Critical, 1 High, 1 Medium)</td><td>Remediation Active</td></tr>
+            <tr><td>Risk Treatments</td><td>5 plans (all Mitigate type)</td><td>3 In Progress, 2 Planned</td></tr>
+            <tr><td>Audit Schedule</td><td>PCI DSS (Oct 2026) + SOC 2 (Sep 2026)</td><td>Planned</td></tr>
+            <tr><td>Framework Coverage</td><td>PCI DSS v4.0 + SOC 2 Type II + HIPAA</td><td>Unified Program</td></tr>
+        </tbody>
+    </table>
+
+    <h2>7. Next Steps</h2>
+    <ul>
+        <li>Complete all 8 Targeted Risk Analyses for PCI DSS v4.0 customized approaches by May 2026</li>
+        <li>Execute BAAs with remaining 5 sub-processors to resolve HIPAA violation by April 2026</li>
+        <li>Implement data isolation controls to eliminate PHI/PCI commingling by June 2026</li>
+        <li>Enhance logging granularity for PCI DSS v4.0 new requirements by July 2026</li>
+        <li>Complete SOC 2 Type II audit (September 2026) and PCI DSS assessment (October 2026)</li>
+        <li>Expand to 12-month SOC 2 observation period in 2027 audit cycle</li>
+    </ul>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti. All rights reserved.
+</footer>
+
+</body>
+</html>

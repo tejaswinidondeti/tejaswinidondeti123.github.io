@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Privacy Program — ConsumerFirst Retail | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #fefce8; color: #a16207; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .status-effective { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-partial { background: #fefce8; color: #a16207; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .reg-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.82rem; }
+        .reg-table th { background: #1c1917; color: #fef2e8; padding: 0.55rem 0.7rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .reg-table td { padding: 0.55rem 0.7rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .roadmap-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .roadmap-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .roadmap-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Privacy</span>
+        <h1>Global Privacy Program &amp; CCPA/GDPR Compliance &mdash; <em>ConsumerFirst Retail</em></h1>
+        <p class="subtitle">Designed and implemented a global privacy program for a multi-channel retailer with 8M+ customers across 40 countries; mapped 8 data processing activities, assessed 5 privacy risks, deployed 8 controls, and drafted 5 privacy policies under GDPR, CCPA/CPRA, and 4 US state privacy laws</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> ConsumerFirst Retail</div>
+            <div class="meta-item"><strong>Industry:</strong> Retail &amp; E-Commerce</div>
+            <div class="meta-item"><strong>Frameworks:</strong> GDPR, CCPA/CPRA, ISO 27701, Virginia CDPA, Colorado CPA, Connecticut CTDPA</div>
+            <div class="meta-item"><strong>Scale:</strong> 5,000 Employees &bull; 150 Stores &bull; 40 Countries &bull; 8M+ Customers</div>
+            <div class="meta-item"><strong>Date:</strong> March 2026</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>ConsumerFirst Retail operates at the intersection of physical retail and digital commerce, collecting and processing personal data from over 8 million customers across 40 countries. This scale of data processing creates significant legal obligations under multiple privacy regimes simultaneously &mdash; most critically the EU General Data Protection Regulation (GDPR) and the California Consumer Privacy Act / California Privacy Rights Act (CCPA/CPRA), as well as emerging state-level laws in Virginia, Colorado, and Connecticut.</p>
+    <p>ConsumerFirst faces fines of up to 4% of global annual turnover under GDPR (Art. 83) and up to $7,500 per intentional violation under CCPA/CPRA. With 8M+ customer records, a single data breach or non-compliance finding could result in regulatory fines exceeding $10M, class-action exposure, and irreversible reputational harm.</p>
+
+    <table class="risk-table">
+        <tr>
+            <th>Phase</th>
+            <th>Deliverable</th>
+        </tr>
+        <tr><td>Data Inventory</td><td>8 data processing activities mapped across systems using ISO 27701 RoPA methodology</td></tr>
+        <tr><td>Risk Assessment</td><td>5 privacy-specific risks assessed with likelihood, impact, and scoring under GDPR Art. 35 / CCPA frameworks</td></tr>
+        <tr><td>Controls</td><td>8 privacy controls implemented referencing ISO 27701, GDPR, CIS, and NIST CSF</td></tr>
+        <tr><td>Policies</td><td>5 formal privacy policies drafted across consent management, DSR workflows, cross-border transfers, PIA, and breach response</td></tr>
+    </table>
+
+    <!-- Data Inventory -->
+    <h2>2. Data Inventory &amp; Asset Register</h2>
+    <p>Under ISO 27701 (Privacy Information Management), organisations must maintain a Record of Processing Activities (RoPA) that documents every significant data processing operation. The 8 assets below represent the primary data processing activities at ConsumerFirst Retail, covering the full customer data lifecycle &mdash; from collection, to analytics, to marketing, to rights fulfillment, to cross-border transfer.</p>
+
+    <!-- Asset 1 -->
+    <div class="risk-card">
+        <h3>Asset 1: Customer Identity &amp; Loyalty Database</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Database</td></tr>
+            <tr><th>Environment</th><td>Production</td></tr>
+            <tr><th>Classification</th><td><span class="score score-critical">Critical</span></td></tr>
+            <tr><th>Owner</th><td>Chief Privacy Officer (CPO)</td></tr>
+            <tr><th>Description</th><td>Central PostgreSQL database storing PII for 8M+ customers: full name, email, phone, postal address, date of birth, loyalty tier, points balance, reward redemption history, and linked payment tokens. Primary repository for CCPA &lsquo;consumers&rsquo; and GDPR &lsquo;data subjects.&rsquo; Any breach triggers mandatory notification under GDPR Art. 33 (72-hour) and CCPA breach provisions.</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 2 -->
+    <div class="risk-card">
+        <h3>Asset 2: E-Commerce Behavioral Analytics Platform</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Environment</th><td>Production</td></tr>
+            <tr><th>Classification</th><td><span class="score score-critical">Critical</span></td></tr>
+            <tr><th>Owner</th><td>VP Digital &amp; E-Commerce</td></tr>
+            <tr><th>Description</th><td>Cloud-native analytics platform (AWS) ingesting clickstream data, product page views, add-to-cart events, search queries, session duration, device fingerprints, and IP addresses. Feeds ML recommendation engine. Creates GDPR obligations around automated decision-making (Art. 22) and requires legitimate interest assessment or explicit consent for profiling.</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 3 -->
+    <div class="risk-card">
+        <h3>Asset 3: In-Store Point-of-Sale (POS) System</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Environment</th><td>Production</td></tr>
+            <tr><th>Classification</th><td><span class="score score-high">High</span></td></tr>
+            <tr><th>Owner</th><td>VP Retail Operations</td></tr>
+            <tr><th>Description</th><td>Deployed across 150 US retail stores. Captures transaction data (items purchased, price, payment method type, loyalty card scan, date/time, store location). Integrates with central customer database for loyalty redemption. POS logs retained for 7 years for financial audit. Payment card data tokenized (PCI DSS compliant); purchase history constitutes personal data under CCPA.</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 4 -->
+    <div class="risk-card">
+        <h3>Asset 4: Email Marketing Automation Platform</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application (Third-Party SaaS)</td></tr>
+            <tr><th>Environment</th><td>Production</td></tr>
+            <tr><th>Classification</th><td><span class="score score-high">High</span></td></tr>
+            <tr><th>Owner</th><td>VP Marketing</td></tr>
+            <tr><th>Description</th><td>Third-party SaaS platform used to send promotional emails, loyalty newsletters, and personalized offers to opted-in customers. Processes email addresses, name, purchase history segments, and engagement metrics. For EU customers, requires valid legal basis &mdash; typically consent (GDPR Art. 6(1)(a)). Vendor relationship introduces data processor obligations under GDPR Art. 28, requiring a Data Processing Agreement (DPA).</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 5 -->
+    <div class="risk-card">
+        <h3>Asset 5: Customer Data Platform (CDP)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Database</td></tr>
+            <tr><th>Environment</th><td>Production</td></tr>
+            <tr><th>Classification</th><td><span class="score score-critical">Critical</span></td></tr>
+            <tr><th>Owner</th><td>Chief Data Officer (CDO)</td></tr>
+            <tr><th>Description</th><td>Unified customer profile store that merges data from POS, e-commerce, loyalty, and marketing systems into a single 360&deg; customer view. Enables cross-channel attribution and audience segmentation. Includes inferred attributes (purchase propensity scores, churn risk, lifetime value estimates). Creation of inferred/derived data constitutes processing under GDPR and requires a lawful basis.</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 6 -->
+    <div class="risk-card">
+        <h3>Asset 6: Cloud Infrastructure (AWS Multi-Region)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Cloud Account</td></tr>
+            <tr><th>Environment</th><td>Production</td></tr>
+            <tr><th>Classification</th><td><span class="score score-critical">Critical</span></td></tr>
+            <tr><th>Owner</th><td>VP Engineering / CISO</td></tr>
+            <tr><th>Description</th><td>AWS organization spanning US-East-1 (primary), EU-West-1 (Dublin, for EU data residency), and AP-Southeast-1 (Singapore). EU region critical for GDPR Chapter V compliance. SCCs and AWS DPA in place. Cross-region replication for disaster recovery creates additional transfer obligations under GDPR Art. 44.</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 7 -->
+    <div class="risk-card">
+        <h3>Asset 7: Data Subject Request (DSR) Management Portal</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Environment</th><td>Production</td></tr>
+            <tr><th>Classification</th><td><span class="score score-high">High</span></td></tr>
+            <tr><th>Owner</th><td>Privacy Operations Manager</td></tr>
+            <tr><th>Description</th><td>Web application enabling customers to submit requests to access, delete, correct, or opt-out of sale of their personal data. Tracks request receipt timestamps, response deadlines (30 days GDPR, 45 days CCPA), verification status, and fulfillment actions. Integrates with Customer Identity Database and CDP. Audit logs retained for 3 years.</td></tr>
+        </table>
+    </div>
+
+    <!-- Asset 8 -->
+    <div class="risk-card">
+        <h3>Asset 8: Cookie &amp; Consent Management Platform (CMP)</h3>
+        <table class="info-table">
+            <tr><th>Type</th><td>Application</td></tr>
+            <tr><th>Environment</th><td>Production</td></tr>
+            <tr><th>Classification</th><td><span class="score score-high">High</span></td></tr>
+            <tr><th>Owner</th><td>Head of Digital Privacy</td></tr>
+            <tr><th>Description</th><td>Consent Management Platform deployed on web and mobile app. Manages GDPR cookie consent banners (IAB TCF 2.2 compliant), CCPA opt-out signals (Global Privacy Control / GPC compliant), and jurisdiction-specific consent flows. Stores consent records with timestamp, version, and signal source. Integrates with CDP to suppress data processing for non-consenting users.</td></tr>
+        </table>
+    </div>
+
+    <!-- Privacy Risk Register -->
+    <h2>3. Privacy Risk Register</h2>
+    <p>The 5 risks below were identified through a structured Privacy Risk Assessment aligned to GDPR Art. 35, ISO 27701 Section 6.5, and NIST Privacy Framework Core Functions. Risk Score = Likelihood &times; Impact (1&ndash;25 scale). Scores of 12+ are HIGH or CRITICAL and require immediate treatment.</p>
+
+    <table class="risk-table">
+        <tr>
+            <th>Risk</th>
+            <th>Category</th>
+            <th>Likelihood</th>
+            <th>Impact</th>
+            <th>Score</th>
+            <th>Rating</th>
+        </tr>
+        <tr>
+            <td>Unlawful Cross-Border Data Transfer of EU Customer PII</td>
+            <td>Compliance</td>
+            <td>3 &ndash; Possible</td>
+            <td>5 &ndash; Severe</td>
+            <td>15</td>
+            <td class="risk-critical">CRITICAL</td>
+        </tr>
+        <tr>
+            <td>Failure to Honor Consumer Rights Requests Within Statutory Deadlines</td>
+            <td>Compliance</td>
+            <td>4 &ndash; Likely</td>
+            <td>4 &ndash; Major</td>
+            <td>16</td>
+            <td class="risk-critical">CRITICAL</td>
+        </tr>
+        <tr>
+            <td>Inadequate Consent Management Leading to Unlawful Marketing Processing</td>
+            <td>Data Protection</td>
+            <td>3 &ndash; Possible</td>
+            <td>4 &ndash; Major</td>
+            <td>12</td>
+            <td class="risk-high">HIGH</td>
+        </tr>
+        <tr>
+            <td>Third-Party Data Processor Non-Compliance (Vendor Risk)</td>
+            <td>Vendor Risk</td>
+            <td>3 &ndash; Possible</td>
+            <td>4 &ndash; Major</td>
+            <td>12</td>
+            <td class="risk-high">HIGH</td>
+        </tr>
+        <tr>
+            <td>Insufficient Data Minimization Resulting in Excessive PII Retention</td>
+            <td>Data Protection</td>
+            <td>4 &ndash; Likely</td>
+            <td>3 &ndash; Moderate</td>
+            <td>12</td>
+            <td class="risk-high">HIGH</td>
+        </tr>
+    </table>
+
+    <!-- Risk 1 -->
+    <div class="risk-card">
+        <h3>Risk 1: Unlawful Cross-Border Data Transfer of EU Customer PII <span class="score score-critical">CRITICAL &mdash; 15</span></h3>
+        <table class="info-table">
+            <tr><th>Category</th><td>Compliance</td></tr>
+            <tr><th>Status</th><td>Open</td></tr>
+            <tr><th>Owner</th><td>Chief Privacy Officer</td></tr>
+        </table>
+        <p>ConsumerFirst processes EU customer data on US-based AWS infrastructure (us-east-1) for analytical and marketing purposes. Despite an EU-specific region (eu-west-1), cross-region replication and US-based marketing SaaS vendors create ongoing cross-border transfer obligations under GDPR Chapter V. Post-Schrems II, if SCCs are not correctly implemented or Transfer Impact Assessments are not documented, any EU supervisory authority audit could result in a suspension of transfers &mdash; halting EU operations.</p>
+    </div>
+
+    <!-- Risk 2 -->
+    <div class="risk-card">
+        <h3>Risk 2: Failure to Honor Consumer Rights Requests Within Statutory Deadlines <span class="score score-critical">CRITICAL &mdash; 16</span></h3>
+        <table class="info-table">
+            <tr><th>Category</th><td>Compliance</td></tr>
+            <tr><th>Status</th><td>In Progress</td></tr>
+            <tr><th>Owner</th><td>Privacy Operations Manager</td></tr>
+        </table>
+        <p>GDPR requires response within 30 days; CCPA mandates 45 days. With 8M+ customers and data distributed across 8+ systems, a volume spike could overwhelm the manual verification and fulfillment workflow. Systematic late responses constitute ongoing violations &mdash; each missed CCPA deadline can be a separate violation at up to $7,500 per intentional violation.</p>
+    </div>
+
+    <!-- Risk 3 -->
+    <div class="risk-card">
+        <h3>Risk 3: Inadequate Consent Management Leading to Unlawful Marketing Processing <span class="score score-high">HIGH &mdash; 12</span></h3>
+        <table class="info-table">
+            <tr><th>Category</th><td>Data Protection</td></tr>
+            <tr><th>Status</th><td>Open</td></tr>
+            <tr><th>Owner</th><td>Head of Digital Privacy</td></tr>
+        </table>
+        <p>Consent obtained prior to CMP upgrade may not meet GDPR requirements for specific, granular, and freely given consent (Art. 7). CCPA/CPRA requires that &lsquo;Do Not Sell or Share&rsquo; opt-out signals (including Global Privacy Control) be honored automatically. Regulators (CNIL, ICO) have imposed multi-million euro fines specifically for non-compliant consent management.</p>
+    </div>
+
+    <!-- Risk 4 -->
+    <div class="risk-card">
+        <h3>Risk 4: Third-Party Data Processor Non-Compliance <span class="score score-high">HIGH &mdash; 12</span></h3>
+        <table class="info-table">
+            <tr><th>Category</th><td>Vendor Risk</td></tr>
+            <tr><th>Status</th><td>Open</td></tr>
+            <tr><th>Owner</th><td>Third-Party Risk Manager</td></tr>
+        </table>
+        <p>ConsumerFirst shares customer data with 40+ third-party vendors (payment processors, marketing platforms, analytics providers, loyalty partners). Under GDPR Art. 28, each vendor must have a signed DPA. Many vendor contracts predate current privacy requirements. A vendor breach or misuse makes ConsumerFirst jointly liable as the data controller.</p>
+    </div>
+
+    <!-- Risk 5 -->
+    <div class="risk-card">
+        <h3>Risk 5: Insufficient Data Minimization Resulting in Excessive PII Retention <span class="score score-high">HIGH &mdash; 12</span></h3>
+        <table class="info-table">
+            <tr><th>Category</th><td>Data Protection</td></tr>
+            <tr><th>Status</th><td>In Progress</td></tr>
+            <tr><th>Owner</th><td>Chief Data Officer</td></tr>
+        </table>
+        <p>Legacy systems retain customer data indefinitely &mdash; the POS system retains 7 years of transaction history for audit purposes, but the behavioral analytics platform retains clickstream data with no defined retention limit. The CDP aggregates data without purging stale profiles. Customers inactive for 5+ years may have richer profiles than active customers, violating both GDPR minimisation (Art. 5(1)(c)) and storage limitation (Art. 5(1)(e)) principles.</p>
+    </div>
+
+    <!-- Privacy Controls Register -->
+    <h2>4. Privacy Controls Register</h2>
+    <p>The 8 controls below implement ConsumerFirst Retail&rsquo;s privacy risk treatment plan. Each control is mapped to applicable regulatory articles and ISO 27701 clauses.</p>
+
+    <table class="risk-table">
+        <tr>
+            <th>Control</th>
+            <th>Framework</th>
+            <th>Reference</th>
+            <th>Frequency</th>
+            <th>Effectiveness</th>
+        </tr>
+        <tr>
+            <td>Consent Lifecycle Management</td>
+            <td>GDPR</td>
+            <td>Art. 6, 7, 13; CCPA &sect;1798.100; ISO 27701 &sect;7.2.3</td>
+            <td>Continuous</td>
+            <td><span class="status-partial">Partially Effective</span></td>
+        </tr>
+        <tr>
+            <td>DSR Fulfillment Workflow</td>
+            <td>GDPR</td>
+            <td>Art. 12&ndash;22; CCPA &sect;1798.100&ndash;135; Virginia CDPA &sect;59.1-577</td>
+            <td>Continuous</td>
+            <td><span class="status-partial">Partially Effective</span></td>
+        </tr>
+        <tr>
+            <td>Cross-Border Transfer Safeguards</td>
+            <td>GDPR</td>
+            <td>Art. 44&ndash;49; SCC Decision 2021/914; ISO 27701 &sect;8.5</td>
+            <td>Quarterly</td>
+            <td><span class="status-partial">Partially Effective</span></td>
+        </tr>
+        <tr>
+            <td>PIA/DPIA Process</td>
+            <td>GDPR</td>
+            <td>Art. 35; ISO 27701 &sect;7.4; NIST Privacy Framework ID.RA</td>
+            <td>Quarterly</td>
+            <td><span class="status-effective">Effective</span></td>
+        </tr>
+        <tr>
+            <td>Data Retention &amp; Minimization Schedule</td>
+            <td>GDPR</td>
+            <td>Art. 5(1)(c)(e); ISO 27701 &sect;7.4.7; CCPA &sect;1798.100(e)</td>
+            <td>Annual</td>
+            <td><span class="status-partial">Partially Effective</span></td>
+        </tr>
+        <tr>
+            <td>Vendor Privacy Assessment &amp; DPA Management</td>
+            <td>GDPR</td>
+            <td>Art. 28; ISO 27701 &sect;8.5; CCPA &sect;1798.140(ag)</td>
+            <td>Annual</td>
+            <td><span class="status-partial">Partially Effective</span></td>
+        </tr>
+        <tr>
+            <td>Privacy-by-Design in SDLC</td>
+            <td>GDPR</td>
+            <td>Art. 25; ISO 27701 &sect;7.4; NIST Privacy Framework CT.DM</td>
+            <td>Continuous</td>
+            <td><span class="status-effective">Effective</span></td>
+        </tr>
+        <tr>
+            <td>Privacy Awareness &amp; Training Program</td>
+            <td>ISO 27701</td>
+            <td>ISO 27701 &sect;6.3; NIST Privacy Framework GV.AT; GDPR Art. 39</td>
+            <td>Annual</td>
+            <td><span class="status-effective">Effective</span></td>
+        </tr>
+    </table>
+
+    <!-- Control 1 -->
+    <div class="risk-card">
+        <h3>Control 1: Consent Lifecycle Management <span class="status-partial">Partially Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>GDPR Art. 6, 7, 13 &bull; CCPA &sect;1798.100 &bull; ISO 27701 &sect;7.2.3</td></tr>
+            <tr><th>Frequency</th><td>Continuous</td></tr>
+            <tr><th>Owner</th><td>Head of Digital Privacy</td></tr>
+        </table>
+        <p>Implements and operates the Consent Management Platform (CMP) to collect, record, and honor customer consent preferences across all digital touchpoints. Ensures consent is granular, freely given, specific, informed, and revocable at any time. Consent records stored with timestamp, IP, version, and purpose. Partially Effective because legacy consent records (pre-CMP) have not been remediated and GPC signal compliance is still being implemented.</p>
+    </div>
+
+    <!-- Control 2 -->
+    <div class="risk-card">
+        <h3>Control 2: Data Subject Rights Fulfillment Workflow <span class="status-partial">Partially Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>GDPR Art. 12&ndash;22 &bull; CCPA &sect;1798.100&ndash;135 &bull; Virginia CDPA &sect;59.1-577</td></tr>
+            <tr><th>Frequency</th><td>Continuous</td></tr>
+            <tr><th>Owner</th><td>Privacy Operations Manager</td></tr>
+        </table>
+        <p>End-to-end operational process for receiving, verifying, tracking, and fulfilling DSRs across all applicable rights: access, deletion, correction, portability, restriction, opt-out of sale/share. The DSR portal auto-acknowledges requests, starts the statutory clock, routes to the appropriate fulfillment team, and triggers data retrieval or deletion across all 8 registered data systems.</p>
+    </div>
+
+    <!-- Control 3 -->
+    <div class="risk-card">
+        <h3>Control 3: Cross-Border Data Transfer Safeguards <span class="status-partial">Partially Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>GDPR Art. 44&ndash;49 &bull; SCC Decision 2021/914 &bull; ISO 27701 &sect;8.5</td></tr>
+            <tr><th>Frequency</th><td>Quarterly</td></tr>
+            <tr><th>Owner</th><td>Chief Privacy Officer</td></tr>
+        </table>
+        <p>Implements legal mechanisms for all transfers of EU personal data to third countries. Mechanisms include: SCCs (2021 format) with all US-based vendors, Transfer Impact Assessments for high-risk transfers, EU data residency enforcement via AWS eu-west-1, and EU&ndash;US Data Privacy Framework certification. Quarterly review of transfer mapping and SCC applicability.</p>
+    </div>
+
+    <!-- Control 4 -->
+    <div class="risk-card">
+        <h3>Control 4: Privacy Impact Assessment (PIA/DPIA) Process <span class="status-effective">Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>GDPR Art. 35 &bull; ISO 27701 &sect;7.4 &bull; NIST Privacy Framework ID.RA</td></tr>
+            <tr><th>Frequency</th><td>Quarterly</td></tr>
+            <tr><th>Owner</th><td>Chief Privacy Officer</td></tr>
+        </table>
+        <p>Formal process requiring a PIA &mdash; or a full DPIA where Art. 35 thresholds are met &mdash; before launching any new data processing activity, marketing initiative, or technology system. PIA template covers: purpose, legal basis, data flows, data minimisation assessment, retention schedule, third-party sharing, security measures, and rights impact. Effective because the PIA process is formally adopted and embedded in the project management lifecycle.</p>
+    </div>
+
+    <!-- Control 5 -->
+    <div class="risk-card">
+        <h3>Control 5: Data Retention &amp; Minimization Schedule <span class="status-partial">Partially Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>GDPR Art. 5(1)(c)(e) &bull; ISO 27701 &sect;7.4.7 &bull; CCPA &sect;1798.100(e)</td></tr>
+            <tr><th>Frequency</th><td>Annual</td></tr>
+            <tr><th>Owner</th><td>Chief Data Officer</td></tr>
+        </table>
+        <p>Formal data retention schedule defining maximum retention periods for each data category by system. Automated deletion routines purge inactive customer profiles after 3 years of inactivity, transaction records after 7 years, and behavioral analytics clickstream data after 13 months (aligned to CNIL guidance). Partially Effective because automated purging is implemented for some systems but not yet all legacy systems.</p>
+    </div>
+
+    <!-- Control 6 -->
+    <div class="risk-card">
+        <h3>Control 6: Vendor Privacy Assessment &amp; DPA Management <span class="status-partial">Partially Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>GDPR Art. 28 &bull; ISO 27701 &sect;8.5 &bull; CCPA &sect;1798.140(ag)</td></tr>
+            <tr><th>Frequency</th><td>Annual</td></tr>
+            <tr><th>Owner</th><td>Third-Party Risk Manager</td></tr>
+        </table>
+        <p>Annual assessment of all third-party vendors receiving customer personal data. Includes: DPA execution (GDPR Art. 28 compliant), CCPA service provider contractual terms, security questionnaire (CIS Controls), subprocessor disclosure review, and breach notification obligation verification. Partially Effective because initial DPA campaign is complete for top-tier vendors but tier-2 and tier-3 vendors are still in progress.</p>
+    </div>
+
+    <!-- Control 7 -->
+    <div class="risk-card">
+        <h3>Control 7: Privacy-by-Design Review in SDLC <span class="status-effective">Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>GDPR Art. 25 &bull; ISO 27701 &sect;7.4 &bull; NIST Privacy Framework CT.DM</td></tr>
+            <tr><th>Frequency</th><td>Continuous</td></tr>
+            <tr><th>Owner</th><td>CISO / Engineering Lead</td></tr>
+        </table>
+        <p>Embeds privacy requirements into the SDLC at design, build, and deployment stages. Includes: privacy requirement checklist for all new features involving personal data, data flow diagram review at design stage, code review checklist for PII handling (encryption, logging exclusions), pre-launch PIA gate, and privacy acceptance criteria in user story definition.</p>
+    </div>
+
+    <!-- Control 8 -->
+    <div class="risk-card">
+        <h3>Control 8: Privacy Awareness &amp; Training Program <span class="status-effective">Effective</span></h3>
+        <table class="info-table">
+            <tr><th>Framework</th><td>ISO 27701 &sect;6.3 &bull; NIST Privacy Framework GV.AT &bull; GDPR Art. 39</td></tr>
+            <tr><th>Frequency</th><td>Annual</td></tr>
+            <tr><th>Owner</th><td>Privacy Operations Manager</td></tr>
+        </table>
+        <p>Annual mandatory privacy training for all 5,000 employees, with role-specific modules for: general staff (consumer rights, breach reporting), marketing team (consent requirements, CCPA opt-out), engineering (privacy-by-design, secure coding), and legal/privacy team (GDPR, CCPA, state laws deep-dive). Training completion tracked and reported to the Board. Privacy champions program in each department.</p>
+    </div>
+
+    <!-- Privacy Policies -->
+    <h2>5. Privacy Policies</h2>
+
+    <!-- Policy 1 -->
+    <div class="risk-card">
+        <h3>Policy 1: Global Consumer Privacy Notice &amp; Data Processing Policy</h3>
+        <table class="info-table">
+            <tr><th>Status</th><td><span class="status-effective">Approved</span></td></tr>
+            <tr><th>Owner</th><td>Chief Privacy Officer</td></tr>
+            <tr><th>Review Date</th><td>March 1, 2027</td></tr>
+        </table>
+        <p>Establishes ConsumerFirst&rsquo;s commitment to transparent, lawful, and fair processing of personal data. Serves as the primary privacy notice required by GDPR Art. 13/14 and CCPA &sect;1798.100. Communicates to customers: what data is collected, why, the legal basis, retention periods, sharing, and how to exercise privacy rights. Covers all processing across 150 stores, e-commerce platform, mobile app, and loyalty program.</p>
+        <ul>
+            <li><strong>Categories Collected:</strong> Identity data, transaction data, behavioral data, inferred data, communications data</li>
+            <li><strong>Legal Bases (GDPR):</strong> Consent (marketing, profiling), contract performance (loyalty), legitimate interests (fraud prevention), legal obligation (financial records)</li>
+            <li><strong>CCPA Rights:</strong> Right to know, opt-out of sale/share, delete, correct, limit sensitive PI use, non-discrimination</li>
+            <li><strong>Retention:</strong> Identity 3 years post-interaction; Transactions 7 years; Analytics 13 months; Consent records 5 years post-consent</li>
+        </ul>
+    </div>
+
+    <!-- Policy 2 -->
+    <div class="risk-card">
+        <h3>Policy 2: Consent Management &amp; Withdrawal Policy</h3>
+        <table class="info-table">
+            <tr><th>Status</th><td><span class="status-effective">Approved</span></td></tr>
+            <tr><th>Owner</th><td>Head of Digital Privacy</td></tr>
+            <tr><th>Review Date</th><td>March 1, 2027</td></tr>
+        </table>
+        <p>Establishes standards for obtaining, recording, managing, and honoring customer consent for all consent-based processing. Ensures all consent is freely given, specific, informed, and unambiguous (GDPR standard).</p>
+        <ul>
+            <li><strong>Collection Mechanisms:</strong> Web CMP (IAB TCF 2.2), mobile app consent flow, in-store written consent, email double opt-in (EU)</li>
+            <li><strong>CCPA Opt-Out:</strong> Global Privacy Control (GPC) signals honored automatically; &lsquo;Do Not Sell or Share&rsquo; link on all pages; processed within 15 business days</li>
+            <li><strong>Withdrawal:</strong> Via privacy preference center, unsubscribe links, or customer service; marketing suppression within 72 hours; full CDP suppression within 30 days</li>
+        </ul>
+    </div>
+
+    <!-- Policy 3 -->
+    <div class="risk-card">
+        <h3>Policy 3: Data Subject Rights (DSR) Response Policy</h3>
+        <table class="info-table">
+            <tr><th>Status</th><td><span class="status-effective">Approved</span></td></tr>
+            <tr><th>Owner</th><td>Privacy Operations Manager</td></tr>
+            <tr><th>Review Date</th><td>June 1, 2027</td></tr>
+        </table>
+        <p>Defines obligations, procedures, and timelines for responding to privacy rights requests from individuals across GDPR, CCPA, and applicable state laws.</p>
+        <ul>
+            <li><strong>Timelines:</strong> GDPR 30 days (extendable to 60); CCPA 45 days (extendable to 90); Virginia/Colorado/Connecticut 45 days (extendable to 90)</li>
+            <li><strong>Identity Verification:</strong> Low-risk (email); Standard (two-factor); Deletion/sensitive (government ID or knowledge-based authentication)</li>
+            <li><strong>Deletion Process:</strong> Customer Identity DB (suppression + purge 30 days), CDP (30 days), Analytics (45 days), Marketing (immediate unsubscribe + 5 days), POS (pseudonymized &mdash; 7-year financial retention exception)</li>
+            <li><strong>Exemptions:</strong> Complete transaction, detect security incidents, defend legal claims, legal obligation, provide requested services</li>
+        </ul>
+    </div>
+
+    <!-- Policy 4 -->
+    <div class="risk-card">
+        <h3>Policy 4: Cross-Border Data Transfer Policy</h3>
+        <table class="info-table">
+            <tr><th>Status</th><td><span class="status-partial">Under Review</span></td></tr>
+            <tr><th>Owner</th><td>Chief Privacy Officer</td></tr>
+            <tr><th>Review Date</th><td>June 1, 2027</td></tr>
+        </table>
+        <p>Establishes legal mechanisms, governance requirements, and operational procedures for all transfers of personal data from the EU/EEA to third countries, in compliance with GDPR Chapter V (Art. 44&ndash;49).</p>
+        <ul>
+            <li><strong>Transfer Mechanisms:</strong> SCCs (2021 format), EU&ndash;US Data Privacy Framework (DPF), Binding Corporate Rules (in development), AWS Data Processing Addendum</li>
+            <li><strong>TIA Requirements:</strong> Required for all high-risk transfers (Score 12+); assesses recipient country legal framework, SCC protection adequacy, and supplementary technical measures</li>
+            <li><strong>Data Residency:</strong> EU customer data processed in AWS eu-west-1 (Dublin) as primary location; cross-region replication permissible under SCCs; EU behavioral analytics must not be processed on US servers without valid SCC/DPF</li>
+        </ul>
+    </div>
+
+    <!-- Policy 5 -->
+    <div class="risk-card">
+        <h3>Policy 5: Privacy Impact Assessment (PIA/DPIA) Policy</h3>
+        <table class="info-table">
+            <tr><th>Status</th><td><span class="status-effective">Approved</span></td></tr>
+            <tr><th>Owner</th><td>Chief Privacy Officer</td></tr>
+            <tr><th>Review Date</th><td>March 1, 2027</td></tr>
+        </table>
+        <p>Establishes when and how PIAs and DPIAs are conducted for new or significantly changed data processing activities. DPIA required for: systematic profiling (CDP scoring), large-scale processing of special categories, and systematic monitoring of publicly accessible areas.</p>
+        <ul>
+            <li><strong>PIA Triggers:</strong> New system/database processing personal data, new data collection touchpoint, significant change to existing processing, new marketing initiative, new third-party integration</li>
+            <li><strong>Process Steps:</strong> Necessity &amp; proportionality &rarr; Legal basis &rarr; Data flow mapping &rarr; Risk assessment &rarr; Mitigation &rarr; DPO consultation &rarr; CPO sign-off</li>
+            <li><strong>Outcomes:</strong> Green (proceed), Amber (proceed with conditions), Red (do not proceed &mdash; redesign required)</li>
+            <li><strong>Marketing PIA:</strong> Required before all new marketing initiatives including customer segmentation, advertising partnerships, AI personalization, and lookalike audience creation</li>
+        </ul>
+    </div>
+
+    <!-- Regulatory Framework Mapping -->
+    <h2>6. Regulatory Framework Mapping</h2>
+
+    <table class="reg-table">
+        <tr>
+            <th>Regulation / Article</th>
+            <th>Obligation</th>
+            <th>Asset(s)</th>
+            <th>Control(s)</th>
+            <th>Policy / Risk</th>
+        </tr>
+        <tr>
+            <td>GDPR Art. 6/7</td>
+            <td>Lawful basis &amp; consent</td>
+            <td>CMP (8), CDP (5)</td>
+            <td>Control 1 &ndash; Consent Mgt</td>
+            <td>Policy 2; Risk 3</td>
+        </tr>
+        <tr>
+            <td>GDPR Art. 12&ndash;22</td>
+            <td>Data subject rights</td>
+            <td>DSR Portal (7), Identity DB (1)</td>
+            <td>Control 2 &ndash; DSR Workflow</td>
+            <td>Policy 3; Risk 2</td>
+        </tr>
+        <tr>
+            <td>GDPR Art. 25</td>
+            <td>Privacy by design</td>
+            <td>All assets (design gate)</td>
+            <td>Control 7 &ndash; PbD in SDLC</td>
+            <td>Policy 5</td>
+        </tr>
+        <tr>
+            <td>GDPR Art. 28</td>
+            <td>Processor contracts (DPAs)</td>
+            <td>Marketing Platform (4), all vendors</td>
+            <td>Control 6 &ndash; Vendor Assessment</td>
+            <td>Risk 4</td>
+        </tr>
+        <tr>
+            <td>GDPR Art. 35</td>
+            <td>DPIA requirement</td>
+            <td>CDP (5), Analytics (2)</td>
+            <td>Control 4 &ndash; PIA/DPIA</td>
+            <td>Policy 5</td>
+        </tr>
+        <tr>
+            <td>GDPR Art. 44&ndash;49</td>
+            <td>Cross-border transfers</td>
+            <td>Cloud Infra (6), CDP (5)</td>
+            <td>Control 3 &ndash; Transfer Safeguards</td>
+            <td>Policy 4; Risk 1</td>
+        </tr>
+        <tr>
+            <td>GDPR Art. 5(c)(e)</td>
+            <td>Data minimisation &amp; retention</td>
+            <td>All databases (1, 5)</td>
+            <td>Control 5 &ndash; Retention Schedule</td>
+            <td>Risk 5</td>
+        </tr>
+        <tr>
+            <td>CCPA &sect;1798.100</td>
+            <td>Right to know / access</td>
+            <td>Identity DB (1), POS (3)</td>
+            <td>Control 2 &ndash; DSR Workflow</td>
+            <td>Policy 1</td>
+        </tr>
+        <tr>
+            <td>CCPA &sect;1798.120</td>
+            <td>Opt-out of sale/share</td>
+            <td>CMP (8), Analytics (2)</td>
+            <td>Control 1 &ndash; Consent Mgt</td>
+            <td>Policy 2; Risk 3</td>
+        </tr>
+        <tr>
+            <td>ISO 27701</td>
+            <td>Privacy information management</td>
+            <td>All 8 assets (RoPA)</td>
+            <td>Controls 1&ndash;8</td>
+            <td>Policies 1&ndash;5</td>
+        </tr>
+    </table>
+
+    <!-- Implementation Roadmap -->
+    <h2>7. Implementation Roadmap</h2>
+
+    <table class="roadmap-table">
+        <tr>
+            <th>Phase</th>
+            <th>Timeline</th>
+            <th>Key Activities</th>
+            <th>Owner</th>
+        </tr>
+        <tr>
+            <td>1 &ndash; Foundation</td>
+            <td>Month 1&ndash;2</td>
+            <td>Deploy CMP; execute DPAs with all tier-1 vendors; implement DSR portal; train all staff</td>
+            <td>CPO + Privacy Ops</td>
+        </tr>
+        <tr>
+            <td>2 &ndash; Legal</td>
+            <td>Month 2&ndash;4</td>
+            <td>Execute 2021 SCCs with all US-based processors; complete Transfer Impact Assessments; finalize Privacy Notice</td>
+            <td>CPO + Legal</td>
+        </tr>
+        <tr>
+            <td>3 &ndash; Controls</td>
+            <td>Month 3&ndash;6</td>
+            <td>Implement data retention automation; embed PIA gate in SDLC; complete vendor tier-2/3 DPA campaign</td>
+            <td>CDO + CISO</td>
+        </tr>
+        <tr>
+            <td>4 &ndash; Maturity</td>
+            <td>Month 6&ndash;12</td>
+            <td>ISO 27701 gap assessment; BCR development for intra-group transfers; annual PIA cycle; DPO effectiveness review</td>
+            <td>CPO + Board</td>
+        </tr>
+    </table>
+
+    <!-- Program Summary -->
+    <h2>8. Program Summary</h2>
+
+    <table class="risk-table">
+        <tr>
+            <th>Category</th>
+            <th>Count</th>
+            <th>Key Highlights</th>
+        </tr>
+        <tr>
+            <td>Data Processing Activities</td>
+            <td><strong>8</strong></td>
+            <td>4 Critical (Identity DB, Analytics, CDP, Cloud Infra) + 4 High (POS, Marketing, DSR Portal, CMP)</td>
+        </tr>
+        <tr>
+            <td>Privacy Risks</td>
+            <td><strong>5</strong></td>
+            <td>2 Critical (Cross-Border Transfer 15, DSR Compliance 16) + 3 High (Consent 12, Vendor 12, Retention 12)</td>
+        </tr>
+        <tr>
+            <td>Privacy Controls</td>
+            <td><strong>8</strong></td>
+            <td>3 Effective (PIA/DPIA, Privacy-by-Design, Training) + 5 Partially Effective</td>
+        </tr>
+        <tr>
+            <td>Privacy Policies</td>
+            <td><strong>5</strong></td>
+            <td>4 Approved + 1 Under Review (Cross-Border Transfer)</td>
+        </tr>
+        <tr>
+            <td>Jurisdictions Covered</td>
+            <td><strong>6</strong></td>
+            <td>GDPR, CCPA/CPRA, Virginia CDPA, Colorado CPA, Connecticut CTDPA, ISO 27701</td>
+        </tr>
+        <tr>
+            <td>Total Deliverables</td>
+            <td><strong>26</strong></td>
+            <td>8 Assets + 5 Risks + 8 Controls + 5 Policies</td>
+        </tr>
+    </table>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti. All rights reserved.
+</footer>
+
+</body>
+</html>

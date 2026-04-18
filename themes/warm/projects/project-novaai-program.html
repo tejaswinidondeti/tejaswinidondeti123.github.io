@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaAI Labs Responsible AI Program | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #ede9fe; color: #6d28d9; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content h4 { font-size: 1rem; font-weight: 700; margin: 1rem 0 0.5rem; color: var(--text); }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); vertical-align: top; }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-medium { background: #fefce8 !important; color: #a16207; font-weight: 700; }
+        .risk-low { background: #f0fdf4 !important; color: #15803d; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .score-medium { background: #fefce8; color: #a16207; }
+        .score-low { background: #f0fdf4; color: #15803d; }
+        .score-purple { background: #ede9fe; color: #6d28d9; }
+        .callout { background: #fff7ed; border-left: 4px solid #c2410c; padding: 1rem 1.25rem; margin: 1.25rem 0; border-radius: 4px; }
+        .callout strong { color: #c2410c; }
+        .flow-box { background: var(--card-bg); border: 2px solid var(--primary); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 0.5rem 0; text-align: center; font-weight: 600; }
+        .flow-arrow { text-align: center; font-size: 1.4rem; color: var(--primary); margin: 0.25rem 0; }
+        .principle-card { background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 1.1rem 1.3rem; margin: 0.85rem 0; box-shadow: var(--shadow); }
+        .principle-card h4 { margin-top: 0; color: var(--primary); }
+        .principle-card p { margin-bottom: 0; }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">AI Governance Program Build</span>
+        <h1>NovaAI Labs &mdash; <em>Responsible AI Policy, Operating Model &amp; Use Case Review Process</em></h1>
+        <p class="subtitle">Authored a complete frontier AI governance program for NovaAI Labs &mdash; a Responsible AI Policy with 8 principles, an Operating Model defining 8 governance bodies and a 9-decision authority matrix, and an end-to-end AI Use Case Review process with 6 stages and 4 risk-tier review pathways from 2 weeks (standard) to 12 weeks (frontier).</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> NovaAI Labs</div>
+            <div class="meta-item"><strong>Industry:</strong> Frontier AI / Foundation Models</div>
+            <div class="meta-item"><strong>Frameworks:</strong> EU AI Act (Articles 51&ndash;53, 71), GDPR, NIST AI RMF, EU AI Pact, Bletchley Declaration</div>
+            <div class="meta-item"><strong>Scope:</strong> 4 Geographies &bull; All Frontier &amp; Applied AI Systems</div>
+            <div class="meta-item"><strong>Date:</strong> April 2026</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- 1. Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>This engagement delivered a complete, board-ready responsible AI program for NovaAI Labs &mdash; a frontier AI provider operating across the United States, European Union, United Kingdom, and Japan. The program is built around three integrated documents that together form the operational foundation of the company's AI governance:</p>
+    <ul>
+        <li><strong>Responsible AI Policy (v2.0)</strong> &mdash; the principles, scope, and lifecycle requirements that govern every AI system NovaAI develops or deploys.</li>
+        <li><strong>AI Governance Operating Model (v2.0)</strong> &mdash; the committees, roles, decision authorities, and reporting calendar that operationalize the policy.</li>
+        <li><strong>AI Use Case Review &amp; Approval Process (v2.0)</strong> &mdash; the end-to-end intake-to-monitoring workflow that brings every AI system through a proportionate review pathway.</li>
+    </ul>
+    <p>All three documents were issued in <strong>April 2026</strong> as part of a renewed responsible-AI commitment following 2025 safety-team concerns, organisational restructuring, the November 2025 DataPulse vendor breach, and the February 2026 NovaHire bias findings. The program reflects NovaAI's dual role as both an AI <em>provider</em> (delivering enterprise solutions) and an AI <em>deployer</em> (running its own internal AI tools), and is aligned with the EU AI Act high-risk and GPAI-systemic-risk regimes that came into force in January 2026.</p>
+    <div class="callout">
+        <strong>Program Headline:</strong> 8 principles &bull; 8 governance bodies &bull; 9-decision authority matrix &bull; 4 review pathways (2 to 12 weeks) &bull; 6 lifecycle stages &bull; quarterly + annual reporting cadence &bull; current maturity <em>Defined</em>, 12-month target <em>Optimised</em>.
+    </div>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 1: RESPONSIBLE AI POLICY -->
+    <!-- =================================================== -->
+    <h2>2. Document 1 &mdash; Responsible AI Policy (v2.0)</h2>
+    <p>The Responsible AI Policy is co-owned by the Chief AI Officer and Chief Risk Officer and applies to all employees, contractors, research affiliates, and third parties engaged in AI development or deployment. It is classified Internal &mdash; All Employees and is on a minimum annual review cycle, with the next review scheduled for October 2026.</p>
+
+    <h3>2.1 Purpose &amp; Dual Role</h3>
+    <p>NovaAI Labs operates in two critical capacities &mdash; as an AI <strong>provider</strong> delivering enterprise-grade AI solutions to customers, and as a <strong>deployer</strong> of its own internally-developed AI tools across research, operations, and product teams. This dual role requires rigorous governance at every stage of the AI lifecycle. The policy explicitly positions itself as a renewal of NovaAI's responsible-AI commitment, informed by the 2024&ndash;2026 incidents and organisational learnings, and aimed at rebuilding stakeholder trust through enhanced transparency, stronger safety practices, and systematic accountability.</p>
+
+    <h3>2.2 Scope</h3>
+    <table class="info-table">
+        <tr><th>System Coverage</th><td>All frontier model research and training, including GPAI models exceeding 10<sup>25</sup> FLOPs compute threshold; all applied AI products including NovaChat, NovaHire, NovaCode, and NovaVision</td></tr>
+        <tr><th>People</th><td>All employees, contractors, research affiliates, and third parties engaged in AI development or deployment</td></tr>
+        <tr><th>Geography</th><td>United States, European Union, United Kingdom, Japan</td></tr>
+        <tr><th>AI System Definition</th><td>Foundation models, fine-tuned models, agentic systems, multimodal systems, and composite systems</td></tr>
+    </table>
+
+    <h3>2.3 The Eight Core Principles</h3>
+
+    <div class="principle-card">
+        <h4>3.1 &mdash; Safety-First Development</h4>
+        <p>Pre-training risk assessments for all frontier models; dangerous capability evaluations before release; staged deployment with continuous safety monitoring; mandatory red-teaming; systematic dual-use risk evaluation. Strengthened following 2025 safety-team concerns; all frontier models must pass safety review before deployment authorisation.</p>
+    </div>
+
+    <div class="principle-card">
+        <h4>3.2 &mdash; Fairness and Non-Discrimination</h4>
+        <p>No unlawful discrimination on protected characteristics in any NovaAI system. Mandatory bias audits for all consequential AI applications. The February 2026 NovaHire bias findings have informed systematic improvements to fairness evaluation and remediation. Debiased training data practices and continuous fairness monitoring are required.</p>
+    </div>
+
+    <div class="principle-card">
+        <h4>3.3 &mdash; Transparency</h4>
+        <p>Model cards published for all deployed models and system cards for applied products. AI use is disclosed to end users. Quarterly transparency reports are published. Internal AI System Inventory is maintained for governance purposes.</p>
+    </div>
+
+    <div class="principle-card">
+        <h4>3.4 &mdash; Accountability</h4>
+        <p>Every AI system has a named system owner responsible for governance compliance. Escalation paths are documented. Board-level oversight integrates AI strategy and risk management with corporate governance. The Chief AI Officer holds operational accountability for AI safety.</p>
+    </div>
+
+    <div class="principle-card">
+        <h4>3.5 &mdash; Privacy and Data Protection</h4>
+        <p>Minimised data collection and consent-based data practices in training data sourcing. Customer data protected throughout the model lifecycle. Informed by the November 2025 <strong>DataPulse vendor breach</strong>, vendor data access is now minimised through contractual controls. Informed by the July 2024 credential exposure vulnerability, encryption at rest is mandatory for all sensitive data.</p>
+    </div>
+
+    <div class="principle-card">
+        <h4>3.6 &mdash; Human Oversight</h4>
+        <p>Meaningful human review is required for all consequential decisions. Rubber-stamp oversight is unacceptable and will be treated as a governance violation. Override criteria are documented; oversight personnel receive mandatory training on responsible AI assessment.</p>
+    </div>
+
+    <div class="principle-card">
+        <h4>3.7 &mdash; Security and Robustness</h4>
+        <p>Adversarial testing before deployment; continuous security monitoring; incident response capabilities maintained. Enhanced third-party vendor security requirements implemented post-DataPulse incident to ensure supply-chain security.</p>
+    </div>
+
+    <div class="principle-card">
+        <h4>3.8 &mdash; Societal Impact and Alignment</h4>
+        <p>Investment in alignment research to reduce existential risks; engagement with policymakers, researchers, and civil society. NovaAI honours voluntary commitments including the EU AI Pact, the White House Voluntary Commitments, and the Bletchley Declaration on AI Safety.</p>
+    </div>
+
+    <h3>2.4 AI Lifecycle Governance Requirements</h3>
+    <table class="info-table">
+        <tr><th>Research &amp; Pre-Training</th><td>Research proposals reviewed by AI Safety Review Board; compute thresholds trigger enhanced review; documented training data sourcing; GPAI models above systemic-risk thresholds comply with EU AI Act Articles 51&ndash;53</td></tr>
+        <tr><th>Evaluation &amp; Red-Teaming</th><td>Mandatory capability evaluations across CBRN, autonomous replication, cyber, and persuasion/deception domains; both internal and external red-teaming; CAIO reviews results before deployment authorisation</td></tr>
+        <tr><th>Deployment Decision</th><td>Staged rollout for all new capabilities; risk-tier-based approval (see authority table below)</td></tr>
+        <tr><th>Monitoring &amp; Review</th><td>Continuous performance monitoring; quarterly model reviews for high-risk systems; annual conformity reassessments; incident-triggered reviews on detection of material breaches</td></tr>
+        <tr><th>Retirement &amp; Deprecation</th><td>Structured deprecation process; minimum 180-day notification to enterprise customers; data retention/deletion per regulatory and contractual obligations; all decisions formally logged</td></tr>
+    </table>
+
+    <h4>Risk-Tier Approval Authorities (Policy &sect; 4.3)</h4>
+    <table class="risk-table">
+        <thead><tr><th>Risk Tier</th><th>Approval Authority</th></tr></thead>
+        <tbody>
+            <tr><td>Minimal Risk</td><td>AI Governance Office</td></tr>
+            <tr><td>Limited Risk</td><td>AI Governance Office + Product Owner</td></tr>
+            <tr><td>High Risk</td><td>AI Governance Committee</td></tr>
+            <tr><td>GPAI with Systemic Risk</td><td>AI Safety Board + CEO</td></tr>
+            <tr><td class="risk-critical">Unacceptable Risk</td><td class="risk-critical">Prohibited</td></tr>
+        </tbody>
+    </table>
+
+    <h3>2.5 Vendor &amp; Third-Party AI</h3>
+    <p>Enhanced due diligence has been implemented following the November 2025 DataPulse vendor breach. Vendor data access is minimised through contractual controls and technical restrictions. All vendor contracts include AI Act compliance requirements applicable to their jurisdiction. Vendors are granted security audit rights, and an annual vendor review cycle is mandatory. Vendors deploying AI systems on NovaAI infrastructure must comply with this policy in full.</p>
+
+    <h3>2.6 Training, Culture &amp; Whistleblower Protection</h3>
+    <p>The policy establishes four mandatory training programmes:</p>
+    <ul>
+        <li><strong>AI Governance Fundamentals</strong> &mdash; all staff, annual</li>
+        <li><strong>Frontier Model Safety</strong> &mdash; all research staff</li>
+        <li><strong>Responsible Deployment</strong> &mdash; all product team members</li>
+        <li><strong>Human Oversight and Decision-Making</strong> &mdash; designated oversight personnel</li>
+    </ul>
+    <p>Whistleblower protections are explicitly reaffirmed for safety concerns. In response to the 2025 safety-team departures, the policy strengthens protections for employees raising responsible-AI concerns, including confidential reporting channels and non-retaliation guarantees. Policy breaches are escalated to the Chief Compliance Officer; sanctions range from formal warning to termination.</p>
+
+    <h3>2.7 References &amp; External Commitments</h3>
+    <p>The policy is anchored to: the EU AI Act (Articles 51&ndash;53 GPAI obligations), the UK AI Bill framework, Japanese AI governance guidelines, and the US Executive Order on AI governance. Voluntary commitments honoured: <strong>EU AI Pact &amp; Code of Practice</strong>, <strong>White House Voluntary AI Commitments</strong>, and the <strong>Bletchley Declaration on AI Safety</strong>. Internal references include the AI Governance Framework (2025), Data Security and Privacy Policy, Vendor Risk Management Standard, NovaHire Bias Audit Report (Feb 2026), and DataPulse Incident Review (Nov 2025).</p>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 2: OPERATING MODEL -->
+    <!-- =================================================== -->
+    <h2>3. Document 2 &mdash; AI Governance Operating Model (v2.0)</h2>
+    <p>The Operating Model translates the policy into a working machine: it defines who sits on which committee, what each role is accountable for, how decisions flow, and how AI governance integrates with the company's existing enterprise risk, security, legal, and data protection functions.</p>
+
+    <h3>3.1 Why an Operating Model</h3>
+    <p>Effective AI governance is not about policies on paper &mdash; it happens in real decisions, conversations, and processes. This operating model ensures that frontier AI research and product decisions are made with adequate safety oversight, cross-functional input, and clear accountability. It reflects a strengthened commitment to <em>independent</em> safety oversight at the Board level following the 2025 safety incidents and restructuring.</p>
+
+    <h3>3.2 Governance Hierarchy</h3>
+    <div class="flow-box">Board of Directors</div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-box">Board AI Safety Sub-Committee <em>(established January 2026)</em></div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-box">AI Governance Committee &mdash; <em>Chair: Chief Risk Officer</em></div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-box">AI Safety Review Board &nbsp;&bull;&nbsp; AI Governance Office (4 FTE)</div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-box">Functional AI Champions (one per business unit) &nbsp;&bull;&nbsp; Review Panels</div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-box">System Owners (individual accountability)</div>
+
+    <h3>3.3 Committee &amp; Role Descriptions</h3>
+
+    <div class="risk-card">
+        <h3>Board of Directors</h3>
+        <p>Holds ultimate governance responsibility for AI strategy and safety. Approves the annual AI governance framework, receives the annual comprehensive AI Governance Programme Report, and is informed of all material AI incidents and escalations.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>Board AI Safety Sub-Committee <span class="score score-purple">New &mdash; Jan 2026</span></h3>
+        <p><strong>Structure:</strong> Chaired by an Independent Director with AI safety expertise; three independent directors plus the CEO as a non-voting observer; direct reporting line to the full Board.</p>
+        <p><strong>Responsibilities:</strong> Reviews frontier model release decisions, can <strong>veto frontier model releases</strong>, receives quarterly safety reports, and provides independent oversight of NovaAI's AI safety commitments.</p>
+        <p><strong>Cadence:</strong> Quarterly + extraordinary sessions.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>AI Governance Committee</h3>
+        <p><strong>Mandate:</strong> Operational oversight of AI governance.</p>
+        <p><strong>Members:</strong> CRO (Chair), CAIO, CTO, DPO, General Counsel, CISO, Head of AI Safety (non-voting), CFO (observer).</p>
+        <p><strong>Responsibilities:</strong> Approves high-risk and frontier AI system deployments; reviews the quarterly AI Governance Dashboard; owns and maintains the Responsible AI Policy; reviews material incidents; resolves governance disputes.</p>
+        <p><strong>Cadence:</strong> Quarterly + extraordinary sessions.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>AI Safety Review Board</h3>
+        <p><strong>Mandate:</strong> Frontier model and novel-capability safety decisions.</p>
+        <p><strong>Members:</strong> Head of AI Safety (Chair), three rotating senior research scientists, an external safety advisor, a Chief AI Officer representative, and the Red Team Lead.</p>
+        <p><strong>Responsibilities:</strong> Approves frontier training runs above the compute threshold, reviews dangerous capability evaluation results, gates frontier deployments, reviews compliance with the responsible scaling policy, and can <strong>halt training or deployment</strong>.</p>
+        <p><strong>Cadence:</strong> Monthly + on-demand for frontier decisions.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>AI Governance Office &mdash; 4 FTE</h3>
+        <p><strong>Head:</strong> AI Governance Lead &bull; <strong>Team:</strong> Policy &amp; Compliance Analyst, Risk Assessment Analyst, Programme Coordinator. Dual-reports to the CRO and CAIO.</p>
+        <p><strong>Responsibilities:</strong> Maintains the AI System Inventory; receives, triages and coordinates all AUCRs; produces standard risk assessments; coordinates enhanced review panels; monitors the regulatory landscape; delivers AI governance training; maintains the AI incident log; and produces both the quarterly AI Governance Dashboard and the annual AI Governance Programme Report.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>Functional AI Champions</h3>
+        <p>One per business unit, serving as embedded governance contacts. Coverage spans ML Research / Frontier Product, Enterprise Products (NovaChat Enterprise), NovaHire / NovaCode / NovaVision, Infrastructure, Customer Support, HR, and Marketing.</p>
+        <p>Champions are the first point of contact for AI use case governance queries, facilitate AUCR submissions, monitor and escalate shadow/unofficial AI use, and attend the quarterly AI Champions forum. Appointed part-time by the business unit head and confirmed by the CRO.</p>
+    </div>
+
+    <div class="risk-card">
+        <h3>Review Panels &amp; System Owners</h3>
+        <p><strong>Review Panels:</strong> Assembled on an as-needed basis to conduct enhanced reviews for high-risk or frontier AI systems. Drawn from Legal/Compliance, the DPO, a CISO delegate, ML Engineering, and external audit/advisory resources.</p>
+        <p><strong>System Owners:</strong> Individual accountability for deployed AI systems. Ensure the system stays within approved scope of use, maintain human oversight procedures, monitor performance, escalate incidents and degradation, manage vendor relationships, and complete an annual System Owner attestation. Appointed at senior-manager level or above and confirmed at AUCR approval.</p>
+    </div>
+
+    <h3>3.4 Decision Authority Matrix</h3>
+    <p>The matrix below clarifies who decides, who recommends, and who is informed across nine key AI governance decisions:</p>
+    <table class="risk-table">
+        <thead>
+            <tr>
+                <th>Decision</th>
+                <th>System Owner</th>
+                <th>AGO</th>
+                <th>AI Gov Cmte</th>
+                <th>AI Safety Bd</th>
+                <th>Bd AI Safety Sub</th>
+                <th>Full Board</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Approve minimal-risk</td><td>Recommends</td><td><strong>APPROVES</strong></td><td>Notified</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+            <tr><td>Approve limited-risk</td><td>Recommends</td><td><strong>APPROVES</strong></td><td>Notified</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+            <tr><td>Approve high-risk</td><td>Recommends</td><td>Coordinates</td><td><strong>APPROVES</strong></td><td>&mdash;</td><td>Notified</td><td>&mdash;</td></tr>
+            <tr><td>Approve frontier / GPAI systemic</td><td>Recommends</td><td>Coordinates</td><td>Endorses</td><td>RECOMMENDS</td><td><strong>APPROVES</strong></td><td>Informed</td></tr>
+            <tr><td>Halt training / deployment</td><td>&mdash;</td><td>Notified</td><td>Informed</td><td><strong>DECIDES</strong></td><td>Informed</td><td>&mdash;</td></tr>
+            <tr><td>Suspend system (incident)</td><td><strong>IMMEDIATE</strong></td><td>Notified</td><td>Informed 24h</td><td>Informed</td><td>Informed</td><td>&mdash;</td></tr>
+            <tr><td>Reject use case</td><td>&mdash;</td><td>Decides</td><td>Endorses (High)</td><td>Endorses (Frontier)</td><td>&mdash;</td><td>&mdash;</td></tr>
+            <tr><td>Update Responsible AI Policy</td><td>&mdash;</td><td>Drafts</td><td><strong>APPROVES</strong></td><td>Consulted</td><td>Endorses</td><td>Notified</td></tr>
+            <tr><td>Escalate to regulator</td><td>&mdash;</td><td>Recommends</td><td><strong>DECIDES</strong></td><td>&mdash;</td><td>Informed</td><td>Informed</td></tr>
+            <tr><td>Material safety concern</td><td>Flags</td><td>Escalates</td><td>Reviews</td><td>Reviews</td><td><strong>DECIDES escalation</strong></td><td>&mdash;</td></tr>
+        </tbody>
+    </table>
+
+    <h3>3.5 Integration with Existing Governance Functions</h3>
+    <table class="risk-table">
+        <thead><tr><th>Governance Function</th><th>Interface with AI Governance</th></tr></thead>
+        <tbody>
+            <tr><td>Enterprise Risk Management</td><td>AI risk is a sub-category; AI Governance Committee reports into ERM governance</td></tr>
+            <tr><td>Data Protection / DPO</td><td>DPO sits on the Committee; joint review of all AUCRs involving personal data</td></tr>
+            <tr><td>Information Security / CISO</td><td>CISO sits on the Committee; oversight of adversarial robustness and security</td></tr>
+            <tr><td>Legal &amp; Compliance</td><td>Regulatory interpretation, contract review, licensing considerations</td></tr>
+            <tr><td>Procurement</td><td>AI vendor governance checklist integrated into vendor selection</td></tr>
+            <tr><td>Internal Audit</td><td>Audits AI governance effectiveness and compliance</td></tr>
+            <tr><td>Research Ethics Board</td><td>Separate body for research ethics; interface for novel research proposals</td></tr>
+            <tr><td>External Engagement</td><td>Communication with the EU AI Office, national regulators, and civil society</td></tr>
+        </tbody>
+    </table>
+
+    <h3>3.6 Reporting Calendar</h3>
+    <table class="risk-table">
+        <thead><tr><th>Report</th><th>Frequency</th><th>Owner</th><th>Audience</th></tr></thead>
+        <tbody>
+            <tr><td>AI Governance Dashboard</td><td>Quarterly</td><td>AI Governance Office</td><td>AI Governance Committee</td></tr>
+            <tr><td>AI Safety Report</td><td>Quarterly</td><td>Head of AI Safety</td><td>AI Safety Review Board + Board AI Safety Sub</td></tr>
+            <tr><td>AI Incident Summary</td><td>Quarterly (ad hoc for Sev 1)</td><td>AI Governance Office</td><td>AI Governance Committee</td></tr>
+            <tr><td>Frontier Capability Review</td><td>Per model release</td><td>AI Safety Review Board</td><td>Board AI Safety Sub-Committee</td></tr>
+            <tr><td>High-Risk System Review</td><td>Annual per system</td><td>AI Governance Office</td><td>AI Governance Committee</td></tr>
+            <tr><td>AI Governance Programme Report</td><td>Annual</td><td>CRO + Chief AI Officer</td><td>Full Board</td></tr>
+            <tr><td>Public Transparency Report</td><td>Quarterly</td><td>Chief AI Officer</td><td>Public</td></tr>
+        </tbody>
+    </table>
+
+    <h3>3.7 Programme Maturity Roadmap</h3>
+    <p><strong>Current State (April 2026) &mdash; <span class="score score-medium">Defined</span>:</strong> The governance programme is in a Defined state, having recovered from the 2025 safety incidents and organisational restructuring. Key achievements include independent Board-level AI safety oversight (Board AI Safety Sub-Committee established), an operational AI Governance Office, an AUCR process active across business units, and a System Owner accountability framework in place.</p>
+    <p><strong>12-Month Target (April 2027) &mdash; <span class="score score-low">Optimised</span>:</strong> Continuous feedback loops, external validation, and predictive incident early-warning systems. Initiatives include external red-teaming programme expansion, quarterly public transparency reports, AI System Inventory evolved into a live real-time governance dashboard, integration of continuous monitoring and predictive incident detection, and formalised external audit and advisory relationships.</p>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 3: USE CASE REVIEW PROCESS -->
+    <!-- =================================================== -->
+    <h2>4. Document 3 &mdash; AI Use Case Review &amp; Approval Process (v2.0)</h2>
+    <p>The third document is the operational workflow that governs how every new AI system, frontier model deployment, material change, or significant fine-tune moves from idea to production at NovaAI. It is built on the principle of <em>proportionate governance</em>: lower-risk systems follow a faster path; frontier systems and GPAI with systemic risk implications undergo intensive multi-stage review involving external expertise.</p>
+
+    <h3>4.1 Process Flow</h3>
+    <div class="flow-box">SUBMISSION</div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-box">INTAKE TRIAGE &mdash; 5 business days</div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-box">REVIEW &amp; ASSESSMENT &mdash; 1 of 4 pathways</div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-box">APPROVAL DECISION</div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-box">DEPLOYMENT &amp; REGISTRATION</div>
+    <div class="flow-arrow">&darr;</div>
+    <div class="flow-box">ONGOING MONITORING</div>
+
+    <h3>4.2 Stage 1 &mdash; Use Case Submission</h3>
+    <p><strong>Submitter:</strong> Product owner, research lead, or business owner responsible for the AI system. <strong>Mechanism:</strong> Via the AI Governance Portal or the AUCR (AI Use Case Review) template.</p>
+    <p><strong>Required Fields:</strong> Business purpose and intended outcomes; intended users and affected individuals; data sources (with personal data identification); model architecture and foundation model used; output type (generative, classification, agentic, etc.); compute scale (for frontier training); human oversight plan; deployment geography; proposed go-live date; system owner nomination; safety evaluation plan.</p>
+
+    <h3>4.3 Stage 2 &mdash; Intake Triage (5 Business Days)</h3>
+    <p>The AI Governance Office performs a completeness check, makes a preliminary EU AI Act classification, conducts a GPAI systemic-risk assessment, and routes the submission to one of four pathways:</p>
+    <table class="risk-table">
+        <thead><tr><th>Triage Outcome</th><th>Pathway</th><th>Action</th></tr></thead>
+        <tbody>
+            <tr><td class="risk-critical">Prohibited</td><td>REJECT</td><td>Notify CAIO and CRO</td></tr>
+            <tr><td>Minimal / Limited Risk</td><td>Standard Review</td><td>2 weeks</td></tr>
+            <tr><td>High Risk</td><td>Enhanced Review</td><td>4&ndash;6 weeks</td></tr>
+            <tr><td>Frontier / GPAI Systemic</td><td>Frontier Review</td><td>8&ndash;12 weeks</td></tr>
+            <tr><td>Classification Unclear</td><td>Legal + DPO Review</td><td>Joint opinion on classification</td></tr>
+        </tbody>
+    </table>
+
+    <h3>4.4 Stage 3A &mdash; Standard Review (Minimal / Limited Risk)</h3>
+    <p><strong>Timeline:</strong> 2 weeks &bull; <strong>Owner:</strong> AI Governance Office</p>
+    <p><strong>Review coverage:</strong> Confirmation of risk classification, GDPR lawful basis review, human oversight confirmation, AI disclosure verification (EU AI Act Article 52), and a vendor AI governance check (if a vendor-supplied model is used).</p>
+    <p><strong>Required documentation:</strong> Completed AUCR template, Privacy Impact Assessment (PIA), and a vendor AI governance questionnaire if applicable.</p>
+
+    <h3>4.5 Stage 3B &mdash; Enhanced Review (High Risk)</h3>
+    <p><strong>Timeline:</strong> 4&ndash;6 weeks &bull; <strong>Coordinator:</strong> AI Governance Office &bull; <strong>Approver:</strong> AI Governance Committee</p>
+    <p>Covers everything in the Standard Review <em>plus</em> a full structured risk assessment, technical documentation review aligned to EU AI Act Annex IV, bias and fairness evaluation, an Article 14 human oversight procedure, an Article 43 conformity assessment plan, an incident response procedure, and a monitoring and performance tracking plan.</p>
+    <table class="risk-table">
+        <thead><tr><th>Reviewer Role</th><th>Responsibility</th></tr></thead>
+        <tbody>
+            <tr><td>AI Governance Office</td><td>Process coordination and documentation review</td></tr>
+            <tr><td>Data Protection Officer</td><td>GDPR compliance and Article 10 requirements</td></tr>
+            <tr><td>Legal &amp; Compliance</td><td>Regulatory interpretation and AI Act compliance</td></tr>
+            <tr><td>CISO / Information Security</td><td>Adversarial robustness and security risk assessment</td></tr>
+            <tr><td>ML Engineering</td><td>Technical feasibility and architecture review</td></tr>
+            <tr><td>External Auditor</td><td>Fairness and bias evaluation (when high-risk with fairness implications)</td></tr>
+        </tbody>
+    </table>
+
+    <h3>4.6 Stage 3C &mdash; Frontier Review (GPAI Systemic Risk + Novel Capability)</h3>
+    <p><strong>Timeline:</strong> 8&ndash;12 weeks &bull; <strong>Owner:</strong> AI Safety Review Board + AI Governance Committee</p>
+    <p>Covers all Enhanced Review elements <em>plus</em>:</p>
+    <ul>
+        <li>Dangerous capability evaluations (CBRN uplift, autonomous replication, cyber, persuasion)</li>
+        <li>Internal red-teaming (minimum 3 weeks)</li>
+        <li>External red-teaming by an independent third party</li>
+        <li>Responsible scaling policy gate check</li>
+        <li>Systemic risk assessment</li>
+        <li>Model card and system card preparation</li>
+        <li>Open-weights release risk analysis (if applicable)</li>
+        <li>EU AI Office notification requirements (Article 52)</li>
+        <li><strong>CEO sign-off gate</strong></li>
+    </ul>
+    <p><strong>Approval authority:</strong> AI Safety Review Board (unanimous) + external red team + Chief AI Officer + CEO final approval.</p>
+    <div class="callout">
+        <strong>Why this pathway exists:</strong> The Frontier Review pathway was formalized in April 2026 following 2025 safety concerns about insufficient governance gates for frontier releases.
+    </div>
+
+    <h3>4.7 Stage 4 &mdash; Approval Decision</h3>
+    <table class="risk-table">
+        <thead><tr><th>Pathway</th><th>Approval Authority</th></tr></thead>
+        <tbody>
+            <tr><td>Standard</td><td>AI Governance Office + System Owner sign-off</td></tr>
+            <tr><td>Enhanced</td><td>AI Governance Committee (majority vote; quorum: CRO + 2 others)</td></tr>
+            <tr><td>Frontier</td><td>AI Safety Review Board unanimous + Chief AI Officer + CEO sign-off</td></tr>
+        </tbody>
+    </table>
+    <p>Approvals may be conditional, with documented owners and completion dates. Rejections are documented in writing and resubmission is permitted after material changes. <strong>Escalation:</strong> Enhanced &rarr; AI Governance Committee &rarr; CRO &rarr; Board. Frontier &rarr; AI Safety Review Board &rarr; CAIO &rarr; CEO &rarr; Board AI Safety Sub-Committee.</p>
+
+    <h3>4.8 Stage 5 &mdash; Deployment &amp; Registration</h3>
+    <p><strong>Pre-go-live requirements:</strong> Register the system in the AI System Inventory; complete all approval conditions; confirm monitoring systems are operational; and confirm human oversight procedures are in place and trained.</p>
+    <p><strong>Regulatory registration:</strong> EU AI Act Article 71 database registration for high-risk systems; EU AI Office notification for GPAI with systemic risk. The AI Governance Office issues final go-live sign-off.</p>
+
+    <h3>4.9 Stage 6 &mdash; Ongoing Monitoring &amp; Periodic Review</h3>
+    <table class="risk-table">
+        <thead><tr><th>System Classification</th><th>Formal Review Cadence</th><th>Event-Driven Review</th></tr></thead>
+        <tbody>
+            <tr><td>GPAI Systemic Risk</td><td>Quarterly + continuous monitoring</td><td>Always triggered</td></tr>
+            <tr><td>High Risk</td><td>Annual</td><td>Event-driven</td></tr>
+            <tr><td>Limited Risk</td><td>Annual check-in</td><td>Change-driven</td></tr>
+            <tr><td>Minimal Risk</td><td>Biennial</td><td>Change-driven</td></tr>
+        </tbody>
+    </table>
+    <p><strong>Out-of-cycle review triggers:</strong> material change to scope, purpose, or data sources; an AI incident or adverse impact report; regulatory change affecting the system; system owner change; new capability discovered; performance drift or model degradation.</p>
+
+    <h3>4.10 Material Changes, Fast-Track &amp; Emergency</h3>
+    <p><strong>Material changes</strong> trigger a new AUCR or change request. They include: scope/purpose/objective change; new personal data category or data source; significant model update (fine-tune, retraining, architecture change); foundation model version upgrade; new vendor or third-party provider; new deployment geography; system owner change; compute scale upgrade (for frontier systems); and changes in human oversight requirements.</p>
+    <p><strong>Security patches and bug fixes</strong> are documented without requiring new review cycles &mdash; the AI Governance Office retains discretion to require expedited review if a significant behaviour change occurs.</p>
+    <div class="callout">
+        <strong>Emergency System Deprecation:</strong> The Chief AI Officer may unilaterally suspend any system in case of identified imminent harm. The AI Governance Committee is notified within 24 hours; formal review of the suspension occurs within 5 business days.
+    </div>
+
+    <!-- 5. Program Summary -->
+    <h2>5. Program Summary</h2>
+    <table class="info-table">
+        <tr><th>Organization</th><td>NovaAI Labs &bull; Frontier AI / Foundation Models</td></tr>
+        <tr><th>Documents Delivered</th><td>Responsible AI Policy v2.0 &bull; AI Governance Operating Model v2.0 &bull; AI Use Case Review &amp; Approval Process v2.0</td></tr>
+        <tr><th>Effective Date</th><td>April 2026</td></tr>
+        <tr><th>Geographic Scope</th><td>United States, European Union, United Kingdom, Japan</td></tr>
+        <tr><th>Core Principles</th><td>8 (Safety, Fairness, Transparency, Accountability, Privacy, Human Oversight, Security, Societal Impact)</td></tr>
+        <tr><th>Governance Bodies</th><td>8 (Board, Board AI Safety Sub, AI Governance Committee, AI Safety Review Board, AI Governance Office, Functional AI Champions, Review Panels, System Owners)</td></tr>
+        <tr><th>Decision Authority Matrix</th><td>10 decision types &times; 6 governance bodies</td></tr>
+        <tr><th>Review Pathways</th><td>4 (Reject &bull; Standard 2w &bull; Enhanced 4&ndash;6w &bull; Frontier 8&ndash;12w)</td></tr>
+        <tr><th>Process Stages</th><td>6 (Submission &rarr; Triage &rarr; Review &rarr; Approval &rarr; Deployment &rarr; Monitoring)</td></tr>
+        <tr><th>Periodic Reviews</th><td>GPAI Systemic quarterly &bull; High Risk annual &bull; Limited annual &bull; Minimal biennial</td></tr>
+        <tr><th>Reporting Cadence</th><td>4 quarterly + 2 annual + 1 per-release report</td></tr>
+        <tr><th>Programme Maturity</th><td><span class="score score-medium">Defined (Apr 2026)</span> &rarr; <span class="score score-low">Optimised (Apr 2027 target)</span></td></tr>
+        <tr><th>Anchored To</th><td>EU AI Act (Articles 51&ndash;53, 71), GDPR Art. 10/22, NIST AI RMF, EU AI Pact, White House Voluntary Commitments, Bletchley Declaration</td></tr>
+    </table>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti &bull; GRC Analyst Portfolio
+</footer>
+
+</body>
+</html>

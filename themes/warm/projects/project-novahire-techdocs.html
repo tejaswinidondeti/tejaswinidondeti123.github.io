@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaHire High-Risk AI Documentation Pack | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #ecfccb; color: #4d7c0f; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content h4 { font-size: 1rem; font-weight: 700; margin: 1rem 0 0.5rem; color: var(--text); }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul, .content ol { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li, .content ol li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 220px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); vertical-align: top; }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-medium { background: #fefce8 !important; color: #a16207; font-weight: 700; }
+        .risk-low { background: #f0fdf4 !important; color: #15803d; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .score-medium { background: #fefce8; color: #a16207; }
+        .score-low { background: #f0fdf4; color: #15803d; }
+        .callout { background: #f0fdf4; border-left: 4px solid #15803d; padding: 1rem 1.25rem; margin: 1.25rem 0; border-radius: 4px; }
+        .callout strong { color: #15803d; }
+        .callout-amber { background: #fff7ed; border-left: 4px solid #c2410c; padding: 1rem 1.25rem; margin: 1.25rem 0; border-radius: 4px; }
+        .callout-amber strong { color: #c2410c; }
+        .doc-card { background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 1.1rem 1.3rem; margin: 0.85rem 0; box-shadow: var(--shadow); }
+        .doc-card h4 { margin-top: 0; color: var(--primary); margin-bottom: 0.4rem; }
+        .doc-card p { margin-bottom: 0; }
+        pre { background: #1c1917; color: #fef2e8; padding: 1rem 1.25rem; border-radius: var(--radius); overflow-x: auto; font-size: 0.82rem; line-height: 1.5; margin: 1rem 0 1.5rem; font-family: 'SF Mono', Menlo, Consolas, monospace; }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">EU AI Act Annex IV &bull; High-Risk Documentation</span>
+        <h1>NovaHire High-Risk AI Documentation Pack &mdash; <em>EU AI Act Annex IV Conformity Bundle</em></h1>
+        <p class="subtitle">Authored the complete six-document EU AI Act Annex IV technical documentation pack for NovaHire v3.1 &mdash; Intended Purpose, Risk Management, Data Governance, Human Oversight, Logging &amp; Traceability, and Performance Monitoring &amp; Post-Market Surveillance &mdash; covering Articles 9, 10, 12, 13, 14, 15, and 61 in a single regulator-ready bundle following the February 2026 bias audit and v3.1 remediation.</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> NovaAI Labs</div>
+            <div class="meta-item"><strong>System:</strong> NovaHire v3.1 &bull; NVA-HRAI-SYS-003</div>
+            <div class="meta-item"><strong>Frameworks:</strong> EU AI Act Annex IV &bull; Articles 9, 10, 12, 13, 14, 15, 61, 73 &bull; ISO/IEC 23894</div>
+            <div class="meta-item"><strong>Scope:</strong> ~180,000 Candidates &bull; 47 Enterprise Deployers</div>
+            <div class="meta-item"><strong>Date:</strong> April 2026</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- 1. Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>This engagement produced the complete <strong>six-document EU AI Act Annex IV technical documentation pack</strong> for NovaHire v3.1 &mdash; the regulator-ready bundle that any high-risk AI provider under the Regulation must hold and make available to conformity assessors, deployers, and competent authorities. NovaHire is classified as high-risk under Annex III, Category 4(a) (employment and recruitment), and the pack was issued in April 2026 immediately following the v3.1 remediation cycle that closed out the confirmed bias findings from the February 2026 audit (18% gender disparity in technical roles, 22% age disparity in senior roles).</p>
+
+    <div class="doc-card">
+        <h4>Document 1 &mdash; Intended Purpose &amp; General Description</h4>
+        <p>NVA-HRAI-DOC-01 &bull; Annex IV &sect; 1 &mdash; What NovaHire is, who it is for, what it must <em>not</em> be used for, and why it is high-risk.</p>
+    </div>
+    <div class="doc-card">
+        <h4>Document 2 &mdash; Risk Management Summary</h4>
+        <p>NVA-HRAI-DOC-02 &bull; Article 9 &mdash; Continuous risk management system with a 9-risk register, methodology, and treatment.</p>
+    </div>
+    <div class="doc-card">
+        <h4>Document 3 &mdash; Data &amp; Data Governance</h4>
+        <p>NVA-HRAI-DOC-03 &bull; Article 10 &mdash; Training data sources, bias mitigation, lawful basis, lineage, and cross-border transfers.</p>
+    </div>
+    <div class="doc-card">
+        <h4>Document 4 &mdash; Human Oversight Measures</h4>
+        <p>NVA-HRAI-DOC-04 &bull; Article 14 &mdash; Four-layer oversight architecture and v3.1 technical enforcement of mandatory human review.</p>
+    </div>
+    <div class="doc-card">
+        <h4>Document 5 &mdash; Logging &amp; Traceability</h4>
+        <p>NVA-HRAI-DOC-05 &bull; Article 12 &mdash; Six log categories, tamper-evident WORM storage, and 6-year retention for decision logs.</p>
+    </div>
+    <div class="doc-card">
+        <h4>Document 6 &mdash; Performance Monitoring &amp; Post-Market Surveillance</h4>
+        <p>NVA-HRAI-DOC-06 &bull; Articles 15 + 61 &mdash; Six metric families, alert thresholds, drift monitoring, and Article 73 incident reporting.</p>
+    </div>
+
+    <div class="callout">
+        <strong>Headline Outcome:</strong> v3.1 metrics as of April 2026 show the gender disparity reduced from <strong>18% &rarr; 4%</strong> and the age disparity reduced from <strong>22% &rarr; 6%</strong>, with monitoring continuing toward a &lt;2% target. All six documents are anchored to the same v3.1 baseline and cross-reference each other.
+    </div>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 1 -->
+    <!-- =================================================== -->
+    <h2>2. Document 1 &mdash; Intended Purpose &amp; General Description</h2>
+    <p><strong>Doc ID:</strong> NVA-HRAI-DOC-01 &bull; <strong>Classification:</strong> EU AI Act Annex IV Section 1 &bull; <strong>Version:</strong> 1.0 (April 2026) &bull; <strong>Review Due:</strong> October 2026.</p>
+
+    <h3>2.1 System Identification</h3>
+    <table class="info-table">
+        <tr><th>Product Name</th><td>NovaHire</td></tr>
+        <tr><th>Version</th><td>3.1</td></tr>
+        <tr><th>Release Dates</th><td>v1.0 October 2023 &bull; v3.1 February 2026</td></tr>
+        <tr><th>Provider</th><td>NovaAI Labs, Inc.</td></tr>
+        <tr><th>Trade Name</th><td>NovaHire Enterprise Recruitment Intelligence</td></tr>
+        <tr><th>Unique Identifier</th><td>NVA-HRAI-SYS-003</td></tr>
+        <tr><th>Provider Contact</th><td>ai-governance@novaai.example</td></tr>
+    </table>
+
+    <h3>2.2 Intended Purpose</h3>
+    <p>NovaHire is a high-risk AI system designed to <em>assist human recruiters</em> in screening job applications. Specifically, it is intended to:</p>
+    <ul>
+        <li>Parse CV/resume documents and extract structured candidate information</li>
+        <li>Compare candidate qualifications against job description requirements</li>
+        <li>Generate a ranked shortlist with fit scores (0&ndash;100) for each candidate</li>
+        <li>Highlight relevant experience and skills matching the job description</li>
+        <li>Flag potential interview discussion topics</li>
+    </ul>
+
+    <h4>What NovaHire Is NOT Intended To Do</h4>
+    <ul>
+        <li>Make final hiring or rejection decisions autonomously</li>
+        <li>Replace human judgment in recruitment</li>
+        <li>Predict future job performance with certainty</li>
+        <li>Assess personality, culture fit, or character</li>
+        <li>Evaluate candidates on any protected characteristic</li>
+        <li>Operate without human oversight for consequential decisions</li>
+    </ul>
+
+    <h3>2.3 Intended Users / Deployers</h3>
+    <p>Enterprise HR teams and recruitment professionals; the NovaAI Labs internal HR function; and 47 enterprise customers as of April 2026 (list maintained separately). All operators must be trained recruitment professionals, must have completed NovaHire oversight training before operating the system, and must understand the system's limitations and non-deterministic nature.</p>
+
+    <h3>2.4 Affected Persons (Cumulative 2023 &ndash; April 2026)</h3>
+    <table class="info-table">
+        <tr><th>Total Candidates Processed</th><td>~180,000</td></tr>
+        <tr><th>European Union</th><td>57%</td></tr>
+        <tr><th>United States</th><td>28%</td></tr>
+        <tr><th>United Kingdom</th><td>9%</td></tr>
+        <tr><th>Other Jurisdictions</th><td>6%</td></tr>
+    </table>
+
+    <h3>2.5 Operational Context</h3>
+    <table class="info-table">
+        <tr><th>Deployment Environment</th><td>Cloud-hosted SaaS via NovaAI Labs API</td></tr>
+        <tr><th>Integration Method</th><td>REST API, webhook, or web interface</td></tr>
+        <tr><th>Typical Workflow</th><td>HR uploads job description and batch of CVs &rarr; NovaHire processes &rarr; ranked shortlist returned &rarr; HR reviews &rarr; human decision on each candidate</td></tr>
+        <tr><th>Human Oversight</th><td><strong>Mandatory</strong> &mdash; technically enforced from v3.1 (Feb 2026)</td></tr>
+        <tr><th>Supported Languages</th><td>English, German, French, Dutch, Spanish, Italian, Portuguese, Polish, Swedish, Danish</td></tr>
+    </table>
+
+    <h3>2.6 Why NovaHire is Classified High-Risk</h3>
+    <p>EU AI Act Annex III, Category 4(a) &mdash; AI systems intended for recruitment or selection. NovaHire directly influences employment outcomes for natural persons, has significant impact on individuals' access to employment opportunities, and carries potential for proxy discrimination via NLP features on CV content. <em>Not a borderline case.</em></p>
+
+    <h3>2.7 Known Limitations (Article 13 Disclosure)</h3>
+    <ul>
+        <li><strong>Bias Risks:</strong> February 2026 audit identified 18% gender disparity in technical roles and 22% age disparity in senior positions in v3.0; v3.1 includes debiased training data and mandatory human-oversight enforcement; ongoing monitoring required.</li>
+        <li><strong>Language:</strong> Performance best in English; may vary for other supported languages.</li>
+        <li><strong>CV Format Dependency:</strong> Performance degrades on non-standard CV layouts.</li>
+        <li><strong>Industry Dependency:</strong> Trained primarily on data from tech, finance, and professional services &mdash; performance may vary for trades, creative industries, or public sector.</li>
+        <li><strong>Temporal Dependency:</strong> Resume screening reflects the state of the job market at training time; not suitable for roles outside standard practice.</li>
+        <li><strong>Not a performance prediction tool</strong> &mdash; fit score measures alignment with the job description, not future job performance.</li>
+        <li><strong>Not a personality or culture assessment</strong> &mdash; no behavioral or psychological predictions.</li>
+    </ul>
+
+    <h3>2.8 Prohibited Uses</h3>
+    <ul>
+        <li>Automated rejection without human review (technically enforced from v3.1)</li>
+        <li>Ranking candidates on any protected characteristic directly</li>
+        <li>Predicting future job performance, tenure, or loyalty</li>
+        <li>Making promotion or termination decisions about existing employees</li>
+        <li>Assessing candidates below the age of 16</li>
+        <li>Any use case outside professional recruitment</li>
+        <li>Integration into automated hiring pipelines that remove human judgment</li>
+    </ul>
+
+    <h3>2.9 Geographic Scope &amp; Regulatory Basis</h3>
+    <p><strong>Approved:</strong> EU (Germany, Netherlands, France, Ireland, Spain, Italy, Poland, Sweden, Denmark, Belgium), UK, US (with state-specific compliance modules), Japan. <strong>Not Approved:</strong> China, Russia, sanctioned jurisdictions.</p>
+    <p><strong>Anchored to:</strong> EU AI Act high-risk obligations, GDPR, EU Equal Treatment Directive, member-state implementing measures, US state laws (NYC Local Law 144, Illinois AIVIA, Colorado AI Act), and the UK Equality Act 2010.</p>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 2 -->
+    <!-- =================================================== -->
+    <h2>3. Document 2 &mdash; Risk Management Summary</h2>
+    <p><strong>Doc ID:</strong> NVA-HRAI-DOC-02 &bull; <strong>Classification:</strong> EU AI Act Article 9 &mdash; Risk Management System.</p>
+
+    <h3>3.1 Risk Management Approach</h3>
+    <p>A continuous, iterative process running throughout the NovaHire lifecycle, aligned to <strong>ISO/IEC 23894 (AI risk management)</strong> and integrated with the NovaAI Labs enterprise risk framework. Governance oversight sits with the AI Governance Committee; operational ownership with the Chief AI Officer and the NovaHire System Owner. Reviewed quarterly for high-risk systems and immediately upon any material change.</p>
+
+    <h3>3.2 Risk Identification Methodology</h3>
+    <ul>
+        <li>Structured risk workshops with cross-functional stakeholders</li>
+        <li>Use-case specific risk taxonomy for recruitment AI</li>
+        <li>Pre-deployment bias evaluation</li>
+        <li>Ongoing monitoring of performance and fairness metrics</li>
+        <li>Incident-driven risk identification</li>
+        <li>External advisor consultation for known blind spots</li>
+        <li>Stakeholder engagement (deployer feedback, candidate complaints)</li>
+    </ul>
+
+    <h3>3.3 Risk Assessment Criteria</h3>
+    <p>Risk Score = Likelihood (1&ndash;5) &times; Impact (1&ndash;5). Levels: <span class="score score-low">Low 1&ndash;6</span> &nbsp; <span class="score score-medium">Medium 7&ndash;14</span> &nbsp; <span class="score score-high">High 15&ndash;19</span> &nbsp; <span class="score score-critical">Critical 20&ndash;25</span>.</p>
+    <p><strong>Risk appetite:</strong> Recruitment AI should not carry high or critical residual risk.</p>
+
+    <h3>3.4 Risk Register (9 Risks)</h3>
+    <table class="risk-table">
+        <thead>
+            <tr><th>ID</th><th>Risk</th><th>Inherent</th><th>Residual</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>R01</td><td>Gender-based proxy discrimination (technical roles)</td><td class="risk-critical">25</td><td class="risk-medium">8</td><td>Confirmed Feb 2026 (18%)</td></tr>
+            <tr><td>R02</td><td>Age-based discrimination (senior roles)</td><td class="risk-critical">25</td><td class="risk-medium">8</td><td>Confirmed Feb 2026 (22%)</td></tr>
+            <tr><td>R03</td><td>Ethnicity proxy via name/institution features</td><td class="risk-critical">20</td><td class="risk-medium">8</td><td>Under investigation</td></tr>
+            <tr><td>R04</td><td>Absence of mandatory human oversight in deployer workflows</td><td class="risk-critical">20</td><td class="risk-low">4</td><td>Remediated v3.1</td></tr>
+            <tr><td>R05</td><td>Inadequate explainability for adverse decisions</td><td class="risk-high">15</td><td class="risk-low">6</td><td>SHAP API in v3.1</td></tr>
+            <tr><td>R06</td><td>Training data provenance concerns</td><td class="risk-high">16</td><td class="risk-medium">8</td><td>Migration in progress</td></tr>
+            <tr><td>R07</td><td>Inadequate deployer documentation (Art. 13)</td><td class="risk-critical">20</td><td class="risk-low">4</td><td>IFU v1.0 distributed Apr 2026</td></tr>
+            <tr><td>R08</td><td>Cross-border regulatory fragmentation</td><td class="risk-high">16</td><td class="risk-medium">8</td><td>Modules in place</td></tr>
+            <tr><td>R09</td><td>Adversarial CV manipulation / prompt injection</td><td class="risk-medium">9</td><td class="risk-low">6</td><td>Adversarial training</td></tr>
+        </tbody>
+    </table>
+
+    <h3>3.5 Risk Treatment Strategy</h3>
+    <p>Treatment options considered for each risk: Avoid / Reduce / Transfer / Accept.</p>
+    <ul>
+        <li><strong>Avoidance applied:</strong> None &mdash; NovaHire is continued in production with remediation.</li>
+        <li><strong>Reduction applied:</strong> All 9 risks (primary strategy).</li>
+        <li><strong>Transfer applied:</strong> Partial via cyber insurance for R09 liability.</li>
+        <li><strong>Acceptance:</strong> None at inherent level; medium residual accepted under monitoring.</li>
+    </ul>
+
+    <h3>3.6 Lifecycle Integration &amp; Fairness Approach</h3>
+    <p>Risk management is embedded across the lifecycle: bias-aware architecture in research/design; fairness metrics computed at each training checkpoint; pre-deployment external red team and independent bias audit; continuous fairness metrics in production; risk reassessment for model updates; and data retention/deletion at decommissioning.</p>
+    <p><strong>Fairness evaluation</strong> covers demographic parity, equalized odds (true-positive rates), counterfactual fairness, intersectional analysis (gender &times; age, etc.), annual external evaluation, and continuous in-production monitoring with alert thresholds.</p>
+    <p><strong>Reporting:</strong> Material risks reported quarterly to the AI Governance Committee; critical risks reported immediately to CAIO, CRO, and the Board AI Safety Sub-Committee. Approved by the AI Governance Committee in April 2026.</p>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 3 -->
+    <!-- =================================================== -->
+    <h2>4. Document 3 &mdash; Data &amp; Data Governance</h2>
+    <p><strong>Doc ID:</strong> NVA-HRAI-DOC-03 &bull; <strong>Classification:</strong> EU AI Act Article 10.</p>
+
+    <h3>4.1 Data Governance Principles</h3>
+    <ul>
+        <li><strong>Lawfulness</strong> &mdash; all training data processed under valid legal basis (GDPR Article 6)</li>
+        <li><strong>Relevance</strong> &mdash; data collected is relevant to the intended recruitment use case</li>
+        <li><strong>Representativeness</strong> &mdash; training data represents diverse populations NovaHire will encounter</li>
+        <li><strong>Accuracy</strong> &mdash; data quality checked at ingestion and throughout the pipeline</li>
+        <li><strong>Data minimization</strong> &mdash; only data necessary for the purpose is processed</li>
+        <li><strong>Fairness</strong> &mdash; training data assessed for bias and remediated</li>
+        <li><strong>Transparency</strong> &mdash; data sources documented and disclosed</li>
+    </ul>
+
+    <h3>4.2 Training Data Sources</h3>
+    <table class="risk-table">
+        <thead><tr><th>Source</th><th>Record Count</th></tr></thead>
+        <tbody>
+            <tr><td>Public CV datasets (CommonCrawl-derived)</td><td>2.3M</td></tr>
+            <tr><td>Licensed resume datasets from partner platforms</td><td>1.8M</td></tr>
+            <tr><td>NovaAI Labs anonymized historical recruitment data</td><td>340K</td></tr>
+            <tr><td>Synthetic CV generation (GPT-based augmentation)</td><td>1.5M</td></tr>
+            <tr><td>NovaHire v3.1 debiased training corpus</td><td>2.1M</td></tr>
+        </tbody>
+    </table>
+    <div class="callout-amber">
+        <strong>Historical Note:</strong> v1.0 (October 2023) and v2.x versions used publicly scraped LinkedIn data. This practice was discontinued in v3.1 following legal review and concerns about lawful basis.
+    </div>
+
+    <h3>4.3 Data Characteristics</h3>
+    <table class="info-table">
+        <tr><th>Total Training Records</th><td>~8M CVs/resumes</td></tr>
+        <tr><th>Languages</th><td>EN 65% &bull; DE 12% &bull; FR 8% &bull; NL 5% &bull; other EU 10%</td></tr>
+        <tr><th>Industries Represented</th><td>Tech 28% &bull; Finance 18% &bull; Professional services 15% &bull; Healthcare 10% &bull; Manufacturing 8% &bull; Retail 7% &bull; Other 14%</td></tr>
+        <tr><th>Experience Levels</th><td>Entry 22% &bull; Mid 41% &bull; Senior 27% &bull; Executive 10%</td></tr>
+        <tr><th>Document Format</th><td>PDF 68% &bull; Word 22% &bull; Plain text 8% &bull; HTML 2%</td></tr>
+    </table>
+
+    <h3>4.4 Data Quality Management</h3>
+    <p>Ingestion validation (format, language detection, completeness, duplicate detection); PII detection and tagging for oversight; anomaly detection with outliers flagged for review; multi-annotator labelling validation with inter-rater reliability; continuous quality monitoring during production.</p>
+
+    <h3>4.5 Bias Identification &amp; Mitigation</h3>
+    <p>v1.0&ndash;v3.0 training data reflected historical hiring patterns that embedded gender, age, and potentially ethnic biases. The February 2026 audit confirmed an 18% gender disparity in technical role shortlisting and a 22% age disparity in senior role shortlisting; ethnicity proxy analysis is ongoing.</p>
+    <p><strong>v3.1 remediation measures:</strong></p>
+    <ul>
+        <li>Rebalanced training dataset (equal representation across gender and age bands)</li>
+        <li>Temporal marker removal (graduation year, tech-stack vintage)</li>
+        <li>Name-inference ablation</li>
+        <li>Fairness-constrained training objective</li>
+        <li>Counterfactual fairness testing in validation</li>
+    </ul>
+    <p><strong>Ongoing monitoring:</strong> demographic parity, equalized odds, and calibration across groups.</p>
+
+    <h3>4.6 Personal Data Processing</h3>
+    <table class="info-table">
+        <tr><th>Personal Data Categories</th><td>Names, contact information, educational history, employment history, skills, certifications</td></tr>
+        <tr><th>Special Category Data</th><td>Not intentionally collected; NovaHire blocks and flags if detected</td></tr>
+        <tr><th>Legal Basis</th><td>Legitimate interest (Art. 6(1)(f)) with balancing test, consent where applicable</td></tr>
+        <tr><th>Data Subject Rights</th><td>Access, rectification, erasure supported</td></tr>
+        <tr><th>DPIA</th><td>Completed &mdash; see DPIA v2.0</td></tr>
+        <tr><th>Data Retention</th><td>Training data retained for model lifecycle; individual candidate data per deployer retention policy</td></tr>
+    </table>
+
+    <h3>4.7 Validation, Lineage &amp; Access</h3>
+    <ul>
+        <li><strong>Hold-out test set:</strong> 200K records stratified by demographic and industry</li>
+        <li><strong>Adversarial test set:</strong> 50K records designed to probe edge cases</li>
+        <li><strong>Fairness test set:</strong> 100K records with ground-truth demographic labels</li>
+        <li>Test sets <strong>never</strong> used for training; cross-validation at each model checkpoint</li>
+        <li>Each training record linked to its source dataset with provenance metadata for audit</li>
+        <li>Data flow: Source &rarr; Ingestion &rarr; Validation &rarr; Labelling &rarr; Preprocessing &rarr; Training &rarr; Model</li>
+        <li>Training data access restricted to ML Research team (RBAC); audit logging of all access; <strong>vendor access not granted post-DataPulse lessons</strong></li>
+    </ul>
+
+    <h3>4.8 Cross-Border Transfers</h3>
+    <p>Training infrastructure: US (Virginia) + EU (Ireland). SCCs in place for data transfers. Customer data processing locality is configurable per deployer. Schrems II assessment completed.</p>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 4 -->
+    <!-- =================================================== -->
+    <h2>5. Document 4 &mdash; Human Oversight Measures</h2>
+    <p><strong>Doc ID:</strong> NVA-HRAI-DOC-04 &bull; <strong>Classification:</strong> EU AI Act Article 14.</p>
+
+    <h3>5.1 Oversight Philosophy</h3>
+    <p>NovaHire is a <em>decision-support</em> system, not an autonomous decision-maker. Three principles govern every oversight measure:</p>
+    <ul>
+        <li>"Rubber-stamp" oversight is not oversight &mdash; human reviewers must have genuine capability to override.</li>
+        <li>Oversight must be meaningful: information, training, authority, time, and culture must all be in place.</li>
+        <li>Oversight is mandatory, not discretionary &mdash; technically enforced from v3.1.</li>
+    </ul>
+
+    <h3>5.2 Article 14 Objectives</h3>
+    <p>Human oversight must enable deployers to: understand the capacities and limitations of NovaHire and monitor its operation; remain aware of automation bias; interpret NovaHire's output correctly; decide not to use or to override NovaHire output; and intervene or stop the system where safe to do so.</p>
+
+    <h3>5.3 Four-Layer Oversight Architecture</h3>
+
+    <div class="risk-card">
+        <h3>Layer 1 &mdash; Operator Oversight (HR Coordinator / Recruiter)</h3>
+        <p>Reviews the NovaHire shortlist before any candidate communication; must approve or modify it; must document reasoning for any override; <strong>no rejection letter can be sent without human approval</strong>. Technical enforcement from v3.1: the API call to "issue rejection" requires a human-approval token.</p>
+    </div>
+    <div class="risk-card">
+        <h3>Layer 2 &mdash; Hiring Manager Oversight</h3>
+        <p>Reviews shortlist for roles above a defined seniority threshold; provides second-pair-of-eyes on shortlisting decisions; can request additional candidates outside the shortlist.</p>
+    </div>
+    <div class="risk-card">
+        <h3>Layer 3 &mdash; HR Leadership Oversight</h3>
+        <p>Monthly review of NovaHire usage metrics; quarterly review of override rates and demographic patterns; escalation point for policy disputes.</p>
+    </div>
+    <div class="risk-card">
+        <h3>Layer 4 &mdash; AI Governance Oversight (NovaAI Labs Provider)</h3>
+        <p>Quarterly review of aggregated deployer usage data; monitoring of fairness metrics across deployments; incident response for concerning patterns; enterprise deployer audit rights.</p>
+    </div>
+
+    <h3>5.4 v3.1 Technical Oversight Controls</h3>
+    <table class="risk-table">
+        <thead><tr><th>Control</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td>Mandatory Review Checkpoint</td><td>Rejection API endpoint requires a human-approval token signed by an authorized user</td></tr>
+            <tr><td>Audit Logging</td><td>Every shortlisting and rejection decision logged with reviewer identity</td></tr>
+            <tr><td>Override Capture</td><td>Reviewer reasoning captured for any deviation from AI recommendation</td></tr>
+            <tr><td>Session Timeouts</td><td>Prevent batch auto-approval without genuine review</td></tr>
+            <tr><td>Threshold Alerting</td><td>Unusual patterns (e.g., 100% AI agreement) trigger a review flag</td></tr>
+            <tr><td>Disclosure</td><td>Candidates informed NovaHire is in use (deployer obligation enforced via contractual clause)</td></tr>
+        </tbody>
+    </table>
+
+    <h3>5.5 Oversight Procedures (Daily &rarr; Quarterly)</h3>
+    <ul>
+        <li><strong>Before go-live:</strong> deployer operations team trained; HR coordinators trained on override criteria; test scenarios completed; NovaAI Labs verifies training before API enablement.</li>
+        <li><strong>Daily:</strong> HR coordinator reviews shortlist, approves/modifies/rejects, captures reasoning; rejected candidates communicated only after human approval; reviewer session logged.</li>
+        <li><strong>Weekly:</strong> HR team lead reviews override patterns; anomalies escalated to AI Governance Office.</li>
+        <li><strong>Monthly:</strong> HR leadership reviews dashboard; <strong>target override rate 10&ndash;25%</strong> &mdash; neither too low (rubber-stamp) nor too high (tool inadequacy).</li>
+        <li><strong>Quarterly:</strong> NovaAI Labs and deployer joint review of demographic patterns and policy refinement.</li>
+    </ul>
+
+    <h3>5.6 Personnel Requirements &amp; Training</h3>
+    <table class="info-table">
+        <tr><th>Authority</th><td>Must have authority to override NovaHire recommendations</td></tr>
+        <tr><th>Information</th><td>Must have full access to candidate information, not just NovaHire output</td></tr>
+        <tr><th>Training</th><td>Must complete NovaHire Oversight Fundamentals course (4 hours) before first use</td></tr>
+        <tr><th>Time</th><td>Minimum 3 minutes per candidate review target</td></tr>
+        <tr><th>Tools</th><td>Override workflow and reasoning capture</td></tr>
+    </table>
+    <p><strong>Curriculum:</strong> NovaHire capabilities and limitations (45 min) &bull; automation bias and how to resist it (30 min) &bull; fair recruitment principles (45 min) &bull; interface walkthrough (30 min) &bull; override scenarios and practice (60 min) &bull; compliance obligations for deployers (30 min). <strong>Annual mandatory refresh; pass 80% knowledge check before API access.</strong></p>
+
+    <h3>5.7 Anti-Automation-Bias Measures</h3>
+    <ul>
+        <li><strong>Interface design</strong> &mdash; scores shown alongside "qualification highlights" to encourage substantive review</li>
+        <li><strong>Score interpretation guidance</strong> &mdash; fit score is not a performance prediction</li>
+        <li><strong>Forced review delay</strong> &mdash; minimum time-on-screen before decisions can be finalized in batch reviews</li>
+        <li><strong>Periodic devil's advocate prompts</strong> &mdash; UI suggests reviewer consider alternatives</li>
+        <li><strong>Training emphasis</strong> &mdash; AI agreement is not a signal of correctness</li>
+    </ul>
+
+    <h3>5.8 Override Protocols &amp; Emergency Stop</h3>
+    <p><strong>Override is required when:</strong> CV reflects non-standard experience NovaHire may not appreciate; industry/role context is outside training data; bias indicators in score patterns; gut-feel mismatch between score and candidate quality; any concern about fairness. Each override is logged with timestamp, reviewer ID, candidate ID, and reason code.</p>
+    <p><strong>Emergency stop:</strong> any authorized user can pause NovaHire for their organization instantly; NovaAI Labs can remote-suspend NovaHire for a specific deployer if a critical issue is detected; the <strong>Chief AI Officer has authority to globally suspend</strong> NovaHire.</p>
+
+    <h3>5.9 Effectiveness Monitoring &amp; Escalation</h3>
+    <p>Tracked metrics: override rate per deployer; distribution of override reasons; time spent per review; reviewer-identity diversity (no single person approving 100% of shortlists); correlation of override patterns with demographic outcomes; customer feedback on oversight burden.</p>
+    <p><strong>Escalation chain:</strong> HR coordinator &rarr; HR lead &rarr; HR Director &rarr; AI Governance Office &rarr; AI Governance Committee &rarr; Chief AI Officer &rarr; Board AI Safety Sub-Committee (for critical issues).</p>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 5 -->
+    <!-- =================================================== -->
+    <h2>6. Document 5 &mdash; Logging &amp; Traceability</h2>
+    <p><strong>Doc ID:</strong> NVA-HRAI-DOC-05 &bull; <strong>Classification:</strong> EU AI Act Article 12 &mdash; Record-keeping.</p>
+
+    <h3>6.1 Logging Philosophy &mdash; Five Principles</h3>
+    <ol>
+        <li><strong>Logs as Evidence</strong> &mdash; sufficient to fully reconstruct any hiring decision; a regulator or plaintiff should be able to ask "what exactly happened to this candidate?" and receive a complete answer.</li>
+        <li><strong>Logs as Accountability</strong> &mdash; human actions logged alongside AI actions, making clear who was responsible at each stage.</li>
+        <li><strong>Logs as Learning</strong> &mdash; enable post-hoc analysis of edge cases, failures, and fairness concerns; used by the AI Governance Office to identify patterns and retrain models.</li>
+        <li><strong>Logs as Protection</strong> &mdash; protect deployers (documenting their use), reviewers (showing diligence), and candidates (creating a record for grievances).</li>
+        <li><strong>Privacy-Respecting</strong> &mdash; PII is minimized: candidate IDs hashed, sensitive data anonymized where possible, retention limited to minimum required.</li>
+    </ol>
+
+    <h3>6.2 Six Log Categories</h3>
+    <table class="risk-table">
+        <thead><tr><th>Category</th><th>Contents</th></tr></thead>
+        <tbody>
+            <tr><td><strong>A. System Operation</strong></td><td>API calls and responses, model inference operations, authN/authZ events, configuration changes, version/model identifier, errors and exceptions</td></tr>
+            <tr><td><strong>B. Decision Logs</strong></td><td>Each shortlisting operation: input metadata, score distribution, output shortlist; feature importance per decision; confidence scores; deployer context; unique decision ID linking to human review</td></tr>
+            <tr><td><strong>C. Human Review (Art. 14 link)</strong></td><td>Reviewer identity, review timestamp, initial AI recommendation vs final human decision, override reasoning, time spent on review, session metadata</td></tr>
+            <tr><td><strong>D. Fairness Monitoring</strong></td><td>Aggregate demographic distributions of shortlists, fairness metric computations, alert triggers, threshold breaches</td></tr>
+            <tr><td><strong>E. Training &amp; Model Lifecycle</strong></td><td>Training runs (compute, duration, dataset IDs), validation metrics at each checkpoint, model version releases &amp; deprecations, red team and evaluation reports, model card updates</td></tr>
+            <tr><td><strong>F. Incident Logs</strong></td><td>Any incident reported or detected, response actions taken, resolution and root cause</td></tr>
+        </tbody>
+    </table>
+
+    <h3>6.3 Log Retention</h3>
+    <table class="risk-table">
+        <thead><tr><th>Category</th><th>Retention</th><th>Justification</th></tr></thead>
+        <tbody>
+            <tr><td>System Operation</td><td>1 year</td><td>Operational troubleshooting and maintenance</td></tr>
+            <tr><td>Decision Logs</td><td>6 years</td><td>Employment law limitation period + regulatory audit</td></tr>
+            <tr><td>Human Review</td><td>6 years</td><td>Employment law defense + accountability</td></tr>
+            <tr><td>Fairness Monitoring</td><td>6 years</td><td>Regulatory audit, bias trend analysis</td></tr>
+            <tr><td>Training &amp; Model Lifecycle</td><td>Permanent (archival)</td><td>Model traceability across generations</td></tr>
+            <tr><td>Incident Logs</td><td>6 years</td><td>Regulatory and liability purposes</td></tr>
+        </tbody>
+    </table>
+
+    <h3>6.4 Access Controls &amp; Integrity</h3>
+    <p><strong>Role-based access:</strong> deployers can access their own customer-specific logs; the AI Governance Office has enterprise oversight access; the DPO accesses logs for privacy inquiries; regulators receive access on request per Article 12(5); the audit team gets time-limited, purpose-specific access. <strong>Separation of duties:</strong> those who approve decisions cannot audit their own logs; meta-logging of all log access; access requests logged with purpose and time range.</p>
+    <p><strong>Integrity controls:</strong> cryptographic hash chain for decision logs (tamper detection); <strong>WORM (write-once-read-many)</strong> storage for audit logs; immutable append-only structure (no deletion, only expiration); regular integrity verification via hash validation; incident response protocol for any integrity breach.</p>
+
+    <h3>6.5 Log Format &amp; Example</h3>
+    <p>All logs are structured JSON (not free-text), OpenTelemetry-compatible for distributed tracing, ISO 8601 UTC timestamps, with a standard schema published for deployer ingestion. Correlation IDs link API calls to decisions across systems.</p>
+<pre>{
+  "log_id": "dlog-2026-04-10-abc123",
+  "timestamp": "2026-04-10T14:32:15Z",
+  "candidate_id_hash": "sha256:a7f8e2c1...",
+  "model_version": "nova-v2.3.1",
+  "confidence_score": 0.87,
+  "feature_importance": {
+    "skills_match": 0.42,
+    "experience_level": 0.38,
+    "education": 0.20
+  },
+  "decision": "shortlist",
+  "correlation_id": "req-xyz789"
+}</pre>
+
+    <h3>6.6 Personal Data, Monitoring &amp; Export</h3>
+    <ul>
+        <li>Candidate IDs are <strong>SHA-256 hashed</strong>, never raw names or email addresses</li>
+        <li>Raw CV/application contents are never logged</li>
+        <li>Reviewer identities logged for accountability purposes</li>
+        <li>DSAR: hashed IDs linked back via secure lookup; deletion requests unlink the candidate pseudonym while preserving the audit trail</li>
+    </ul>
+    <p><strong>Real-time alerts:</strong> unusual review patterns (e.g., rapid approvals without reading scores), fairness metric breaches, authentication anomalies (off-hours access), and error spikes. Daily dashboards for the AI Governance Office, weekly summaries for deployers (their data only), and monthly compliance reports.</p>
+    <p><strong>Regulator export:</strong> standard JSON/CSV format on request; <strong>5 business day turnaround for routine, 24-hour turnaround for urgent regulatory requests</strong>; deployer-specific extracts and time-range queries supported; secure, encrypted transmission.</p>
+
+    <h3>6.7 Governance &amp; Limitations</h3>
+    <p>Joint ownership: CISO + AI Governance Office. Quarterly policy review, AI Governance Committee approval for changes, annual audit of log completeness by Internal Audit.</p>
+    <p><strong>Honest limitations:</strong> logs capture <em>what</em> happened, not <em>why</em> a human decided as they did beyond documented reasoning; aggregated statistics may not detect subtle individual-level discrimination; logging is not preventive &mdash; it enables after-the-fact analysis only; no log survives deletion requests beyond pseudonymized archives.</p>
+
+    <!-- =================================================== -->
+    <!-- DOCUMENT 6 -->
+    <!-- =================================================== -->
+    <h2>7. Document 6 &mdash; Performance Monitoring &amp; Post-Market Surveillance</h2>
+    <p><strong>Doc ID:</strong> NVA-HRAI-DOC-06 &bull; <strong>Classification:</strong> EU AI Act Articles 15 (accuracy, robustness, cybersecurity) + 61 (post-market monitoring).</p>
+
+    <h3>7.1 Monitoring Philosophy</h3>
+    <ul>
+        <li>Monitoring must cover <strong>accuracy and fairness</strong> from day one</li>
+        <li>Both technical metrics and real-world outcomes matter</li>
+        <li>Early detection of drift and degradation is essential</li>
+        <li>Monitoring must be continuous, not periodic snapshots</li>
+        <li>Post-market surveillance is a <strong>provider obligation</strong>, not deployer burden</li>
+    </ul>
+
+    <h3>7.2 Six Performance Metric Categories</h3>
+
+    <h4>7.2.1 Accuracy</h4>
+    <p>Top-k accuracy &bull; Mean Reciprocal Rank (MRR) &bull; Normalized Discounted Cumulative Gain (NDCG) &bull; Precision/Recall at k &bull; F1 for binary shortlist decisions &bull; Calibration (does fit score 80 correspond to 80% match likelihood?).</p>
+
+    <h4>7.2.2 Fairness</h4>
+    <p>Demographic parity &bull; equalized odds &bull; equal opportunity &bull; <strong>disparate impact ratio (4/5 rule)</strong> &bull; counterfactual fairness &bull; individual fairness &bull; intersectional fairness (gender &times; age, race &times; gender, etc.).</p>
+
+    <h4>7.2.3 Robustness</h4>
+    <p>Adversarial accuracy under CV manipulation &bull; out-of-distribution detection rate &bull; performance on edge cases (non-standard CVs, multilingual, career changers) &bull; stability under input perturbation &bull; confidence calibration under uncertainty.</p>
+
+    <h4>7.2.4 Cybersecurity</h4>
+    <p>Prompt injection success rate (NLP input) &bull; API abuse detection rate &bull; authentication bypass attempts &bull; data exfiltration attempts detected.</p>
+
+    <h4>7.2.5 Operational</h4>
+    <p>Latency (p50/p95/p99) &bull; throughput (req/s) &bull; availability (uptime %) &bull; error rate &bull; model inference success rate.</p>
+
+    <h4>7.2.6 Real-World Outcomes</h4>
+    <p>Candidate interview-to-shortlist rate (did humans agree with NovaHire?) &bull; performance and retention of hired candidates from NovaHire shortlists &bull; candidate complaint rates &bull; override rates (from Doc 4) &bull; deployer satisfaction scores.</p>
+
+    <h3>7.3 Performance Thresholds &amp; Alerts</h3>
+    <table class="risk-table">
+        <thead><tr><th>Metric</th><th>Target</th><th>Alert</th><th>Critical</th></tr></thead>
+        <tbody>
+            <tr><td>Top-10 accuracy</td><td>&ge;92%</td><td>&lt;90%</td><td>&lt;85%</td></tr>
+            <tr><td>Demographic parity ratio</td><td>0.9 &ndash; 1.1</td><td>&lt;0.85 or &gt;1.15</td><td>&lt;0.8 or &gt;1.2</td></tr>
+            <tr><td>Disparate impact (4/5 rule)</td><td>&ge;0.9</td><td>&lt;0.85</td><td>&lt;0.8</td></tr>
+            <tr><td>Latency p95</td><td>&lt;500 ms</td><td>&gt;800 ms</td><td>&gt;1500 ms</td></tr>
+            <tr><td>Availability</td><td>&ge;99.9%</td><td>&lt;99.5%</td><td>&lt;99%</td></tr>
+            <tr><td>Adversarial robustness</td><td>&ge;85%</td><td>&lt;80%</td><td>&lt;75%</td></tr>
+            <tr><td>Override rate</td><td>10 &ndash; 25%</td><td>&lt;5% or &gt;40%</td><td>&lt;2% or &gt;60%</td></tr>
+        </tbody>
+    </table>
+
+    <h3>7.4 Monitoring Infrastructure &amp; Data Drift</h3>
+    <p><strong>Infrastructure:</strong> real-time metric computation pipeline; four dashboard tiers (Technical for ML engineering, Governance for AGO, Executive for CAIO, Deployer for enterprise customers); alert routing to on-call engineers and the AI Governance Office; historical metric retention for trend analysis.</p>
+    <p><strong>Drift monitoring:</strong> input distribution monitoring (CV characteristics drift over time); prediction distribution monitoring; concept drift (relationship between CV features and job fit changes); population drift (applicant pool demographic shifts); automated drift detection with statistical tests; drift thresholds trigger review.</p>
+
+    <h3>7.5 Production Fairness Monitoring (v3.1 Onward)</h3>
+    <ul>
+        <li>Daily computation of fairness metrics aggregated across deployers</li>
+        <li>Per-deployer fairness tracking where data is available</li>
+        <li>Automatic alerts on threshold breach</li>
+        <li><strong>Quarterly external fairness audit</strong></li>
+        <li>Annual comprehensive independent evaluation</li>
+        <li>Quarterly public fairness metrics report</li>
+    </ul>
+    <div class="callout">
+        <strong>February 2026 &rarr; April 2026 progress:</strong> v3.0 audit identified 18% gender disparity and 22% age disparity. Under v3.1: <strong>gender disparity reduced to 4%</strong> and <strong>age disparity reduced to 6%</strong>. Monitoring continues to track progress toward the &lt;2% target.
+    </div>
+
+    <h3>7.6 Article 61 Post-Market Monitoring Plan</h3>
+    <ul>
+        <li>Continuous performance monitoring (real-time)</li>
+        <li>Weekly summary reports</li>
+        <li>Monthly governance reviews</li>
+        <li>Quarterly comprehensive reviews</li>
+        <li>Annual independent audit</li>
+        <li>Ad-hoc investigation on signal or incident</li>
+        <li>Reporting to AI Governance Committee and Board AI Safety Sub-Committee</li>
+    </ul>
+
+    <h3>7.7 Article 73 Incident Reporting</h3>
+    <p>Serious incidents reported to the national competent authority <strong>within 15 days</strong>; material issues escalated per the incident response procedure; deployer-reported issues triaged within 24 hours; candidate complaints monitored as an early signal.</p>
+
+    <h3>7.8 Improvement, Robustness &amp; Cybersecurity</h3>
+    <p><strong>Performance improvement process:</strong> quarterly model evaluation cycle; improvement proposals reviewed by the AI Governance Committee before deployment; A/B testing framework for controlled rollout; gradual rollout with monitoring; rollback capability if degradation is detected.</p>
+    <p><strong>Robustness testing:</strong> continuous red team exercises; adversarial example generation; edge-case library maintained and tested against each release; stress testing of infrastructure; chaos engineering for resilience.</p>
+    <p><strong>Cybersecurity (Article 15):</strong> application security monitoring, network monitoring, authN/authZ monitoring, data loss prevention, model extraction attempt detection, API abuse detection and rate limiting, bi-annual penetration testing, and a bug bounty programme.</p>
+
+    <h3>7.9 Deployer Reporting &amp; Model Update Management</h3>
+    <p><strong>Deployers receive:</strong> monthly performance report for their deployment; quarterly fairness assessment; annual compliance attestation; incident notifications as they occur; model update notifications with impact assessment.</p>
+    <p><strong>Model updates:</strong> all material updates go through the AI Use Case Review process; impact assessment before deployment; rollback plan documented; <strong>deployer notification minimum 14 days before material updates</strong>; post-update monitoring intensified for 30 days.</p>
+
+    <h3>7.10 Transparency Reporting</h3>
+    <p>Quarterly transparency report including NovaHire performance and fairness metrics, published on <em>trust.novaai.example</em>. Aggregated metrics protect individual privacy; methodology disclosed.</p>
+
+    <!-- 8. Program Summary -->
+    <h2>8. Program Summary</h2>
+    <table class="info-table">
+        <tr><th>System</th><td>NovaHire v3.1 &bull; NVA-HRAI-SYS-003</td></tr>
+        <tr><th>Documents Delivered</th><td>6 (Annex IV pack: Intended Purpose, Risk Mgmt, Data Governance, Human Oversight, Logging, Performance Monitoring)</td></tr>
+        <tr><th>EU AI Act Articles Covered</th><td>9, 10, 12, 13, 14, 15, 61, 73 + Annex III Cat. 4(a) + Annex IV &sect; 1</td></tr>
+        <tr><th>Aligned Standards</th><td>ISO/IEC 23894 (AI risk management), GDPR Articles 6/22, OpenTelemetry logging</td></tr>
+        <tr><th>Risk Register</th><td>9 risks &bull; 4 Critical-inherent reduced to Low/Medium residual</td></tr>
+        <tr><th>Training Data Volume</th><td>~8M CVs across EN/DE/FR/NL + other EU; 200K hold-out test set; 100K fairness test set</td></tr>
+        <tr><th>Oversight Architecture</th><td>4 layers + 6 v3.1 technical controls + 4-hour mandatory training</td></tr>
+        <tr><th>Logging</th><td>6 categories &bull; SHA-256 hashed candidate IDs &bull; WORM storage &bull; 6-year retention for decision logs</td></tr>
+        <tr><th>Performance Monitoring</th><td>6 metric families &bull; 7-metric threshold table &bull; 4 dashboard tiers &bull; quarterly external audit</td></tr>
+        <tr><th>Bias Remediation Result</th><td>Gender disparity 18% &rarr; 4% &bull; Age disparity 22% &rarr; 6% (target &lt;2%)</td></tr>
+        <tr><th>Approved By</th><td>AI Governance Committee (April 2026) &bull; CAIO &bull; CRO &bull; Board AI Safety Sub-Committee (noted)</td></tr>
+        <tr><th>Effective Date</th><td>April 2026 &bull; Review Due October 2026</td></tr>
+    </table>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti &bull; GRC Analyst Portfolio
+</footer>
+
+</body>
+</html>

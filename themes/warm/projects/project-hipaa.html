@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIPAA Incident Response Program — HealthTech Systems | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: linear-gradient(180deg, #292524 0%, #1c1917 100%);
+            border-bottom: 1px solid #44403c;
+            box-shadow: 0 4px 16px rgba(41, 37, 36, 0.3);
+            padding: 0 2rem;
+        }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #ffffff; text-decoration: none; }
+        .nav-logo span { color: #ffffff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; transition: color 0.2s; }
+        .back-link:hover { color: #fb923c; }
+
+        .project-hero {
+            padding: 7rem 2rem 3rem;
+            background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%);
+            border-bottom: 1px solid var(--border);
+        }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #fef2f2; color: #b91c1c; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+
+        .risk-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow);
+        }
+        .risk-card h3 { margin-top: 0; }
+
+        .severity-critical { display: inline-block; background: #fef2f2; color: #b91c1c; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .severity-high { display: inline-block; background: #fff7ed; color: #c2410c; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .severity-medium { display: inline-block; background: #fefce8; color: #a16207; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .status-complete { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-progress { background: #fff7ed; color: #c2410c; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-resolved { display: inline-block; background: #dcfce7; color: #15803d; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+
+        @media (max-width: 768px) {
+            .project-hero h1 { font-size: 1.8rem; }
+            .info-table th { width: 120px; }
+            .meta-row { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Incident Response</span>
+        <h1>HIPAA Incident Response Program &mdash; <em>HealthTech Systems</em></h1>
+        <p class="subtitle">Comprehensive IR program for a 600-employee EHR provider serving 200+ hospitals with 2M+ patient PHI records</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> HealthTech Systems (600 employees)</div>
+            <div class="meta-item"><strong>Industry:</strong> Healthcare Technology / EHR</div>
+            <div class="meta-item"><strong>Regulations:</strong> HIPAA Security Rule, HIPAA Breach Notification Rule, NIST CSF</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <h2>1. Executive Summary</h2>
+    <p>HealthTech Systems is a 600-employee healthcare technology company providing EHR systems to over 200 hospitals across the United States. The platform stores PHI for more than 2 million patients, including medical records, diagnoses, prescriptions, lab results, insurance information, and Social Security numbers. This project develops a comprehensive IR program including 3 documented incident scenario logs, 8 IR controls mapped to HIPAA and NIST CSF, 4 critical system inventories, and 5 remediation action items.</p>
+
+    <h2>2. Critical Systems &mdash; Asset Inventory</h2>
+
+    <div class="risk-card">
+        <h3>System 1: CloudEHR Platform</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>VP of Product Engineering</td></tr>
+            <tr><th>Description</th><td>Multi-tenant SaaS EHR platform on AWS GovCloud (React + Java/Spring Boot). Used by 200+ hospitals and 45,000 clinicians. Manages 2.3M active patient records including demographics, diagnoses, medications, lab results, imaging, and billing. Supports EPCS (DEA-regulated). SOC 2 Type II certified annually.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 2: Patient Data Warehouse (PostgreSQL on AWS GovCloud RDS)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Chief Data Officer</td></tr>
+            <tr><th>Description</th><td>Central PostgreSQL database storing 2.3M patient records, 180M clinical encounters, 95M prescriptions, 45M lab results, 28M imaging references, 12M billing records. AES-256 encryption (FIPS 140-2 KMS). Multi-AZ with automatic failover. Backups every 6 hours, retained 90 days. Row-level security per hospital. Audit logs retained 6 years.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 3: AWS GovCloud Production Account</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>Critical</td></tr>
+            <tr><th>Owner</th><td>Director of Infrastructure</td></tr>
+            <tr><th>Description</th><td>FedRAMP High compliant AWS GovCloud (US-West). Includes ECS Fargate, RDS, S3, CloudTrail, GuardDuty, WAF, KMS (FIPS 140-2 HSMs). VPC with private subnets &mdash; no public PHI exposure. 50 engineers with IAM access. Root account secured with hardware MFA and break-glass procedure.</td></tr>
+        </table>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 4: Hospital Integration Engine (HL7 FHIR API Gateway)</h3>
+        <table class="info-table">
+            <tr><th>Classification</th><td>High</td></tr>
+            <tr><th>Owner</th><td>VP of Integrations</td></tr>
+            <tr><th>Description</th><td>RESTful API gateway for 200+ hospitals using HL7 FHIR standards. Processes admissions, discharges, lab orders, medications, clinical documents, insurance checks. ~4.5M API transactions daily. Mutual TLS authentication, OAuth 2.0 + unique API keys per hospital. Rate limiting and full audit logging.</td></tr>
+        </table>
+    </div>
+
+    <h2>3. Incident Scenario Logs &mdash; 3 Documented Incidents</h2>
+
+    <div class="risk-card">
+        <h3>Incident 1: Ransomware Attack on EHR Application Servers</h3>
+        <span class="severity-critical">Critical</span> <span class="status-resolved" style="margin-left: 0.5rem;">Resolved</span>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-light);">January 15, 2026 (Simulated)</p>
+        <ul style="margin-top: 0.5rem;">
+            <li><strong>2:47 AM:</strong> GuardDuty detected Hive ransomware variant &mdash; C2 connections + file encryption in ECS containers</li>
+            <li><strong>Spread:</strong> 3 ECS instances affected; encrypted app config files; RDS blocked by security groups</li>
+            <li><strong>Impact:</strong> 12 hospitals experienced partial outage; e-prescribing unavailable for 3.5 hours</li>
+            <li><strong>Response:</strong> P1 declared at 2:52 AM &rarr; systems isolated at 3:00 AM &rarr; forensic snapshots at 3:15 AM &rarr; clean containers deployed at 3:30 AM &rarr; service restored by 6:30 AM</li>
+            <li><strong>Total outage:</strong> 3 hours 43 minutes</li>
+            <li><strong>HIPAA:</strong> No confirmed PHI exfiltration; database protected; forensic investigation continuing for potential in-memory PHI exposure</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Incident 2: Phishing Attack Leading to Unauthorized PHI Access</h3>
+        <span class="severity-high">High</span> <span class="status-resolved" style="margin-left: 0.5rem;">Resolved</span>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-light);">February 8, 2026 (Simulated)</p>
+        <ul style="margin-top: 0.5rem;">
+            <li><strong>10:15 AM:</strong> Support engineer fell for phishing email mimicking hospital IT admin</li>
+            <li><strong>10:22 AM:</strong> Attacker logged in using stolen credentials; engineer approved MFA push (fatigue attack)</li>
+            <li><strong>10:22-10:47 AM:</strong> Attacker viewed 1,200 patient records (names, DOB, addresses, insurance IDs) across 3 hospitals</li>
+            <li><strong>10:35 AM:</strong> SIEM detected dual-location anomaly (Austin, TX + Romania VPN)</li>
+            <li><strong>10:47 AM:</strong> Attacker session terminated; account disabled</li>
+            <li><strong>HIPAA Breach:</strong> Reportable &mdash; 1,200 patients affected. Required: HHS notification within 60 days, individual letters, media notification (500+ affected), hospital BAA notification within 24 hours</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Incident 3: Misconfigured API Endpoint Exposing Patient Data</h3>
+        <span class="severity-critical">Critical</span> <span style="display: inline-block; background: #fefce8; color: #a16207; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-left: 0.5rem;">INVESTIGATING</span>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-light);">March 1, 2026 (Simulated)</p>
+        <ul style="margin-top: 0.5rem;">
+            <li><strong>Root cause:</strong> New FHIR API endpoint (/api/v3/patient/search) deployed Feb 20 without authentication check &mdash; missed in code review</li>
+            <li><strong>Exposure window:</strong> 8 days (Feb 20&ndash;28)</li>
+            <li><strong>342 requests:</strong> 298 internal testing, 38 hospital IPs, 6 unknown external IPs</li>
+            <li><strong>PHI exposed:</strong> 847 patients from 2 hospitals (names, MRNs, DOB, primary diagnoses including sensitive conditions)</li>
+            <li><strong>HIPAA Breach:</strong> Reportable &mdash; fewer than 500 per hospital, reported in annual breach log; individual notification required within 60 days</li>
+        </ul>
+    </div>
+
+    <h2>4. Incident Response Controls &mdash; 8 Controls</h2>
+
+    <div class="risk-card">
+        <h3>C-01: Incident Response Plan &amp; Playbooks</h3>
+        <p><strong>HIPAA:</strong> 45 CFR 164.308(a)(6)(i) &nbsp;|&nbsp; <strong>NIST CSF:</strong> RS.RP-1</p>
+        <ul>
+            <li>Incident classification P1&ndash;P4 based on PHI exposure, system impact, and patient safety</li>
+            <li>Defined roles: Incident Commander, Technical Lead, Communications Lead, Privacy Officer, HHS Notification Coordinator</li>
+            <li>6-phase lifecycle: Preparation &rarr; Detection &rarr; Containment &rarr; Eradication &rarr; Recovery &rarr; Post-Incident Review</li>
+            <li>HIPAA breach determination using 4-factor risk assessment</li>
+            <li>HHS reporting timelines: 60-day deadline for 500+ individuals; annual log for smaller breaches</li>
+            <li>Tested quarterly via tabletop exercises; updated annually or after major incidents</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-02: 24/7 Security Monitoring &amp; Threat Detection (SIEM)</h3>
+        <p><strong>HIPAA:</strong> 45 CFR 164.312(b), 164.308(a)(1)(ii)(D) &nbsp;|&nbsp; <strong>NIST CSF:</strong> DE.CM-1</p>
+        <ul>
+            <li>Splunk SIEM with 4-person SOC team working 24/7 shifts</li>
+            <li>Log sources: CloudTrail, VPC Flow Logs, GuardDuty, CloudEHR app logs, FHIR API (4.5M txns/day), Okta, EDR, database audit</li>
+            <li>Healthcare-specific detection rules: bulk PHI access (&gt;100 records/hour), non-clinical after-hours access, dual-location logins, ransomware behavior</li>
+            <li>15-minute response SLA via PagerDuty; all PHI access logs retained 6 years</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-03: Automated Incident Containment</h3>
+        <p><strong>HIPAA:</strong> 45 CFR 164.308(a)(6)(ii) &nbsp;|&nbsp; <strong>NIST CSF:</strong> RS.MI-1</p>
+        <ul>
+            <li>Ransomware detected &rarr; auto-isolate affected ECS tasks via security group changes</li>
+            <li>Compromised credentials &rarr; auto-disable IAM keys + terminate sessions</li>
+            <li>Brute-force attack &rarr; auto-block IP at WAF level</li>
+            <li>Abnormal API activity &rarr; rate limit + suspend hospital API key</li>
+            <li>Manual isolation within 5 minutes via AWS Systems Manager</li>
+            <li>Clinical impact assessment required before full isolation during peak hours (6 AM&ndash;10 PM)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-04: Digital Forensics &amp; Evidence Preservation</h3>
+        <p><strong>HIPAA:</strong> 45 CFR 164.308(a)(6)(ii) &nbsp;|&nbsp; <strong>NIST CSF:</strong> RS.AN-3</p>
+        <ul>
+            <li>EBS snapshots of affected servers before shutdown (memory + disk capture)</li>
+            <li>CloudTrail logs saved with hash verification for integrity</li>
+            <li>SIEM logs exported and stored offline; database audit logs of all PHI access extracted</li>
+            <li>Chain of custody documented for all evidence</li>
+            <li>Evidence stored in encrypted S3 bucket with restricted access</li>
+            <li>Retained 6+ years per HIPAA (longer if litigation/OCR investigation); follows NIST SP 800-86</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-05: HIPAA Breach Notification Procedure</h3>
+        <p><strong>HIPAA:</strong> 45 CFR 164.400-414 &nbsp;|&nbsp; <strong>NIST CSF:</strong> RS.CO-2</p>
+        <ul>
+            <li>4-factor breach risk assessment: type/amount of PHI, who accessed it, was it viewed/taken, risk mitigation level</li>
+            <li><strong>500+ individuals:</strong> HHS within 60 days + individual letters + state media notification + hospital BAA notification within 24 hours</li>
+            <li><strong>&lt;500 individuals:</strong> HHS annual breach log + individual letters within 60 days</li>
+            <li>Notification letters include: what happened, PHI involved, protective steps, investigation actions, contact info</li>
+            <li>All breaches documented in breach log with full investigation details</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-06: Business Associate Agreement (BAA) Incident Obligations</h3>
+        <p><strong>HIPAA:</strong> 45 CFR 164.314, 164.504(e)</p>
+        <ul>
+            <li>BAAs with all 200+ hospitals defining shared IR responsibilities</li>
+            <li>HealthTech notifies hospital within 24 hours of any incident affecting their PHI</li>
+            <li>Notification includes: incident details, PHI involved, patient count, actions taken, contact person</li>
+            <li>Joint investigation procedures for cross-system incidents</li>
+            <li>Annual coordination meetings with top 20 hospitals by patient volume</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-07: Vulnerability Management with Healthcare Prioritization</h3>
+        <p><strong>HIPAA:</strong> 45 CFR 164.308(a)(1)(ii)(A) &nbsp;|&nbsp; <strong>NIST CSF:</strong> DE.CM-8</p>
+        <ul>
+            <li>Weekly Qualys scans on all GovCloud infrastructure; Trivy in CI/CD (Critical CVEs block deployment)</li>
+            <li>Patch SLAs: Critical (CVSS 9.0+) within 24 hours; High (7.0&ndash;8.9) within 7 days</li>
+            <li>PHI-handling systems: severity auto-escalated by one level</li>
+            <li>FHIR API gateway issues always treated as Critical (external-facing)</li>
+            <li>Annual pen test by healthcare-specialized firm + EPCS-specific security testing (DEA)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>C-08: Workforce Security Awareness &amp; Phishing Simulation</h3>
+        <p><strong>HIPAA:</strong> 45 CFR 164.308(a)(5) &nbsp;|&nbsp; <strong>NIST CSF:</strong> PR.AT-1</p>
+        <ul>
+            <li>Annual HIPAA security training for all 600 employees (PHI handling, phishing, MFA, incident reporting)</li>
+            <li>Monthly phishing simulations with healthcare-specific lures (fake hospital IT, EHR vendor, HHS/OCR notices)</li>
+            <li>Click rate: 4.2% (vs 12% industry average); repeat offenders get 1-on-1 coaching + manager notification</li>
+            <li>Engineering/support teams: additional training on API security, PHI exposure in code, secure development</li>
+        </ul>
+    </div>
+
+    <h2>5. Remediation &amp; Action Items &mdash; 5 Items</h2>
+
+    <div class="risk-card">
+        <h3>Action 1: Automated Negative Testing for API Authentication in CI/CD</h3>
+        <span class="severity-critical">Critical</span> <span style="display: inline-block; background: #dbeafe; color: #1d4ed8; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-left: 0.5rem;">IN PROGRESS</span>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Due:</strong> April 15, 2026</p>
+        <ul>
+            <li><strong>Gap:</strong> Incident 3 revealed CI/CD pipeline did not test for unauthenticated API requests &mdash; PHI exposed for 8 days</li>
+            <li>Add automated tests: unauthenticated requests (expect 401), expired tokens, wrong API keys, cross-tenant access</li>
+            <li>Pipeline must block deployment if any test fails</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Action 2: Deploy Phishing-Resistant MFA (FIDO2/WebAuthn)</h3>
+        <span class="severity-critical">Critical</span> <span style="display: inline-block; background: #f3e8ff; color: #7c3aed; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-left: 0.5rem;">NOT STARTED</span>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Due:</strong> May 31, 2026</p>
+        <ul>
+            <li><strong>Gap:</strong> Incident 2 showed push-notification MFA defeated by fatigue attack</li>
+            <li>Switch all employees to FIDO2/WebAuthn hardware keys (YubiKey)</li>
+            <li>Enable Okta number-matching during transition; disable push-only MFA after rollout</li>
+            <li>Enable impossible travel detection to block logins from impossible locations</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Action 3: Full HIPAA Breach Notification Tabletop Exercise</h3>
+        <span class="severity-high">High</span> <span style="display: inline-block; background: #f3e8ff; color: #7c3aed; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-left: 0.5rem;">NOT STARTED</span>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Due:</strong> June 30, 2026</p>
+        <ul>
+            <li><strong>Gap:</strong> Team has never practiced the full breach notification process end-to-end</li>
+            <li>Simulate breach affecting 2,500 patients across 8 hospitals &mdash; trigger all notification steps</li>
+            <li>Walk through: breach detection &rarr; 4-factor risk assessment &rarr; HHS notification &rarr; 2,500 individual letters &rarr; media notification &rarr; hospital BAA notification</li>
+            <li>Test letter generation system at scale; document lessons learned</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Action 4: Forensic Evidence Preservation Toolkit</h3>
+        <span class="severity-high">High</span> <span style="display: inline-block; background: #dbeafe; color: #1d4ed8; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-left: 0.5rem;">IN PROGRESS</span>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Due:</strong> May 15, 2026</p>
+        <ul>
+            <li><strong>Gap:</strong> No pre-configured forensic toolkit &mdash; engineers would set up tools manually under pressure</li>
+            <li>Create AWS SSM automation: auto-snapshot EBS, export CloudTrail/SIEM/VPC logs, store in evidence S3 bucket</li>
+            <li>Pre-build forensic AMI with Volatility + SANS SIFT toolkit</li>
+            <li>Create chain-of-custody template (Legal-approved); validate in tabletop exercise</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Action 5: Hospital-Facing Incident Communication Portal</h3>
+        <span class="severity-medium">Medium</span> <span style="display: inline-block; background: #f3e8ff; color: #7c3aed; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-left: 0.5rem;">NOT STARTED</span>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Due:</strong> August 31, 2026</p>
+        <ul>
+            <li><strong>Gap:</strong> Email-based hospital notifications are slow and untrackable &mdash; notifying 12 hospitals took 90 minutes</li>
+            <li>Build secure incident portal with real-time status, affected systems, estimated resolution</li>
+            <li>Integrate with PagerDuty for auto-updates; SMS/webhook alerts for P1/P2</li>
+            <li>Read-receipt tracking for all 200+ hospitals; BAA notification workflow</li>
+        </ul>
+    </div>
+
+    <h2>6. Program Summary</h2>
+    <table class="risk-table">
+        <tr><th>Component</th><th>Details</th><th>Status</th></tr>
+        <tr><td><strong>Critical Systems</strong></td><td>4 inventoried (3 Critical, 1 High)</td><td><span class="status-complete">Complete</span></td></tr>
+        <tr><td><strong>Incident Scenarios</strong></td><td>3 documented (Ransomware, Phishing, Data Breach)</td><td><span class="status-complete">Complete</span></td></tr>
+        <tr><td><strong>IR Controls</strong></td><td>8 implemented, all Effective</td><td><span class="status-complete">Operational</span></td></tr>
+        <tr><td><strong>Remediation Items</strong></td><td>5 items (2 Critical, 2 High, 1 Medium)</td><td><span class="status-progress">In Progress</span></td></tr>
+        <tr><td><strong>HIPAA Compliance</strong></td><td>164.308(a)(6) Security Incident Procedures</td><td><span class="status-complete">Implemented</span></td></tr>
+    </table>
+
+    <h2>7. Next Steps</h2>
+    <div class="risk-card">
+        <ul>
+            <li><strong>Complete all 5 remediation items by due dates</strong> &mdash; Track in Jira with weekly CISO updates; Critical items (API testing, MFA) are highest priority</li>
+            <li><strong>First full-scale tabletop exercise</strong> &mdash; Use the 3 incident scenarios; include hospital customer representatives for breach notification walkthrough</li>
+            <li><strong>Engage OCR-experienced legal counsel</strong> &mdash; Retain healthcare-specialized counsel with OCR investigation and breach filing experience</li>
+            <li><strong>Hospital incident coordination program</strong> &mdash; Align IR procedures with top 20 hospitals; test notification channels; conduct joint exercises</li>
+            <li><strong>Pursue HITRUST CSF certification</strong> &mdash; Healthcare-specific framework incorporating HIPAA, NIST; demonstrates mature security to hospital customers</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    <p><a href="../index.html#projects" style="color: var(--primary); text-decoration: none; font-weight: 600;">&larr; Back to All Projects</a></p>
+    <p style="margin-top: 0.75rem;">&copy; 2026 Tejaswini Dondeti. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

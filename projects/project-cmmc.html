@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMMC Level 2 Compliance — GlobalParts Manufacturing | Tejaswini Dondeti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c2410c;
+            --primary-light: #ffedd5;
+            --text: #292524;
+            --text-light: #78716c;
+            --bg: #faf7f2;
+            --bg-alt: #f3eee8;
+            --card-bg: #fffefb;
+            --border: #e7e5e4;
+            --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --radius: 6px;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+        .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #fff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .back-link:hover { color: #fb923c; }
+        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+        .project-hero .container { max-width: 900px; margin: 0 auto; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #fefce8; color: #a16207; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+        .project-hero h1 em { color: var(--primary); font-style: italic; }
+        .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
+        .meta-item strong { color: var(--text); }
+        .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+        .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
+        .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
+        .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .content ul li { margin-bottom: 0.4rem; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+        .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
+        .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
+        .info-table td { background: var(--card-bg); }
+        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
+        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
+        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
+        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
+        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
+        .risk-card h3 { margin-top: 0; }
+        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .score-critical { background: #fef2f2; color: #b91c1c; }
+        .score-high { background: #fff7ed; color: #c2410c; }
+        .status-effective { background: #dcfce7; color: #15803d; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        .status-partial { background: #fefce8; color: #a16207; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+        footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">Tejaswini <span>Dondeti</span></a>
+        <a href="../index.html#projects" class="back-link">&larr; Back to Projects</a>
+    </div>
+</nav>
+
+<div class="project-hero">
+    <div class="container">
+        <span class="tag">Compliance</span>
+        <h1>Supply Chain Security &amp; CMMC Level 2 &mdash; <em>GlobalParts Manufacturing</em></h1>
+        <p class="subtitle">Led CMMC Level 2 compliance program for a 2,500-employee Tier 2 defense supplier with $50M in annual DoD contracts; mapped 6 CUI systems, implemented 14 controls across all NIST 800-171 families, and assessed 3 sub-tier suppliers</p>
+        <div class="meta-row">
+            <div class="meta-item"><strong>Company:</strong> GlobalParts Manufacturing</div>
+            <div class="meta-item"><strong>Industry:</strong> Defense Manufacturing</div>
+            <div class="meta-item"><strong>Regulation:</strong> CMMC 2.0, NIST SP 800-171, DFARS 252.204-7012, ITAR</div>
+            <div class="meta-item"><strong>Contracts:</strong> Lockheed Martin, Raytheon, General Dynamics</div>
+            <div class="meta-item"><strong>Date:</strong> March 2026</div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- Executive Summary -->
+    <h2>1. Executive Summary</h2>
+    <p>GlobalParts Manufacturing is a 2,500-employee Tier 2 defense supplier headquartered in Detroit, producing precision components for military vehicles and aircraft for major defense contractors. The company processes Controlled Unclassified Information (CUI) including technical drawings, specifications, test data, and manufacturing processes for $50M in annual DoD contracts.</p>
+    <p>Under DFARS 252.204-7012 and CMMC 2.0, GlobalParts must achieve Level 2 certification by implementing all 110 NIST SP 800-171 practices. This project identifies 6 CUI-processing systems, implements 14 CMMC controls across all 14 NIST 800-171 families, assesses 5 CUI protection risks, manages 3 sub-tier supplier security assessments, and prepares SSP documentation for the C3PAO audit.</p>
+
+    <table class="info-table">
+        <tr><th>Deliverables</th><td>6 CUI Systems, 14 CMMC Controls, 5 CUI Risks, 3 Supplier Assessments</td></tr>
+        <tr><th>NIST 800-171 Status</th><td>78 implemented, 22 partial, 10 not started (110 total &mdash; 71%)</td></tr>
+        <tr><th>Classification</th><td>CUI//SP-CTI &mdash; Controlled Technical Information</td></tr>
+    </table>
+
+    <!-- CUI System Inventory -->
+    <h2>2. CUI System Inventory &mdash; 6 Systems</h2>
+
+    <div class="risk-card">
+        <h3>System 1: Engineering CAD/PLM (Siemens Teamcenter + NX)</h3>
+        <table class="info-table">
+            <tr><th>Type / Classification</th><td>Application &mdash; Critical</td></tr>
+            <tr><th>Owner</th><td>VP of Engineering</td></tr>
+            <tr><th>Users</th><td>350 engineers with role-based access by defense program</td></tr>
+        </table>
+        <ul>
+            <li>15,000+ CAD models and technical drawings for military components, 8,000+ manufacturing specs, 3,500+ ITAR-controlled material specs</li>
+            <li>CUI marking enforcement: documents require CUI classification before save or share</li>
+            <li>Hosted on-premises on dedicated servers, segregated from corporate network</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 2: Manufacturing Execution System (MES) &mdash; Shop Floor</h3>
+        <table class="info-table">
+            <tr><th>Type / Classification</th><td>Application &mdash; Critical</td></tr>
+            <tr><th>Owner</th><td>VP of Manufacturing</td></tr>
+            <tr><th>Users</th><td>800+ operators, supervisors, and quality inspectors across 4 facilities</td></tr>
+        </table>
+        <ul>
+            <li>Controls production across Michigan and Ohio facilities; contains CNC programs derived from CUI drawings</li>
+            <li>Interfaces with CAD/PLM, ERP, CNC machines, and quality management systems</li>
+            <li>Segmented network separated from corporate and engineering networks by firewalls</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 3: Defense Contract ERP (SAP S/4HANA &mdash; CUI Instance)</h3>
+        <table class="info-table">
+            <tr><th>Type / Classification</th><td>Application &mdash; Critical</td></tr>
+            <tr><th>Owner</th><td>CFO</td></tr>
+            <tr><th>Users</th><td>200+ across finance, procurement, contracts, and logistics</td></tr>
+        </table>
+        <ul>
+            <li>Dedicated CUI instance separated from commercial ERP; handles DoD contract financials, ITAR procurement, DCAA audit records</li>
+            <li>CAC/PIV-equivalent MFA required for all access</li>
+            <li>Isolation simplifies CMMC scope &mdash; prevents entire ERP from being in assessment scope</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 4: CUI Enclave Network Infrastructure</h3>
+        <table class="info-table">
+            <tr><th>Type / Classification</th><td>Network &mdash; Critical</td></tr>
+            <tr><th>Owner</th><td>CISO</td></tr>
+        </table>
+        <ul>
+            <li>Dedicated network isolating all 6 CUI systems from corporate network and internet</li>
+            <li>Palo Alto next-gen firewalls, IDS/IPS, encrypted VPN to primes/subcontractors, NAC, wireless disabled in CUI areas</li>
+            <li>Reduces CMMC scope from 2,500 employees to ~600 CUI handlers (saving ~$500K in assessment costs)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 5: Secure File Transfer (Kiteworks)</h3>
+        <table class="info-table">
+            <tr><th>Type / Classification</th><td>Application &mdash; High</td></tr>
+            <tr><th>Owner</th><td>IT Director</td></tr>
+        </table>
+        <ul>
+            <li>FIPS 140-2 validated platform for all CUI exchanges with primes, subcontractors, DCAA, and DoD</li>
+            <li>~2,000 CUI file transfers monthly with marking enforcement, recipient verification, download tracking, auto-expiration</li>
+            <li>Policy enforcement point: CUI cannot leave enclave without going through this system</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>System 6: CUI Enclave Endpoints (500+ Workstations &amp; Laptops)</h3>
+        <table class="info-table">
+            <tr><th>Type / Classification</th><td>Endpoint &mdash; High</td></tr>
+            <tr><th>Owner</th><td>IT Director</td></tr>
+        </table>
+        <ul>
+            <li>350 engineering workstations, 100 shop floor terminals, 50 encrypted laptops (BitLocker + remote wipe)</li>
+            <li>CIS-hardened Windows, CrowdStrike EDR, full disk encryption, CAC/PIV MFA, USB ports disabled, application whitelisting</li>
+            <li>Mobile and personal devices NOT authorized for CUI access</li>
+        </ul>
+    </div>
+
+    <!-- CUI Risk Assessment -->
+    <h2>3. CUI Risk Assessment &mdash; 5 Risks</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr><th>Risk ID</th><th>Risk Title</th><th>Category</th><th>L</th><th>I</th><th>Score</th><th>Rating</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>CUI-R1</td><td>CUI Data Spill via Unauthorized Transmission</td><td>Data Protection</td><td>4</td><td>5</td><td>20</td><td class="risk-critical">CRITICAL</td></tr>
+            <tr><td>CUI-R2</td><td>CMMC Assessment Failure (32 Practice Gaps)</td><td>Compliance</td><td>3</td><td>5</td><td>15</td><td class="risk-critical">CRITICAL</td></tr>
+            <tr><td>CUI-R3</td><td>Supply Chain Compromise via Sub-Tier Suppliers</td><td>Vendor Risk</td><td>4</td><td>4</td><td>16</td><td class="risk-critical">CRITICAL</td></tr>
+            <tr><td>CUI-R4</td><td>Insider Threat Exploiting Legitimate CUI Access</td><td>Access Control</td><td>3</td><td>5</td><td>15</td><td class="risk-critical">CRITICAL</td></tr>
+            <tr><td>CUI-R5</td><td>Ransomware Disrupting Defense Production</td><td>Availability</td><td>4</td><td>4</td><td>16</td><td class="risk-critical">CRITICAL</td></tr>
+        </tbody>
+    </table>
+
+    <div class="risk-card">
+        <h3>CUI-R1: CUI Data Spill via Unauthorized Transmission <span class="score score-critical">CRITICAL &mdash; 20</span></h3>
+        <ul>
+            <li>CUI could leave enclave through: regular email, USB drives, personal cloud storage, unencrypted calls, unsecured printouts</li>
+            <li>600+ people handle CUI daily; human error under deadline pressure creates constant spill risk</li>
+            <li>ITAR-controlled CUI unauthorized disclosure is a criminal offense with fines and imprisonment</li>
+            <li><strong>Treatment:</strong> Technical controls preventing unauthorized transmission + making secure path as convenient as insecure path</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>CUI-R2: CMMC Assessment Failure <span class="score score-critical">CRITICAL &mdash; 15</span></h3>
+        <ul>
+            <li>Current state: 78/110 practices implemented, 22 partial, 10 not started &mdash; 32 gaps across AC, AU, CM, IR, SC families</li>
+            <li>Failed assessment = loss of ALL DoD contracts ($50M annual revenue)</li>
+            <li><strong>Treatment:</strong> Focused remediation roadmap for 32 gaps; highest-risk areas: System &amp; Communications Protection (6 gaps), Configuration Management (5 gaps)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>CUI-R3: Supply Chain Compromise <span class="score score-critical">CRITICAL &mdash; 16</span></h3>
+        <ul>
+            <li>35+ sub-tier suppliers receive CUI; only 8 have demonstrated NIST 800-171 compliance, 15 have unknown postures</li>
+            <li>DoD holds GlobalParts accountable for supplier CUI protection per DFARS flowdown requirements</li>
+            <li><strong>Treatment:</strong> Supplier assessment program, CUI flowdown enforcement, remediation requirements with 12-month deadlines</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>CUI-R4: Insider Threat <span class="score score-critical">CRITICAL &mdash; 15</span></h3>
+        <ul>
+            <li>600+ employees with CUI access; threats include espionage, competitor theft, inadvertent disclosure, social engineering</li>
+            <li>No formal insider threat program beyond standard access controls and background checks</li>
+            <li><strong>Treatment:</strong> Enhanced personnel screening, continuous monitoring, CUI NDA enforcement, behavioral analytics in SIEM</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>CUI-R5: Ransomware Disrupting Defense Production <span class="score score-critical">CRITICAL &mdash; 16</span></h3>
+        <ul>
+            <li>Manufacturing was #1 ransomware target in 2023-2024; 2,500 employees create large phishing surface</li>
+            <li>Ransomware on MES halts CNC machines and production &mdash; physical production time cannot be recovered</li>
+            <li>DFARS requires reporting cyber incidents affecting CUI to DoD within 72 hours</li>
+            <li><strong>Treatment:</strong> CUI enclave isolation, CrowdStrike EDR, application whitelisting, offline backups, quarterly IR exercises</li>
+        </ul>
+    </div>
+
+    <!-- CMMC Control Catalog -->
+    <h2>4. CMMC Control Catalog &mdash; 14 Controls (1 per NIST 800-171 Family)</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr><th>#</th><th>Control Name</th><th>NIST 800-171 Family</th><th>Reference</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>CUI Identification, Marking &amp; Handling</td><td>Media Protection</td><td>MP.L2-3.8.1, 3.8.2</td><td>Effective</td></tr>
+            <tr><td>2</td><td>MFA with CAC/PIV for All CUI Access</td><td>Identification &amp; Auth</td><td>IA.L2-3.5.3</td><td>Effective</td></tr>
+            <tr><td>3</td><td>CUI Enclave Network Segmentation</td><td>System &amp; Comms Protection</td><td>SC.L2-3.13.1, 3.13.5, 3.13.6</td><td>Effective</td></tr>
+            <tr><td>4</td><td>FIPS 140-2 Encryption (At Rest &amp; In Transit)</td><td>System &amp; Comms Protection</td><td>SC.L2-3.13.11, 3.13.8</td><td>Effective</td></tr>
+            <tr><td>5</td><td>Continuous Monitoring &amp; Audit Logging</td><td>Audit &amp; Accountability</td><td>AU.L2-3.3.1, 3.3.2</td><td>Effective</td></tr>
+            <tr><td>6</td><td>Vulnerability Management (30-Day Critical Patch)</td><td>System &amp; Info Integrity</td><td>SI.L2-3.14.1, RA.L2-3.11.2</td><td>Effective</td></tr>
+            <tr><td>7</td><td>IR Plan with 72-Hour DoD Reporting</td><td>Incident Response</td><td>IR.L2-3.6.1, DFARS 7012</td><td>Effective</td></tr>
+            <tr><td>8</td><td>Configuration Management with CUI Baselines</td><td>Configuration Mgmt</td><td>CM.L2-3.4.1, 3.4.2, 3.4.6</td><td>Effective</td></tr>
+            <tr><td>9</td><td>Personnel Security &amp; CUI Access Authorization</td><td>Personnel Security</td><td>PS.L2-3.9.1, 3.9.2</td><td>Effective</td></tr>
+            <tr><td>10</td><td>Physical Protection of CUI Areas</td><td>Physical Protection</td><td>PE.L2-3.10.1, 3.10.3, 3.10.5</td><td>Effective</td></tr>
+            <tr><td>11</td><td>Media Protection &amp; Removable Media Controls</td><td>Media Protection</td><td>MP.L2-3.8.1, 3.8.7, 3.8.9</td><td>Effective</td></tr>
+            <tr><td>12</td><td>Security Awareness (Manufacturing-Specific CUI)</td><td>Awareness &amp; Training</td><td>AT.L2-3.2.1, 3.2.2, 3.2.3</td><td>Effective</td></tr>
+            <tr><td>13</td><td>SSP Documentation &amp; POA&amp;M Management</td><td>Security Assessment</td><td>CA.L2-3.12.4</td><td>Effective</td></tr>
+            <tr><td>14</td><td>Supply Chain CUI Flowdown &amp; Supplier Assessment</td><td>Supply Chain Risk</td><td>SR.L2-3.17.1, DFARS 7012</td><td>Partial</td></tr>
+        </tbody>
+    </table>
+
+    <div class="risk-card">
+        <h3>Control 1: CUI Identification, Marking &amp; Handling</h3>
+        <ul>
+            <li>CUI marking standards per 32 CFR Part 2002: banner marking, category marking (CUI//SP-CTI), dissemination controls, destruction instructions</li>
+            <li>CAD/PLM requires CUI classification before document save; email DLP blocks CUI patterns from non-secure channels</li>
+            <li>Destruction: cross-cut shredding (NIST 800-88) for paper, cryptographic erasure for digital</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 2: MFA with CAC/PIV for All CUI Access</h3>
+        <ul>
+            <li>CAC smart card readers on all CUI workstations; PIV-equivalent cards for non-government employees</li>
+            <li>VPN access: smart card + TOTP; shop floor terminals: proximity badge + PIN (for gloved operators)</li>
+            <li>C3PAO will specifically test that MFA cannot be bypassed for any CUI access path</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 3: CUI Enclave Network Segmentation</h3>
+        <ul>
+            <li>Palo Alto next-gen firewalls at all enclave entry/exit points with default-deny rules</li>
+            <li>Internal segmentation: engineering, manufacturing, and finance segments cannot communicate directly</li>
+            <li>No CUI system has direct internet access; VPN tunnels use FIPS 140-2 validated encryption</li>
+            <li>Quarterly penetration testing targeting the enclave boundary</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 4: FIPS 140-2 Encryption for CUI</h3>
+        <ul>
+            <li>At rest: BitLocker with TPM (AES-256 FIPS validated), database TDE, file-level encryption</li>
+            <li>In transit: TLS 1.2+ with FIPS cipher suites, IPsec VPN with FIPS encryption, secure file transfer with AES-256</li>
+            <li>FIPS 140-2 validation is a hard requirement &mdash; non-validated encryption does NOT satisfy NIST 800-171</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 5: Continuous Monitoring &amp; Audit Logging</h3>
+        <ul>
+            <li>Splunk SIEM aggregating: authentication, CUI document access/modify/print, network traffic, file transfers, config changes</li>
+            <li>Correlation rules: unauthorized CUI access, bulk downloads, after-hours access, failed auth patterns</li>
+            <li>24/7 managed SOC with 15-minute SLA; logs retained 3 years on write-once media</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 6: Vulnerability Management (30-Day Critical Patch)</h3>
+        <ul>
+            <li>Weekly Qualys scans of CUI enclave; Critical (CVSS 9.0+) patched within 30 days, High within 60 days</li>
+            <li>CrowdStrike EDR + application whitelisting on all CUI endpoints</li>
+            <li>Annual pen test including enclave boundary breach attempts and social engineering</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 7: Incident Response with 72-Hour DoD Reporting</h3>
+        <ul>
+            <li>CUI-specific IR plan: detection, containment, mandatory DFARS 72-hour DoD reporting, evidence preservation</li>
+            <li>Quarterly tabletop exercises: ransomware, CUI spill, insider theft, supply chain compromise</li>
+            <li>72-hour reporting is a non-negotiable DFARS contractual obligation</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 8: Configuration Management with CUI Baselines</h3>
+        <ul>
+            <li>CIS-hardened baselines for Windows, Linux, network devices, and applications (Teamcenter, SAP, MES)</li>
+            <li>Least functionality: all unnecessary services, ports, features disabled; application whitelisting</li>
+            <li>SCCM + CrowdStrike monitoring for baseline deviations; all changes require documented approval</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 9: Personnel Security &amp; CUI Access Authorization</h3>
+        <ul>
+            <li>Pre-employment background investigation, CUI handling training before access, signed CUI NDA</li>
+            <li>Annual refresher training with assessment; reinvestigation every 5 years</li>
+            <li>Termination: access revoked same day, CUI materials collected, exit interview; for-cause: immediate revocation + 30-day log review</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 10: Physical Protection of CUI Areas</h3>
+        <ul>
+            <li>Badge access on all CUI area doors, visitor escort required, CCTV with 90-day retention</li>
+            <li>Secure printing with badge release, GSA-approved security containers, cross-cut shredding with destruction logs</li>
+            <li>Shop floor: CUI work orders returned to secure bins after shifts, photography and personal devices prohibited</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 11: Media Protection &amp; Removable Media Controls</h3>
+        <ul>
+            <li>USB ports disabled on all CUI workstations via group policy (hardware-level enforcement)</li>
+            <li>3 authorized CNC transfer stations per facility: FIPS 140-2 encrypted drives only, mandatory scanning, full audit logging</li>
+            <li>Backup media encrypted with FIPS AES-256 in fire-rated safes; NIST 800-88 sanitization for disposal</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 12: Security Awareness Training (Manufacturing-Specific)</h3>
+        <ul>
+            <li>All 2,500 employees: annual general security awareness; 600+ CUI personnel: additional CUI-specific training</li>
+            <li>Shop floor modules: CUI area photography bans, work order handling, USB restrictions, CNC transfer procedures</li>
+            <li>Monthly phishing simulations with manufacturing-specific lures; current click rate: 5.1% (industry avg: 11%)</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 13: SSP Documentation &amp; POA&amp;M Management</h3>
+        <ul>
+            <li>SSP describes: CUI enclave scope, all 110 practices with status, architecture diagrams, roles, evidence references</li>
+            <li>78 practices fully documented, 32 in POA&amp;M with remediation actions, owners, milestone dates</li>
+            <li>POA&amp;M reviewed weekly, reported monthly to CISO and CEO; SSP is the primary C3PAO assessment document</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>Control 14: Supply Chain CUI Flowdown &amp; Supplier Assessment <span class="status-partial">Partially Effective</span></h3>
+        <ul>
+            <li>DFARS 252.204-7012 flowdown in every subcontract involving CUI</li>
+            <li>Annual security questionnaire + on-site reviews for 8 most critical suppliers; SPRS score verification</li>
+            <li>15/35 suppliers have unknown postures awaiting assessment; suppliers failing within 12 months are replaced</li>
+        </ul>
+    </div>
+
+    <!-- Supplier Assessments -->
+    <h2>5. Supplier Security Assessments &mdash; 3 Vendors</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr><th>Supplier</th><th>Service</th><th>Criticality</th><th>SPRS Score</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Apex Precision Machining</td><td>CNC machining of ITAR titanium components</td><td>Critical</td><td class="risk-critical">45 / 110</td><td>Under Review</td></tr>
+            <tr><td>TechAlloy Materials Corp</td><td>ITAR-controlled specialty alloys</td><td>High</td><td class="risk-high">85 / 110</td><td>Active</td></tr>
+            <tr><td>DefenseLogistics Inc</td><td>Secure warehousing &amp; logistics (FCL facility)</td><td>High</td><td style="background:#dcfce7;color:#15803d;font-weight:700;">102 / 110</td><td>Active</td></tr>
+        </tbody>
+    </table>
+
+    <div class="risk-card">
+        <h3>Apex Precision Machining <span class="score score-critical">SPRS: 45/110</span></h3>
+        <ul>
+            <li>45-employee machine shop handling F-35 component specs &mdash; most sensitive CUI with weakest security</li>
+            <li><strong>Gaps:</strong> No NIST 800-171 implementation, no encryption, no MFA, CUI markings removed for convenience, personal USB drives for CNC transfer</li>
+            <li><strong>Remediation:</strong> GlobalParts funding $150K cybersecurity improvement (firewall, MFA, encryption, training, IR plan); 12-month timeline</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>TechAlloy Materials Corp <span class="score score-high">SPRS: 85/110</span></h3>
+        <ul>
+            <li>Moderate cybersecurity maturity; MFA and encrypted email in place</li>
+            <li><strong>Gaps:</strong> No documented config baselines, limited audit log retention, IR plan never tested</li>
+            <li><strong>Remediation:</strong> Config baselines within 6 months, extend log retention to 1 year, first tabletop within 3 months; targeting CMMC Level 2 in 18 months</li>
+        </ul>
+    </div>
+
+    <div class="risk-card">
+        <h3>DefenseLogistics Inc <span class="status-effective">SPRS: 102/110</span></h3>
+        <ul>
+            <li>Existing DoD facility clearance at Secret level &mdash; security posture exceeds most NIST 800-171 requirements</li>
+            <li><strong>Gaps:</strong> 8 IT-specific practices for non-classified CUI systems (config management, system monitoring)</li>
+            <li><strong>Remediation:</strong> Close 8 IT gaps within 6 months; lowest risk and closest to CMMC-ready</li>
+        </ul>
+    </div>
+
+    <!-- Program Summary -->
+    <h2>6. Program Summary</h2>
+
+    <table class="risk-table">
+        <thead>
+            <tr><th>Component</th><th>Details</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>CUI Systems</td><td>6 inventoried (4 Critical, 2 High)</td><td>Complete</td></tr>
+            <tr><td>NIST 800-171 Practices</td><td>78 implemented, 22 partial, 10 not started</td><td>71% Complete</td></tr>
+            <tr><td>CMMC Controls</td><td>14 across all 14 families (13 Effective, 1 Partial)</td><td>Operational</td></tr>
+            <tr><td>CUI Risks</td><td>5 assessed (all Critical)</td><td>Documented</td></tr>
+            <tr><td>Suppliers Assessed</td><td>3 of 35 (SPRS: 45, 85, 102)</td><td>In Progress</td></tr>
+            <tr><td>SSP Documentation</td><td>Complete for 78 practices, POA&amp;M for 32</td><td>Assessment-Ready</td></tr>
+        </tbody>
+    </table>
+
+    <h2>7. Next Steps</h2>
+    <ul>
+        <li>Remediate 32 remaining NIST 800-171 practice gaps per POA&amp;M timeline</li>
+        <li>Complete security assessments for remaining 32 of 35 sub-tier suppliers</li>
+        <li>Complete Apex Precision Machining cybersecurity improvement program</li>
+        <li>Conduct mock C3PAO assessment to validate readiness</li>
+        <li>Schedule formal CMMC Level 2 C3PAO assessment</li>
+        <li>Establish formal insider threat program beyond standard access controls</li>
+    </ul>
+
+</div>
+
+<footer>
+    &copy; 2026 Tejaswini Dondeti. All rights reserved.
+</footer>
+
+</body>
+</html>
