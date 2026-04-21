@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaHire AI Risk Assessment & Governance Review | Tejaswini Dondeti</title>
+    <title>NovaHire AI Risk Assessment & Board Review | Tejaswini Dondeti</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
@@ -18,56 +18,91 @@
             --card-bg: #fffefb;
             --border: #e7e5e4;
             --shadow: 0 2px 8px rgba(41,37,36,0.06);
+            --shadow-md: 0 6px 20px rgba(41,37,36,0.08);
             --radius: 6px;
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'DM Sans', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
-        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: linear-gradient(180deg, #292524 0%, #1c1917 100%); border-bottom: 1px solid #44403c; box-shadow: 0 4px 16px rgba(41,37,36,0.3); padding: 0 2rem; }
+
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: linear-gradient(180deg, #292524 0%, #1c1917 100%);
+            border-bottom: 1px solid #44403c;
+            box-shadow: 0 4px 16px rgba(41, 37, 36, 0.3);
+            padding: 0 2rem;
+        }
         .nav-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #fff; text-decoration: none; }
-        .nav-logo span { color: #fff; }
-        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+        .nav-logo { font-weight: 600; font-size: 1.05rem; color: #ffffff; text-decoration: none; }
+        .nav-logo span { color: #ffffff; }
+        .back-link { color: #d6d3d1; text-decoration: none; font-size: 0.92rem; font-weight: 600; transition: color 0.2s; }
         .back-link:hover { color: #fb923c; }
-        .project-hero { padding: 7rem 2rem 3rem; background: linear-gradient(170deg, #fff7ed 0%, #faf7f2 40%, #fef3c7 100%); border-bottom: 1px solid var(--border); }
+
+        .project-hero {
+            padding: 7rem 2rem 3rem;
+            background: linear-gradient(170deg, #fef2f2 0%, #faf7f2 40%, #fee2e2 100%);
+            border-bottom: 1px solid var(--border);
+        }
         .project-hero .container { max-width: 900px; margin: 0 auto; }
-        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #fef2f2; color: #b91c1c; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .project-hero .tag { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 4px; background: #fee2e2; color: #b91c1c; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
         .project-hero h1 { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
         .project-hero h1 em { color: var(--primary); font-style: italic; }
         .project-hero .subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem; }
         .meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
         .meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-light); }
         .meta-item strong { color: var(--text); }
+
         .content { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
         .content h2 { font-family: 'Fraunces', Georgia, serif; font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: var(--primary); }
+        .content h2:first-child { margin-top: 0; }
         .content h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
         .content p { text-align: justify; margin-bottom: 1rem; color: var(--text); }
         .content ul { margin-left: 1.5rem; margin-bottom: 1rem; color: var(--text); }
         .content ul li { margin-bottom: 0.4rem; }
+
         .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
         .info-table th, .info-table td { padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left; }
         .info-table th { background: #1c1917; color: #fef2e8; font-weight: 600; width: 200px; }
         .info-table td { background: var(--card-bg); }
-        .risk-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
-        .risk-table th { background: #1c1917; color: #fef2e8; padding: 0.6rem 0.8rem; border: 1px solid #44403c; font-weight: 600; text-align: left; }
-        .risk-table td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--card-bg); }
-        .risk-critical { background: #fef2f2 !important; color: #b91c1c; font-weight: 700; }
-        .risk-high { background: #fff7ed !important; color: #c2410c; font-weight: 700; }
-        .risk-medium { background: #fefce8 !important; color: #a16207; font-weight: 700; }
-        .risk-low { background: #f0fdf4 !important; color: #15803d; font-weight: 700; }
-        .risk-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 1.25rem 0; box-shadow: var(--shadow); }
-        .risk-card h3 { margin-top: 0; }
-        .score { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-        .score-critical { background: #fef2f2; color: #b91c1c; }
-        .score-high { background: #fff7ed; color: #c2410c; }
-        .score-medium { background: #fefce8; color: #a16207; }
-        .score-low { background: #f0fdf4; color: #15803d; }
-        .callout { background: #fef2f2; border-left: 4px solid #b91c1c; padding: 1rem 1.25rem; margin: 1.25rem 0; border-radius: 4px; }
-        .callout strong { color: #b91c1c; }
-        .callout-amber { background: #fff7ed; border-left: 4px solid #c2410c; padding: 1rem 1.25rem; margin: 1.25rem 0; border-radius: 4px; }
-        .callout-amber strong { color: #c2410c; }
+
+        .doc-list { list-style: none; margin: 1rem 0 1.5rem; padding: 0; }
+        .doc-list li {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.9rem 1.2rem; margin-bottom: 0.5rem;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); box-shadow: var(--shadow);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .doc-list li:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .doc-num {
+            flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
+            background: var(--primary); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.9rem;
+        }
+        .doc-info { flex: 1; }
+        .doc-info .doc-title { font-weight: 600; color: var(--text); margin-bottom: 0.1rem; }
+        .doc-info .doc-desc { font-size: 0.82rem; color: var(--text-light); }
+        .doc-dl {
+            flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.35rem;
+            padding: 0.5rem 1rem; background: var(--primary); color: #fff;
+            text-decoration: none; font-size: 0.82rem; font-weight: 600;
+            border-radius: var(--radius); transition: background 0.2s;
+        }
+        .doc-dl:hover { background: #9a3412; }
+        .doc-dl svg { width: 14px; height: 14px; fill: currentColor; }
+        @media (max-width: 640px) {
+            .doc-list li { flex-wrap: wrap; }
+            .doc-dl { margin-left: 44px; margin-top: 0.25rem; }
+        }
+
         footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light); }
-        @media (max-width: 768px) { .project-hero h1 { font-size: 1.8rem; } .info-table th { width: 120px; } .meta-row { flex-direction: column; gap: 0.5rem; } }
+
+        @media (max-width: 768px) {
+            .project-hero h1 { font-size: 1.8rem; }
+            .info-table th { width: 120px; }
+            .meta-row { flex-direction: column; gap: 0.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -81,329 +116,68 @@
 
 <div class="project-hero">
     <div class="container">
-        <span class="tag">High-Risk AI &bull; Employment</span>
-        <h1>NovaHire &mdash; <em>AI Risk Assessment &amp; Board Governance Review</em></h1>
-        <p class="subtitle">Conducted a full AI risk assessment and Board-level governance review of NovaHire, a transformer-based recruitment and CV-screening system classified as High-Risk under EU AI Act Annex III &mdash; documenting 7 risks (4 Critical), confirmed bias outcomes across 180,000+ candidates, and a 90-day remediation programme escalated to the Board Risk &amp; Audit Committee.</p>
+        <span class="tag">AI Risk Assessment</span>
+        <h1>NovaHire &mdash; AI Risk Assessment &amp; Board Review &mdash; <em>NovaAI Labs</em></h1>
+        <p class="subtitle">Board-level AI risk assessment and governance review of a high-risk recruitment NLP system under EU AI Act Annex III &mdash; 7-risk register, confirmed bias findings escalated to the Board Risk &amp; Audit Committee, and a 90-day remediation plan</p>
         <div class="meta-row">
             <div class="meta-item"><strong>Company:</strong> NovaAI Labs</div>
-            <div class="meta-item"><strong>System:</strong> NVA-AI-003 &bull; NovaHire v3.1</div>
-            <div class="meta-item"><strong>Frameworks:</strong> EU AI Act Annex III, GDPR Art. 22, NIST AI RMF 1.0</div>
-            <div class="meta-item"><strong>Scale:</strong> 180,000+ Candidates &bull; 47 Enterprise Deployers</div>
-            <div class="meta-item"><strong>Date:</strong> April 2026</div>
+            <div class="meta-item"><strong>System:</strong> NovaHire v3.1 (NVA-AI-003)</div>
+            <div class="meta-item"><strong>Frameworks:</strong> EU AI Act Annex III, NIST AI RMF, GDPR Art. 22</div>
+            <div class="meta-item"><strong>Scale:</strong> 47 enterprise customers &bull; 180,000+ candidates</div>
         </div>
     </div>
 </div>
 
 <div class="content">
 
-    <!-- 1. Executive Summary -->
-    <h2>1. Executive Summary</h2>
-    <p>NovaHire (NVA-AI-003) is an internally developed, transformer-based natural language processing system used for recruitment and CV screening. The system ingests CVs, job descriptions, and LinkedIn profiles to produce ranked shortlists with fit scores from 0&ndash;100. It is deployed within NovaAI Labs HR operations and licensed to 47 enterprise customers across the European Union, having processed 180,000+ candidates since October 2023.</p>
-    <p>This engagement combined a standalone AI Risk Assessment with a Board-level Governance Review Memo prepared for the Chief Executive Officer and Board Risk &amp; Audit Committee. The review was triggered by a February 2026 independent bias audit that confirmed measurable discriminatory outcomes and a subsequent reassessment of NovaAI's obligations under the EU AI Act high-risk regime that came into force in January 2026.</p>
-    <div class="callout">
-        <strong>Confirmed Bias Findings (Feb 2026 Audit):</strong> Women applying for technical roles were shortlisted at <strong>18% lower rates</strong> than statistically equivalent men. Candidates over age 45 were shortlisted at <strong>22% lower rates</strong> than statistically equivalent younger candidates for senior roles. These are measured outcomes across the full 180,000-candidate operational history &mdash; not estimates.
-    </div>
-    <p>Material regulatory non-compliance was identified under EU AI Act Articles 10, 13, 14, and 43: no conformity assessment has been conducted; enterprise deployers have received no Article 13 instructions for use; and autonomous rejection mechanisms lack documented Article 14 human oversight across the 47 customer deployments. The Board was asked to approve immediate suspension of automated shortlisting within 72 hours, commence a 90-day remediation programme, notify affected customers, and engage external employment law counsel.</p>
+    <h2>Project Overview</h2>
+    <p>NovaHire (NVA-AI-003) is NovaAI Labs&rsquo; internally developed transformer-based recruitment NLP system, deployed by NovaAI&rsquo;s HR function and licensed to 47 enterprise customers across the European Union. The system ingests CVs, job descriptions, and LinkedIn data to produce ranked shortlists with fit scores (0&ndash;100). By April 2026, the system had processed approximately <strong>180,000 job applicants</strong>, placing it squarely within the EU AI Act's most consequential obligations.</p>
+    <p>This project delivered an end-to-end AI risk assessment and governance review of NovaHire &mdash; classifying it as a <strong>high-risk AI system under EU AI Act Annex III, Category 4(a)</strong> (employment and recruitment decisions); documenting confirmed bias findings from a February 2026 audit (18% gender disparity, 22% age disparity); scoring AI-specific risks under a 5&times;5 methodology aligned to NIST AI RMF; and escalating findings to the <strong>Board Risk &amp; Audit Committee</strong> with recommended remediation actions, a deployment decision, and customer notification strategy.</p>
 
-    <!-- 2. System Overview -->
-    <h2>2. System Overview &amp; Classification</h2>
+    <h2>Project Highlights</h2>
     <table class="info-table">
-        <tr><th>System ID</th><td>NVA-AI-003</td></tr>
-        <tr><th>System Name</th><td>NovaHire</td></tr>
-        <tr><th>Version Assessed</th><td>v3.1 (as deployed)</td></tr>
-        <tr><th>Architecture</th><td>Transformer-based NLP model</td></tr>
-        <tr><th>Provider</th><td>NovaAI Labs (internal development &amp; maintenance)</td></tr>
-        <tr><th>Deployers</th><td>NovaAI Labs HR + 47 enterprise customers (EU)</td></tr>
-        <tr><th>Inputs</th><td>CVs, job descriptions, LinkedIn profile data</td></tr>
-        <tr><th>Outputs</th><td>Ranked candidate shortlists with fit scores (0&ndash;100)</td></tr>
-        <tr><th>Deployment Date</th><td>October 2023</td></tr>
-        <tr><th>Affected Persons</th><td>~180,000 job applicants processed to date</td></tr>
-        <tr><th>EU AI Act Classification</th><td><span class="score score-critical">High-Risk</span> &bull; Annex III, Category 4(a) &mdash; Employment &amp; Recruitment Decisions</td></tr>
-        <tr><th>NovaAI Labs Role</th><td>Provider <em>and</em> Deployer (dual status under the Regulation)</td></tr>
-    </table>
-    <p>The Annex III classification triggers a set of mandatory obligations that were not in place at the time of assessment: Article 43 conformity assessment and technical documentation, Article 10 data governance and bias monitoring, Article 13 transparency and deployer instructions, Article 14 human oversight, and Article 71 EU database registration.</p>
-
-    <!-- 3. Risk Methodology -->
-    <h2>3. Risk Assessment Methodology</h2>
-    <p>The assessment used a standard 5&times;5 likelihood-impact matrix. Risk scores are computed as the product of likelihood and impact to yield both inherent and residual risk ratings. Controls are proposed per risk and scored for residual exposure assuming successful implementation.</p>
-    <table class="info-table">
-        <tr><th>Likelihood Scale</th><td>1 = Remote &bull; 2 = Low &bull; 3 = Medium &bull; 4 = High &bull; 5 = Almost Certain</td></tr>
-        <tr><th>Impact Scale</th><td>1 = Negligible &bull; 2 = Minor &bull; 3 = Moderate &bull; 4 = Severe &bull; 5 = Catastrophic</td></tr>
-        <tr><th>Risk Levels</th><td>1&ndash;6 Low &bull; 7&ndash;14 Medium &bull; 15&ndash;19 High &bull; 20&ndash;25 Critical</td></tr>
+        <tr><th>Regulatory Classification</th><td>High-Risk AI under <strong>EU AI Act Annex III, Category 4(a)</strong> &mdash; triggering conformity assessment (Art. 43), bias monitoring (Art. 6, 14, 16), human oversight (Art. 14), and deployer documentation (Art. 13) obligations</td></tr>
+        <tr><th>AI Risks Assessed</th><td><strong>7 AI-specific risks</strong> on a 5&times;5 Likelihood&ndash;Impact matrix aligned to NIST AI RMF &mdash; covering bias, explainability, data quality, human oversight, regulatory classification, vendor/supply-chain, and audit trail gaps</td></tr>
+        <tr><th>Bias Findings (Confirmed)</th><td><strong>18% gender disparity</strong> and <strong>22% age disparity</strong> in candidate pass-through rates, identified in the February 2026 internal fairness audit across 180,000+ candidates</td></tr>
+        <tr><th>Affected Persons</th><td><strong>180,000+ job applicants</strong> across NovaAI HR and 47 enterprise deployers &mdash; GDPR Article 22 automated-decision-making rights invoked</td></tr>
+        <tr><th>Governance Review Scope</th><td>Regulatory classification verification, provider vs. deployer status analysis, conformity assessment gap analysis, customer documentation audit, and bias audit validation</td></tr>
+        <tr><th>Board Recommendations</th><td>Three-decision package: (a) note governance findings, (b) approve <strong>90-day remediation plan</strong>, and (c) determine NovaHire&rsquo;s operational status (continue / suspend / restrict)</td></tr>
+        <tr><th>Frameworks Applied</th><td>EU AI Act (Reg. 2024/1689), NIST AI Risk Management Framework 1.0, ISO/IEC 23894 AI risk guidance, GDPR Articles 22 &amp; 35 (DPIA), ISO/IEC 42001 AIMS alignment</td></tr>
+        <tr><th>Deliverables</th><td>Board-Only Governance Review &amp; Deployment Decision Memo + full AI Risk Assessment with register, treatment plans, and owner assignments</td></tr>
     </table>
 
-    <!-- 4. Risk Register -->
-    <h2>4. Risk Register</h2>
-    <p>Seven risks were identified and assessed. Four are Critical, three are High. Two critical risks (RISK-001 and RISK-002) have been empirically validated through the February 2026 bias audit.</p>
+    <h2>Download Documents</h2>
 
-    <div class="risk-card">
-        <h3>RISK-001 &mdash; Gender-Based Proxy Discrimination <span class="score score-critical">Critical</span></h3>
-        <p><strong>Description:</strong> February 2026 internal bias audit confirmed women applying for technical roles were shortlisted at 18% lower rates than men with equivalent qualifications. The model appears to have learned from historical tech hiring patterns; NLP features such as writing style, absence of certain keywords, and career gaps correlated with gender.</p>
-        <p><strong>Affected Groups:</strong> Women applicants, particularly for engineering and ML research roles.</p>
-        <table class="info-table">
-            <tr><th>Likelihood</th><td>5</td></tr>
-            <tr><th>Impact</th><td>5</td></tr>
-            <tr><th>Inherent Risk</th><td><span class="score score-critical">25 &mdash; Critical</span></td></tr>
-            <tr><th>Proposed Controls</th><td>Immediate model retraining on debiased dataset; suspend automated below-threshold rejection; independent re-audit; notify all 47 enterprise customers; engage employment law counsel</td></tr>
-            <tr><th>Residual Risk</th><td><span class="score score-medium">10 &mdash; Medium</span></td></tr>
-            <tr><th>Control Owner</th><td>Chief AI Officer + Chief People Officer</td></tr>
-        </table>
-    </div>
-
-    <div class="risk-card">
-        <h3>RISK-002 &mdash; Age-Based Discrimination in Senior Role Shortlisting <span class="score score-critical">Critical</span></h3>
-        <p><strong>Description:</strong> Bias audit confirmed candidates over age 45 were shortlisted at 22% lower rates for senior positions &mdash; a pattern that mirrors the 2024&ndash;2026 Workday class action on algorithmic age bias. Model proxies include graduation year, years-of-experience framing, and technology stack references.</p>
-        <p><strong>Affected Groups:</strong> Candidates aged 45+, particularly for senior and leadership roles.</p>
-        <table class="info-table">
-            <tr><th>Likelihood</th><td>5</td></tr>
-            <tr><th>Impact</th><td>5</td></tr>
-            <tr><th>Inherent Risk</th><td><span class="score score-critical">25 &mdash; Critical</span></td></tr>
-            <tr><th>Proposed Controls</th><td>Remove graduation year and temporal markers from training features; mandatory human review for all senior role shortlisting; legal review of age discrimination exposure; retrospective audit of 12 months of rejections</td></tr>
-            <tr><th>Residual Risk</th><td><span class="score score-medium">10 &mdash; Medium</span></td></tr>
-            <tr><th>Control Owner</th><td>Chief AI Officer + General Counsel</td></tr>
-        </table>
-    </div>
-
-    <div class="risk-card">
-        <h3>RISK-003 &mdash; Absence of Human Oversight in Enterprise Customer Deployments <span class="score score-critical">Critical</span></h3>
-        <p><strong>Description:</strong> NovaAI Labs provides no enforceable human-oversight requirements to its enterprise customers. Customers may configure NovaHire to auto-reject candidates below a fit-score threshold with no human review. NovaAI cannot currently confirm whether Article 14 oversight is being maintained across the 47 customer deployments.</p>
-        <p><strong>Affected Groups:</strong> All 47 enterprise customers and their applicants.</p>
-        <table class="info-table">
-            <tr><th>Likelihood</th><td>5</td></tr>
-            <tr><th>Impact</th><td>4</td></tr>
-            <tr><th>Inherent Risk</th><td><span class="score score-critical">20 &mdash; Critical</span></td></tr>
-            <tr><th>Proposed Controls</th><td>Mandatory human oversight contractual requirement; technical enforcement via product configuration; customer attestation; audit rights</td></tr>
-            <tr><th>Residual Risk</th><td><span class="score score-medium">8 &mdash; Medium</span></td></tr>
-            <tr><th>Control Owner</th><td>Chief AI Officer + VP Enterprise Sales</td></tr>
-        </table>
-    </div>
-
-    <div class="risk-card">
-        <h3>RISK-004 &mdash; Inadequate Deployer Documentation (Article 13) <span class="score score-critical">Critical</span></h3>
-        <p><strong>Description:</strong> Enterprise customers have not been supplied with instructions for use, intended purpose, performance characteristics, known limitations, or human oversight measures as required by EU AI Act Article 13. As provider, NovaAI Labs is in material non-compliance.</p>
-        <p><strong>Affected Groups:</strong> All 47 enterprise deployers and regulatory authorities.</p>
-        <table class="info-table">
-            <tr><th>Likelihood</th><td>5</td></tr>
-            <tr><th>Impact</th><td>4</td></tr>
-            <tr><th>Inherent Risk</th><td><span class="score score-critical">20 &mdash; Critical</span></td></tr>
-            <tr><th>Proposed Controls</th><td>Produce comprehensive instructions for use; publish model card; technical documentation per Annex IV; distribute to all 47 deployers</td></tr>
-            <tr><th>Residual Risk</th><td><span class="score score-low">5 &mdash; Low</span></td></tr>
-            <tr><th>Control Owner</th><td>Chief AI Officer + Legal</td></tr>
-        </table>
-    </div>
-
-    <div class="risk-card">
-        <h3>RISK-005 &mdash; Lack of Explainability for Adverse Decisions <span class="score score-high">High</span></h3>
-        <p><strong>Description:</strong> Rejected candidates receive only a fit score with no meaningful explanation of how the decision was reached. This creates exposure under GDPR Article 22 (automated individual decision-making) and EU AI Act Article 13 transparency obligations.</p>
-        <p><strong>Affected Groups:</strong> Job applicants receiving adverse decisions.</p>
-        <table class="info-table">
-            <tr><th>Likelihood</th><td>5</td></tr>
-            <tr><th>Impact</th><td>3</td></tr>
-            <tr><th>Inherent Risk</th><td><span class="score score-high">15 &mdash; High</span></td></tr>
-            <tr><th>Proposed Controls</th><td>Implement SHAP-based explanation API; human review as decision point; update candidate communications</td></tr>
-            <tr><th>Residual Risk</th><td><span class="score score-low">6 &mdash; Low</span></td></tr>
-            <tr><th>Control Owner</th><td>Head of Product + Legal</td></tr>
-        </table>
-    </div>
-
-    <div class="risk-card">
-        <h3>RISK-006 &mdash; Training Data Provenance Concerns <span class="score score-high">High</span></h3>
-        <p><strong>Description:</strong> NovaHire was trained on a proprietary dataset that includes publicly scraped LinkedIn profiles. The lawful basis for processing is unclear, creating potential GDPR Article 6 and Article 14 issues. The model card is incomplete.</p>
-        <p><strong>Affected Groups:</strong> Individuals whose data was scraped without consent.</p>
-        <table class="info-table">
-            <tr><th>Likelihood</th><td>4</td></tr>
-            <tr><th>Impact</th><td>4</td></tr>
-            <tr><th>Inherent Risk</th><td><span class="score score-high">16 &mdash; High</span></td></tr>
-            <tr><th>Proposed Controls</th><td>Legal review of training data lawful basis; produce comprehensive model card; consider retraining with consented-only dataset; engage DPO</td></tr>
-            <tr><th>Residual Risk</th><td><span class="score score-medium">8 &mdash; Medium</span></td></tr>
-            <tr><th>Control Owner</th><td>Chief AI Officer + DPO</td></tr>
-        </table>
-    </div>
-
-    <div class="risk-card">
-        <h3>RISK-007 &mdash; Cross-Border Regulatory Exposure <span class="score score-high">High</span></h3>
-        <p><strong>Description:</strong> Enterprise customers span the EU, UK, and US, generating multi-jurisdictional exposure: EU AI Act, UK Equality Act 2010, NYC Local Law 144 (bias audit requirements), Illinois AI Video Interview Act, and Colorado AI Act 2024.</p>
-        <p><strong>Affected Groups:</strong> NovaAI Labs, regulators, and customers across multiple jurisdictions.</p>
-        <table class="info-table">
-            <tr><th>Likelihood</th><td>4</td></tr>
-            <tr><th>Impact</th><td>4</td></tr>
-            <tr><th>Inherent Risk</th><td><span class="score score-high">16 &mdash; High</span></td></tr>
-            <tr><th>Proposed Controls</th><td>Multi-jurisdictional legal review; jurisdiction-specific compliance modules; regulatory monitoring programme</td></tr>
-            <tr><th>Residual Risk</th><td><span class="score score-medium">8 &mdash; Medium</span></td></tr>
-            <tr><th>Control Owner</th><td>General Counsel + Compliance</td></tr>
-        </table>
-    </div>
-
-    <!-- 5. Risk Summary Matrix -->
-    <h2>5. Risk Summary Matrix</h2>
-    <table class="risk-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Risk Title</th>
-                <th>L</th>
-                <th>I</th>
-                <th>Inherent</th>
-                <th>Residual</th>
-                <th>Rating</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>RISK-001</td><td>Gender-Based Proxy Discrimination</td><td>5</td><td>5</td><td>25</td><td>10</td><td class="risk-critical">Critical</td></tr>
-            <tr><td>RISK-002</td><td>Age-Based Discrimination in Senior Role Shortlisting</td><td>5</td><td>5</td><td>25</td><td>10</td><td class="risk-critical">Critical</td></tr>
-            <tr><td>RISK-003</td><td>Absence of Human Oversight in Enterprise Deployments</td><td>5</td><td>4</td><td>20</td><td>8</td><td class="risk-critical">Critical</td></tr>
-            <tr><td>RISK-004</td><td>Inadequate Deployer Documentation (Article 13)</td><td>5</td><td>4</td><td>20</td><td>5</td><td class="risk-critical">Critical</td></tr>
-            <tr><td>RISK-005</td><td>Lack of Explainability for Adverse Decisions</td><td>5</td><td>3</td><td>15</td><td>6</td><td class="risk-high">High</td></tr>
-            <tr><td>RISK-006</td><td>Training Data Provenance Concerns</td><td>4</td><td>4</td><td>16</td><td>8</td><td class="risk-high">High</td></tr>
-            <tr><td>RISK-007</td><td>Cross-Border Regulatory Exposure</td><td>4</td><td>4</td><td>16</td><td>8</td><td class="risk-high">High</td></tr>
-        </tbody>
-    </table>
-    <p style="font-size: 0.82rem; color: var(--text-light);">L = Likelihood &bull; I = Impact &bull; Risk score = L &times; I</p>
-
-    <!-- 6. Board Governance Findings -->
-    <h2>6. Board Governance Review &mdash; Key Findings</h2>
-    <p>The companion Governance Review Memo (Reference NVA-GOV-2026-003, <em>CONFIDENTIAL &mdash; Board Only</em>) escalated four material findings to the Board Risk &amp; Audit Committee:</p>
-
-    <h3>6.1 Classification and Regulatory Exposure</h3>
-    <p>NovaHire is classified as high-risk under EU AI Act Annex III, Category 4(a). This triggers conformity assessment (Article 43), risk assessment and bias monitoring (Articles 6, 14, 16), deployment transparency and human oversight (Article 14), and deployer instructions for use (Article 13). NovaAI holds both provider and deployer status; the 47 enterprise customers inherit deployer obligations but lack awareness or supporting documentation to discharge them. The high-risk regime came into force in January 2026 &mdash; NovaAI is in material non-compliance.</p>
-
-    <h3>6.2 The Confirmed Bias Problem &mdash; 18% and 22%</h3>
-    <p>The February 2026 bias audit across the full 180,000-candidate historical dataset produced unambiguous findings: 18% lower shortlisting for women in technical roles and 22% lower shortlisting for candidates over 45 in senior roles. These are measured outcomes, not estimates. They mirror the age-discrimination pattern documented in the Workday class action (2024&ndash;2026). The outcomes cannot be defended &mdash; only acknowledged and remedied.</p>
-
-    <h3>6.3 The Enterprise Customer Exposure Problem</h3>
-    <ul>
-        <li>No Article 13 instructions for use have been supplied to any of the 47 customers.</li>
-        <li>No customer attestations have been obtained for Article 14 human oversight.</li>
-        <li>No bias audit data has been shared with customers.</li>
-        <li>Current customer contracts do not include EU AI Act compliance clauses or liability allocation.</li>
+    <ul class="doc-list">
+        <li>
+            <div class="doc-num">1</div>
+            <div class="doc-info">
+                <div class="doc-title">Governance Review &amp; Deployment Decision Memo</div>
+                <div class="doc-desc">Board-Only memorandum to CEO + Board Risk &amp; Audit Committee &middot; findings, recommended actions, deployment decision request &middot; Ref. NVA-GOV-2026-003</div>
+            </div>
+            <a href="../assets/pdfs/NovaHire_1_Governance_Review_Memo.pdf" download class="doc-dl">
+                <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+                Download PDF
+            </a>
+        </li>
+        <li>
+            <div class="doc-num">2</div>
+            <div class="doc-info">
+                <div class="doc-title">AI Risk Assessment &mdash; NovaHire v3.1</div>
+                <div class="doc-desc">Full 7-risk register with inherent / residual scoring, treatment plans, and owner assignments &middot; mapped to NIST AI RMF &amp; EU AI Act</div>
+            </div>
+            <a href="../assets/pdfs/NovaHire_2_Risk_Assessment.pdf" download class="doc-dl">
+                <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+                Download PDF
+            </a>
+        </li>
     </ul>
-    <p>If a customer is sued by a candidate for discriminatory screening, NovaAI Labs will very likely be joined as a co-defendant provider. Liability exposure is direct and uninsured. Public disclosure of the bias audit is expected to trigger rapid enterprise customer churn.</p>
-
-    <h3>6.4 The Autonomous Rejection Problem</h3>
-    <p>Article 14 requires documented human review of all significant employment decisions. NovaAI implemented human-in-the-loop review for internal HR use in January 2026, but has no visibility into how customers configure the system. Some customers may be running fully autonomous rejection workflows. Technical enforcement via product controls &mdash; not merely contractual obligations &mdash; is required.</p>
-
-    <div class="callout-amber">
-        <strong>Residual Risk Position &mdash; Medium-High:</strong> Even with full remediation controls in place, the residual risk position of NovaHire remains Medium-High. Harm has already occurred; candidates have been rejected at discriminatory rates. Rectification and notification obligations may crystallise under EU AI Act Article 84. The 90-day remediation window is time-critical.
-    </div>
-
-    <!-- 7. Recommended Actions -->
-    <h2>7. Recommended Remediation Programme</h2>
-
-    <h3>Immediate (Within 72 Hours)</h3>
-    <table class="risk-table">
-        <thead><tr><th>Action</th><th>Owner</th></tr></thead>
-        <tbody>
-            <tr><td>Suspend automated shortlisting function across all deployments</td><td>Chief AI Officer</td></tr>
-            <tr><td>Notify all 47 enterprise customers of bias findings &amp; remediation plan</td><td>VP Enterprise Sales + Legal</td></tr>
-            <tr><td>Engage external employment law counsel</td><td>General Counsel</td></tr>
-            <tr><td>Brief Board Risk &amp; Audit Committee</td><td>AI Governance Office</td></tr>
-            <tr><td>Preserve audit data and all model versions</td><td>Chief AI Officer</td></tr>
-        </tbody>
-    </table>
-
-    <h3>Within 30 Days</h3>
-    <table class="risk-table">
-        <thead><tr><th>Action</th><th>Owner</th></tr></thead>
-        <tbody>
-            <tr><td>Produce Article 13 instructions for use</td><td>Chief AI Officer + Legal</td></tr>
-            <tr><td>Implement technical enforcement of human review (product-level)</td><td>Head of Product</td></tr>
-            <tr><td>Commission independent external bias audit</td><td>AI Governance Office</td></tr>
-            <tr><td>Retrain NovaHire on debiased dataset</td><td>ML Research Team</td></tr>
-            <tr><td>Update candidate privacy notices</td><td>Legal + Data Protection Officer</td></tr>
-        </tbody>
-    </table>
-
-    <h3>Within 90 Days</h3>
-    <table class="risk-table">
-        <thead><tr><th>Action</th><th>Owner</th></tr></thead>
-        <tbody>
-            <tr><td>Complete EU AI Act conformity assessment</td><td>AI Governance Office</td></tr>
-            <tr><td>Register in EU database (Article 71)</td><td>AI Governance Office</td></tr>
-            <tr><td>Execute amended customer contracts (EU AI Act clauses + liability)</td><td>Legal + Enterprise Sales</td></tr>
-            <tr><td>Retrospective review of rejected candidates (past 12 months)</td><td>HR + Legal</td></tr>
-            <tr><td>Board decision on long-term product continuation</td><td>Board of Directors</td></tr>
-        </tbody>
-    </table>
-
-    <!-- 8. Board Decision Options -->
-    <h2>8. Board Decision Options</h2>
-    <p>The Board was presented with three options. The AI Governance Office recommended <strong>Option A</strong>.</p>
-
-    <div class="risk-card">
-        <h3>Option A &mdash; Immediate Suspension + 90-Day Remediation <span class="score score-low">Recommended</span></h3>
-        <ul>
-            <li>Suspend automated shortlisting for all deployments (internal &amp; customer-facing) within 72 hours.</li>
-            <li>Revert to full manual CV review during remediation period.</li>
-            <li>Execute all remediation actions on a 90-day timeline.</li>
-            <li>Maintain Board-level governance oversight of the remediation program.</li>
-        </ul>
-        <p><strong>Impact:</strong> Reduces regulatory and litigation risk. Demonstrates responsible governance. Operational disruption limited to 90 days. Revenue impact: ~$4.5M in additional operating costs.</p>
-    </div>
-
-    <div class="risk-card">
-        <h3>Option B &mdash; Enhanced Oversight During Remediation <span class="score score-high">Not Recommended</span></h3>
-        <ul>
-            <li>Retain NovaHire in production with mandatory human review of all shortlisting decisions.</li>
-            <li>Proceed with the 90-day remediation on the same timeline.</li>
-            <li>Assume human oversight controls are effective across 47 customer deployments.</li>
-        </ul>
-        <p><strong>Risk:</strong> Cannot confirm human-review effectiveness across the customer base. Continued exposure to discriminatory outcomes, regulatory findings, and litigation during the 90-day window. No technical safeguards. Reputational risk if the audit becomes public while the system remains active.</p>
-    </div>
-
-    <div class="risk-card">
-        <h3>Option C &mdash; Full Product Withdrawal <span class="score score-medium">Disproportionate</span></h3>
-        <ul>
-            <li>Sunset NovaHire entirely; discontinue all deployments.</li>
-            <li>Revert to manual screening indefinitely.</li>
-            <li>Issue contract termination notices to all 47 enterprise customers.</li>
-        </ul>
-        <p><strong>Impact:</strong> Eliminates regulatory and litigation risk but produces very significant revenue impact (~$18M annual NovaHire licensing revenue). Disproportionate response if remediation programme succeeds.</p>
-    </div>
-
-    <!-- 9. Financial & Reputational -->
-    <h2>9. Financial &amp; Reputational Considerations</h2>
-    <table class="info-table">
-        <tr><th>Category</th><td><strong>Estimate</strong></td></tr>
-        <tr><th>Remediation Cost</th><td>$4.5M</td></tr>
-        <tr><th>Annual Revenue at Risk (Customer Churn)</th><td>~$18M</td></tr>
-        <tr><th>Estimated Litigation Exposure</th><td>$15M &ndash; $40M</td></tr>
-    </table>
-    <p>NovaAI Labs is positioned as a responsible-AI leader. Public disclosure of confirmed discriminatory bias in NovaHire &mdash; combined with evidence of material non-compliance with the EU AI Act &mdash; would fundamentally contradict that positioning. Enterprise customers are acutely sensitive to AI governance credentials, making churn risk substantial.</p>
-
-    <!-- 10. Human Oversight Model -->
-    <h2>10. Recommended Human Oversight Model</h2>
-    <h3>Immediate (Weeks 1&ndash;4)</h3>
-    <p>Mandatory human review required for 100% of shortlisting decisions, across both NovaAI Labs internal hiring and all 47 enterprise deployments. System must technically enforce this requirement and prevent auto-rejection configurations.</p>
-    <h3>Enhanced Monitoring (Weeks 5&ndash;12)</h3>
-    <p>Quarterly demographic audits across all shortlists; tracking of human reviewer override rates; analysis of acceptance vs. rejection patterns by protected characteristic.</p>
-    <h3>Governance &amp; Accountability (Weeks 13+)</h3>
-    <p>Establishment of an AI Governance Committee with quarterly review of all bias metrics; annual independent external audit; and formal escalation procedures for anomalous patterns.</p>
-
-    <!-- 11. Escalation -->
-    <h2>11. Escalation Clause</h2>
-    <div class="callout">
-        If the 72-hour suspension of automated shortlisting is not implemented, the AI Governance Office will escalate this matter to the Chief Compliance Officer and will consider notification obligations to relevant Data Protection Authorities under <strong>Article 84 of the EU AI Act</strong>.
-    </div>
-
-    <!-- 12. Program Summary -->
-    <h2>12. Program Summary</h2>
-    <table class="info-table">
-        <tr><th>System Assessed</th><td>NovaHire (NVA-AI-003) &bull; v3.1</td></tr>
-        <tr><th>EU AI Act Classification</th><td>High-Risk &mdash; Annex III, Category 4(a)</td></tr>
-        <tr><th>Candidates Processed</th><td>~180,000 since October 2023</td></tr>
-        <tr><th>Enterprise Deployers</th><td>47 (European Union)</td></tr>
-        <tr><th>Risks Identified</th><td>7 total &mdash; 4 Critical, 3 High</td></tr>
-        <tr><th>Bias Findings</th><td>18% lower shortlisting for women (tech); 22% lower for candidates 45+ (senior)</td></tr>
-        <tr><th>Overall Residual Risk</th><td><span class="score score-high">Medium-High</span></td></tr>
-        <tr><th>Remediation Window</th><td>90 Days &bull; Board-mandated</td></tr>
-        <tr><th>Recommendation</th><td>Option A &mdash; Immediate Suspension + 90-Day Remediation</td></tr>
-        <tr><th>Reference</th><td>NVA-GOV-2026-003 &bull; CONFIDENTIAL &mdash; Board Only</td></tr>
-    </table>
 
 </div>
 
 <footer>
-    &copy; 2026 Tejaswini Dondeti &bull; GRC Analyst Portfolio
+    <p><a href="../index.html#projects" style="color: var(--primary); text-decoration: none; font-weight: 600;">&larr; Back to All Projects</a></p>
+    <p style="margin-top: 0.75rem;">&copy; 2026 Tejaswini Dondeti. All rights reserved.</p>
 </footer>
 
 </body>
