@@ -138,10 +138,6 @@
             <div class="meta-item"><strong>Industry:</strong> Healthcare &amp; Financial AI</div>
             <div class="meta-item"><strong>Frameworks:</strong> ISO 42001, NIST AI RMF, EU AI Act</div>
         </div>
-        <a href="../assets/pdfs/MindfulAI.pdf" download class="download-btn">
-            <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-            Download Full Report (PDF)
-        </a>
     </div>
 </div>
 
@@ -161,13 +157,98 @@
         <tr><th>Regulatory Scope</th><td>High-Risk AI under EU AI Act Annex III, EU MDR Class IIa (medical devices), OSFI E-23 (Canadian banking), ECOA (US credit), Health Canada SaMD</td></tr>
     </table>
 
-    <div class="callout" style="background: #fff7ed; border-left: 4px solid #c2410c; padding: 1.25rem 1.5rem; border-radius: 0 6px 6px 0; margin: 2rem 0; text-align: center;">
-        <p style="margin-bottom: 1rem; font-size: 0.95rem;"><strong>Want the full report?</strong> The complete documentation includes the AI system inventory, full risk register, control design, policy frameworks, and regulatory mapping.</p>
-        <a href="../assets/pdfs/MindfulAI.pdf" download class="download-btn">
-            <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-            Download Full Report (PDF)
-        </a>
-    </div>
+    <h2>Download Documents</h2>
+
+    <style>
+        .doc-list { list-style: none; margin: 1rem 0 1.5rem; padding: 0; }
+        .doc-list li {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.9rem 1.2rem; margin-bottom: 0.5rem;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); box-shadow: var(--shadow);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .doc-list li:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .doc-num {
+            flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
+            background: var(--primary); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.9rem;
+        }
+        .doc-info { flex: 1; }
+        .doc-info .doc-title { font-weight: 600; color: var(--text); margin-bottom: 0.1rem; }
+        .doc-info .doc-desc { font-size: 0.82rem; color: var(--text-light); }
+        .doc-dl {
+            flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.35rem;
+            padding: 0.5rem 1rem; background: var(--primary); color: #fff;
+            text-decoration: none; font-size: 0.82rem; font-weight: 600;
+            border-radius: var(--radius); transition: background 0.2s;
+        }
+        .doc-dl:hover { background: #9a3412; }
+        .doc-dl svg { width: 14px; height: 14px; fill: currentColor; }
+        @media (max-width: 640px) {
+            .doc-list li { flex-wrap: wrap; }
+            .doc-dl { margin-left: 44px; margin-top: 0.25rem; }
+        }
+    </style>
+
+    <ul class="doc-list">
+        <li>
+            <div class="doc-num">1</div>
+            <div class="doc-info">
+                <div class="doc-title">AI Governance &amp; ISO 42001 Implementation Report</div>
+                <div class="doc-desc">Full programme report &middot; AI system inventory, risk register, governance controls, and regulatory mapping across healthcare &amp; financial AI</div>
+            </div>
+            <a href="../assets/pdfs/MindfulAI.pdf" download class="doc-dl">
+                <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+                Download PDF
+            </a>
+        </li>
+        <li>
+            <div class="doc-num">2</div>
+            <div class="doc-info">
+                <div class="doc-title">Responsible AI Policy</div>
+                <div class="doc-desc">Governing AI system development, deployment, and use across the AI lifecycle</div>
+            </div>
+            <a href="../assets/pdfs/MindfulAI_1_Responsible_AI_Policy.pdf" download class="doc-dl">
+                <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+                Download PDF
+            </a>
+        </li>
+        <li>
+            <div class="doc-num">3</div>
+            <div class="doc-info">
+                <div class="doc-title">AI Data Governance &amp; Privacy Policy</div>
+                <div class="doc-desc">Data quality, minimisation, and privacy controls across training, validation, and production data</div>
+            </div>
+            <a href="../assets/pdfs/MindfulAI_2_AI_Data_Governance_Privacy_Policy.pdf" download class="doc-dl">
+                <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+                Download PDF
+            </a>
+        </li>
+        <li>
+            <div class="doc-num">4</div>
+            <div class="doc-info">
+                <div class="doc-title">AI Fairness &amp; Bias Mitigation Policy</div>
+                <div class="doc-desc">Identifying, measuring, and mitigating bias in AI systems &middot; fairness metrics and remediation</div>
+            </div>
+            <a href="../assets/pdfs/MindfulAI_3_AI_Fairness_Bias_Mitigation_Policy.pdf" download class="doc-dl">
+                <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+                Download PDF
+            </a>
+        </li>
+        <li>
+            <div class="doc-num">5</div>
+            <div class="doc-info">
+                <div class="doc-title">AI Incident Response &amp; Escalation Policy</div>
+                <div class="doc-desc">Detection, triage, response, and post-incident review for AI-specific incidents and harms</div>
+            </div>
+            <a href="../assets/pdfs/MindfulAI_4_AI_Incident_Response_Escalation_Policy.pdf" download class="doc-dl">
+                <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+                Download PDF
+            </a>
+        </li>
+    </ul>
 
 </div>
 
